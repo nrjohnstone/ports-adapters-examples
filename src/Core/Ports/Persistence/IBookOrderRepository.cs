@@ -6,6 +6,6 @@ namespace Core.Ports.Persistence
     public interface IBookOrderRepository
     {
         BookOrder Get(Guid id);
-        void Store(Guid id, BookOrder bookOrder);
+        void Store(BookOrder bookOrder);
     }
 }

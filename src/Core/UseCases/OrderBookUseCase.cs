@@ -1,5 +1,6 @@
 ﻿using System;
 using AmbientContext.LogService.Serilog;
+using Core.Entities;
 using Core.Ports.Persistence;
 using Core.ValueObjects;
 
@@ -20,6 +21,11 @@ namespace Core.UseCases
         public void Execute(BookRequest bookRequest)
         {
             Logger.Information("Execute OrderBookUseCase for Title: {Title}", bookRequest.Title);
+
+            BookOrder bookOrder = new BookOrder(
+                "Acme Inc", Guid.NewGuid());
+            
+            _bookOrderRepository.Store(bookOrder);
         }
     }
 }

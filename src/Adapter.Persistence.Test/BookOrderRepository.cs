@@ -26,10 +26,10 @@ namespace Adapter.Persistence.Test
             throw new InvalidOperationException();
         }
 
-        public void Store(Guid id, BookOrder bookOrder)
+        public void Store(BookOrder bookOrder)
         {
-            Logger.Information("Store BookOrderId: {BookOrderId}", id);
-            _bookOrders[id] = bookOrder;
+            Logger.Information("Store BookOrderId: {BookOrderId}", bookOrder.Id);
+            _bookOrders[bookOrder.Id] = bookOrder;
         }
     }
 }
