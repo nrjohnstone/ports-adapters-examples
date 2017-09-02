@@ -9,6 +9,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Core", "src\Core\Core.cspro
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Host.Console", "src\Host.Console\Host.Console.csproj", "{E7562808-6D94-4C58-902E-71CDFA832567}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Adapter.Persistence.Test", "src\Adapter.Persistence.Test\Adapter.Persistence.Test.csproj", "{1649AA20-899F-4050-B99A-C408A4AA39FE}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +29,10 @@ Global
 		{E7562808-6D94-4C58-902E-71CDFA832567}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E7562808-6D94-4C58-902E-71CDFA832567}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E7562808-6D94-4C58-902E-71CDFA832567}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1649AA20-899F-4050-B99A-C408A4AA39FE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1649AA20-899F-4050-B99A-C408A4AA39FE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1649AA20-899F-4050-B99A-C408A4AA39FE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1649AA20-899F-4050-B99A-C408A4AA39FE}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

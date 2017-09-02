@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Threading;
 using Adapter.Command;
+using Adapter.Persistence.Test;
 using Core.Ports.Commands;
 using Core.UseCases;
 using Core.ValueObjects;
@@ -14,7 +15,7 @@ namespace Host.Console
             var orderBookCommand = new OrderBookCommand(
                 new OrderBookUseCase());
 
-            var commandAdapter = new TestCommandAdapter();
+            var commandAdapter = new TriggerAdapter();
 
             commandAdapter.Initialize();
             IEnumerable<BookRequest> testData = new[] {
@@ -22,6 +23,10 @@ namespace Host.Console
                 new BookRequest(title: "The Blind Watchmaker", supplier: "Winston Publishing",  price: 24.99M, quantity: 10),
                 new BookRequest(title: "Dirk Gently", supplier: "Acme Inc", price: 10.99M, quantity: 2)
             };
+
+            var persistenceAdapter = new PersistenceAdapter();
+            persistenceAdapter.Initialize();
+            persistenceAdapter.Register();
 
             commandAdapter.Handle(orderBookCommand, testData);
 

@@ -51,6 +51,10 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Adapter.Persistence.Test\Adapter.Persistence.Test.csproj">
+      <Project>{1649AA20-899F-4050-B99A-C408A4AA39FE}</Project>
+      <Name>Adapter.Persistence.Test</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Adapter.Trigger.Test\Adapter.Trigger.Test.csproj">
       <Project>{408f72c9-ed46-4b95-a1aa-9ba45d5681ee}</Project>
       <Name>Adapter.Trigger.Test</Name>
