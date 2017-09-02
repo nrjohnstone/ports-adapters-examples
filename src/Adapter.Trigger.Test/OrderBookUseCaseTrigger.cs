@@ -1,22 +1,23 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Threading;
-using Core.Ports.Commands;
+using Core.UseCases;
 using Core.ValueObjects;
 
 namespace Adapter.Command
 {
-    public class OrderBookCommandHandler
+    public class OrderBookUseCaseTrigger
     {
-        private readonly OrderBookCommand _orderBookCommand;
+        private readonly OrderBookUseCase _orderBookUseCase;
         private Thread _producerThread;
         private bool _shutdown;
         private Queue<BookRequest> _testBookRequests;
 
-        public OrderBookCommandHandler(OrderBookCommand orderBookCommand)
+        public OrderBookUseCaseTrigger(OrderBookUseCase orderBookUseCase)
         {
-            if (orderBookCommand == null) throw new ArgumentNullException(nameof(orderBookCommand));
-            _orderBookCommand = orderBookCommand;
+            if (orderBookUseCase == null) throw new ArgumentNullException(nameof(orderBookUseCase));
+            _orderBookUseCase = orderBookUseCase;
+            _testBookRequests = new Queue<BookRequest>();
         }
 
         public void SetTestData(IEnumerable<BookRequest> testData)
@@ -32,24 +33,12 @@ namespace Adapter.Command
 
         private void ProducerCycle()
         {
-            
             while (!_shutdown && _testBookRequests.Count > 0)
             {
                 BookRequest bookRequest = _testBookRequests.Dequeue();
-
-                _orderBookCommand.Execute(bookRequest);
+                _orderBookUseCase.Execute(bookRequest);
                 Thread.Sleep(1000);
             }
-        }
-
-        private Queue<BookRequest> InitializeTestData()
-        {
-            return new Queue<BookRequest>(new []
-            {
-                new BookRequest(title: "The Light Fantastic", supplier: "Osborne", price:15M, quantity: 1), 
-                new BookRequest("The Blind Watchmaker", supplier: "Osborne", price:24.99M, quantity: 10), 
-                new BookRequest("Dirk Gently", supplier: "Osborne", price: 10.99M, quantity: 2) 
-            });
         }
 
         public void Stop()

@@ -1,4 +1,7 @@
-﻿namespace Adapter.Persistence.Test
+﻿using Core.Ports.Persistence;
+using SimpleInjector;
+
+namespace Adapter.Persistence.Test
 {
     public class PersistenceAdapter
     {
@@ -9,10 +12,12 @@
             _initialized = true;
         }
 
-        public void Register()
+        public void Register(Container container)
         {
             if (!_initialized)
                 throw new AdpaterNotInitializedException();
+
+            container.Register<IBookOrderRepository, BookOrderRepository>();
         }
     }
 }
