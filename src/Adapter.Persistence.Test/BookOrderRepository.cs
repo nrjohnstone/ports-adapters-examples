@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using AmbientContext.LogService.Serilog;
 using Core.Entities;
 using Core.Ports.Persistence;
 
@@ -7,6 +8,8 @@ namespace Adapter.Persistence.Test
 {
     public class BookOrderRepository : IBookOrderRepository
     {
+        public AmbientLogService Logger = new AmbientLogService();
+
         private readonly Dictionary<Guid, BookOrder> _bookOrders;
 
         public BookOrderRepository()
@@ -16,6 +19,7 @@ namespace Adapter.Persistence.Test
 
         public BookOrder Get(Guid id)
         {
+            Logger.Information("Retrieving BookOrderId: {BookOrderId}", id);
             if (_bookOrders.ContainsKey(id))
                 return _bookOrders[id];
 
@@ -24,6 +28,7 @@ namespace Adapter.Persistence.Test
 
         public void Store(Guid id, BookOrder bookOrder)
         {
+            Logger.Information("Store BookOrderId: {BookOrderId}", id);
             _bookOrders[id] = bookOrder;
         }
     }

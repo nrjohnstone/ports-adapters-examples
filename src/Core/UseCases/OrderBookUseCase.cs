@@ -1,4 +1,5 @@
 ﻿using System;
+using AmbientContext.LogService.Serilog;
 using Core.Ports.Persistence;
 using Core.ValueObjects;
 
@@ -6,6 +7,7 @@ namespace Core.UseCases
 {
     public class OrderBookUseCase
     {
+        public AmbientLogService Logger = new AmbientLogService();
         private readonly IBookOrderRepository _bookOrderRepository;
 
         public OrderBookUseCase(IBookOrderRepository bookOrderRepository)
@@ -17,7 +19,7 @@ namespace Core.UseCases
 
         public void Execute(BookRequest bookRequest)
         {
-
+            Logger.Information("Execute OrderBookUseCase for Title: {Title}", bookRequest.Title);
         }
     }
 }
