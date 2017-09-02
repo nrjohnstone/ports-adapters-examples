@@ -1,0 +1,10 @@
+version: '2'
+
+services:
+  rabbitMq:
+    image: rabbitmq:3-management
+    ports:
+      - "15671-15672:15671-15672"
+      - "4369:4369"
+      - "5671-5672:5671-5672"
+      - "25672:25672"
