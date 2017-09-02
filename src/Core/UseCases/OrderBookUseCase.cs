@@ -23,7 +23,7 @@ namespace Core.UseCases
             Logger.Information("Execute OrderBookUseCase for Title: {Title}", bookRequest.Title);
 
             BookOrder bookOrder = new BookOrder(
-                "Acme Inc", Guid.NewGuid());
+                bookRequest.Supplier, Guid.NewGuid());
             
             _bookOrderRepository.Store(bookOrder);
         }
