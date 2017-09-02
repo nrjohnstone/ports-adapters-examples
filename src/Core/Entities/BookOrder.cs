@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using Core.ValueObjects;
 
 namespace Core.Entities
 {
@@ -11,9 +13,20 @@ namespace Core.Entities
 
             Supplier = supplier;
             Id = id;
+
+            OrderLines = new List<OrderLine>();
+        }
+
+        public void AddBookRequest(BookRequest bookRequest)
+        {
+            OrderLine orderLine = new OrderLine(bookRequest.Title,
+                bookRequest.Price, bookRequest.Quantity);
+
+            OrderLines.Add(orderLine);
         }
 
         public string Supplier { get; }
         public Guid Id { get; }
+        public List<OrderLine> OrderLines { get; }
     }
 }

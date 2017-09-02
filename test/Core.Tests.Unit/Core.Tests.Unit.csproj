@@ -38,6 +38,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Fluency, Version=1.0.59.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Fluency.1.0.59\lib\net40\Fluency.dll</HintPath>
+    </Reference>
     <Reference Include="FluentAssertions, Version=4.19.4.0, Culture=neutral, PublicKeyToken=33f2691a05b67b6a, processorArchitecture=MSIL">
       <HintPath>..\..\packages\FluentAssertions.4.19.4\lib\net45\FluentAssertions.dll</HintPath>
     </Reference>
@@ -65,6 +68,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Helpers\BookRequestBuilder.cs" />
     <Compile Include="OrderBookUseCaseTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -72,6 +76,10 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\src\Adapter.Persistence.Test\Adapter.Persistence.Test.csproj">
+      <Project>{1649AA20-899F-4050-B99A-C408A4AA39FE}</Project>
+      <Name>Adapter.Persistence.Test</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\src\Core\Core.csproj">
       <Project>{97E5E8EB-26D7-49D9-A412-3DF4F5716643}</Project>
       <Name>Core</Name>

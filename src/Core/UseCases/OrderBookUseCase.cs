@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using AmbientContext.LogService.Serilog;
 using Core.Entities;
 using Core.Ports.Persistence;
@@ -22,8 +24,16 @@ namespace Core.UseCases
         {
             Logger.Information("Execute OrderBookUseCase for Title: {Title}", bookRequest.Title);
 
-            BookOrder bookOrder = new BookOrder(
-                bookRequest.Supplier, Guid.NewGuid());
+            IEnumerable<BookOrder> bookOrders = _bookOrderRepository.GetBySupplier(bookRequest.Supplier);
+            var bookOrder = bookOrders.FirstOrDefault();
+
+            if (bookOrder == null)
+            {
+                bookOrder = new BookOrder(
+                    bookRequest.Supplier, Guid.NewGuid());
+            }
+           
+            bookOrder.AddBookRequest(bookRequest);
             
             _bookOrderRepository.Store(bookOrder);
         }
