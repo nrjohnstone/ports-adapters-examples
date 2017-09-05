@@ -30,7 +30,7 @@ namespace Core.UseCases
             if (bookOrder == null)
             {
                 bookOrder = new BookOrder(
-                    bookRequest.Supplier, Guid.NewGuid());
+                    bookRequest.Supplier, Guid.NewGuid(), BookOrderState.Pending);
             }
            
             bookOrder.AddBookRequest(bookRequest);

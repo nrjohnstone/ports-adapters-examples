@@ -51,6 +51,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Entities\BookOrder.cs" />
+    <Compile Include="Entities\BookOrderState.cs" />
     <Compile Include="Entities\OrderLine.cs" />
     <Compile Include="Ports\Persistence\IBookOrderRepository.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

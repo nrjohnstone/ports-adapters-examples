@@ -39,8 +39,8 @@ namespace Core.Tests.Unit
             storedOrders.Count.Should().Be(1);
 
             var storedOrder = storedOrders.First();
-
             storedOrder.Supplier.Should().Be("SupplierFoo");
+            storedOrder.State.Should().Be(BookOrderState.Pending);
             storedOrder.OrderLines.Should().Contain(
                 x => x.Title == bookRequest.Title &&
                      x.Price == bookRequest.Price &&
@@ -113,7 +113,11 @@ namespace Core.Tests.Unit
 
         private void CreateBookOrderWithOrderLineForSupplier(string supplier)
         {
-            BookOrder bookOrder = new BookOrder("SupplierBar", Guid.NewGuid());
+            BookOrder bookOrder = new BookOrder(
+                "SupplierBar", 
+                Guid.NewGuid(),
+                BookOrderState.Pending);
+
             bookOrder.AddBookRequest(
                 a.BookRequest
                 .ForSupplier(supplier)

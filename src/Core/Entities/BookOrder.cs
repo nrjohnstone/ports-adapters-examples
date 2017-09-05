@@ -6,13 +6,14 @@ namespace Core.Entities
 {
     public class BookOrder
     {
-        public BookOrder(string supplier, Guid id)
+        public BookOrder(string supplier, Guid id, BookOrderState state)
         {
             if (string.IsNullOrWhiteSpace(supplier))
                 throw new ArgumentException("Value cannot be null or whitespace.", nameof(supplier));
 
             Supplier = supplier;
             Id = id;
+            State = state;
 
             OrderLines = new List<OrderLine>();
         }
@@ -28,5 +29,6 @@ namespace Core.Entities
         public string Supplier { get; }
         public Guid Id { get; }
         public List<OrderLine> OrderLines { get; }
+        public BookOrderState State { get; }
     }
 }
