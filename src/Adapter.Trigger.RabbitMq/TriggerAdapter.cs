@@ -4,7 +4,7 @@ using RabbitMQ.Client;
 
 namespace Adapter.Trigger.RabbitMq
 {
-    public class TriggerAdapter
+    public class TriggerAdapter : IDisposable
     {
         private OrderBookUseCaseTrigger _orderBookUseCaseTrigger;
         private bool _initialized;
@@ -61,6 +61,11 @@ namespace Adapter.Trigger.RabbitMq
         {            
             _orderBookUseCaseTrigger.Stop();
             _connection.Dispose();
+        }
+
+        public void Dispose()
+        {
+            _connection?.Dispose();
         }
     }
 }

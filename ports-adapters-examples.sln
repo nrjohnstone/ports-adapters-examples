@@ -19,6 +19,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Adapter.Notification.Test",
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Adapter.Trigger.RabbitMq", "src\Adapter.Trigger.RabbitMq\Adapter.Trigger.RabbitMq.csproj", "{9874DC72-7D4E-4F04-B9D1-6AA175F58224}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Adapter.Notification.RabbitMq", "Adapter.Notification.RabbitMq\Adapter.Notification.RabbitMq.csproj", "{F939005A-4433-475D-BCEA-41671DE4D8C8}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -53,6 +55,10 @@ Global
 		{9874DC72-7D4E-4F04-B9D1-6AA175F58224}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9874DC72-7D4E-4F04-B9D1-6AA175F58224}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9874DC72-7D4E-4F04-B9D1-6AA175F58224}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F939005A-4433-475D-BCEA-41671DE4D8C8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F939005A-4433-475D-BCEA-41671DE4D8C8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F939005A-4433-475D-BCEA-41671DE4D8C8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F939005A-4433-475D-BCEA-41671DE4D8C8}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -13,7 +13,14 @@ namespace Host.Console
         {
             ConfigureSerilog();
             Logger.Debug("Application starting");
-            Application application = new Application();
+
+            Settings settings = new Settings()
+            {
+                TriggerAdapter = "Test",
+                NotificationAdapter = "RabbitMq"
+            };
+
+            Application application = new Application(settings);
 
             application.Configure();
             application.Run();
@@ -31,5 +38,12 @@ namespace Host.Console
                 .MinimumLevel.Debug()
                 .CreateLogger();
         }
+    }
+
+    public class Settings
+    {
+        public string TriggerAdapter { get; set; }
+        public string NotificationAdapter { get; set; }
+        public string PersistenceAdapter { get; set; }
     }
 }
