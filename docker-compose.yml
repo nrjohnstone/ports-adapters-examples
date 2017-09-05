@@ -1,6 +1,7 @@
 version: '2'
 
 services:
+
   rabbitMq:
     image: rabbitmq:3-management
     ports:
@@ -8,3 +9,14 @@ services:
       - "4369:4369"
       - "5671-5672:5671-5672"
       - "25672:25672"
+
+  mysql:
+    build:
+      context: ./docker/mysql
+    ports:
+      - "3306:3306"
+    environment:
+      - MYSQL_ROOT_PASSWORD=password
+      - MYSQL_DATABASE=bookorders
+      - MYSQL_USER=bookorder_service
+      - MYSQL_PASSWORD=123
