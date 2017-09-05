@@ -24,7 +24,8 @@ namespace Core.UseCases
         {
             Logger.Information("Execute OrderBookUseCase for Title: {Title}", bookRequest.Title);
 
-            IEnumerable<BookOrder> bookOrders = _bookOrderRepository.GetBySupplier(bookRequest.Supplier);
+            IEnumerable<BookOrder> bookOrders = _bookOrderRepository.GetBySupplier(
+                bookRequest.Supplier, BookOrderState.New);
             var bookOrder = bookOrders.FirstOrDefault();
 
             if (bookOrder == null)

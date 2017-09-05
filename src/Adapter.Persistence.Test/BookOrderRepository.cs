@@ -38,6 +38,12 @@ namespace Adapter.Persistence.Test
             return _bookOrders.Values.Where(x => x.Supplier == supplier);
         }
 
+        public IEnumerable<BookOrder> GetBySupplier(string supplier, BookOrderState state)
+        {
+            return _bookOrders.Values.Where(x => x.Supplier == supplier &&
+            x.State == state);
+        }
+
         public IEnumerable<BookOrder> GetByState(BookOrderState state)
         {
             return _bookOrders.Values.Where(x => x.State == state);

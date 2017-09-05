@@ -51,7 +51,7 @@ namespace Core.Tests.Unit
         {
             var sut = CreateSut();
 
-            CreateBookOrderWithOrderLineForSupplier("SupplierBar");
+            StoreBookOrderWithOrderLineForSupplier("SupplierBar");
 
             BookRequest bookRequest =
                 a.BookRequest
@@ -82,7 +82,7 @@ namespace Core.Tests.Unit
         {
             var sut = CreateSut();
 
-            CreateBookOrderWithOrderLineForSupplier("SupplierBar");
+            StoreBookOrderWithOrderLineForSupplier("SupplierBar");
 
             BookRequest bookRequest =
                 a.BookRequest
@@ -109,7 +109,7 @@ namespace Core.Tests.Unit
                      x.Quantity == bookRequest.Quantity);
         }
 
-        private void CreateBookOrderWithOrderLineForSupplier(string supplier)
+        private BookOrder StoreBookOrderWithOrderLineForSupplier(string supplier)
         {
             BookOrder bookOrder = new BookOrder(
                 "SupplierBar", 
@@ -122,12 +122,51 @@ namespace Core.Tests.Unit
                 .ForTitle("The Hobbit")
                 );
             _bookOrderRepository.Store(bookOrder);
+
+            return bookOrder;
         }
+
 
         private OrderBookUseCase CreateSut()
         {
             return new OrderBookUseCase(
                 _bookOrderRepository);
         }
+
+        [Fact]
+        public void OrderABook_WhenOrderForSupplierIsNotInNewState_ShouldCreateNewOrderForSupplier()
+        {
+            var sut = CreateSut();
+
+            var bookOrder = StoreBookOrderWithOrderLineForSupplier("SupplierBar");
+            bookOrder.Approve();
+            _bookOrderRepository.Store(bookOrder);
+
+            BookRequest bookRequest =
+                a.BookRequest
+                    .ForSupplier("SupplierBar")
+                    .ForTitle("The Color of Magic");
+
+            // act
+            sut.Execute(bookRequest);
+
+            // assert
+            var storedOrders = _bookOrderRepository.GetBySupplier(bookRequest.Supplier).ToList();
+
+            storedOrders.Count.Should().Be(2);
+            storedOrders.Select(x => x.Supplier).Should().OnlyContain(supplier => supplier.Equals("SupplierBar"));
+
+            var newOrder = storedOrders.FirstOrDefault(x => x.Id != bookOrder.Id);
+
+            newOrder.Should().NotBeNull("A new bookOrder should have been created");
+            newOrder.Supplier.Should().Be("SupplierBar");
+            newOrder.OrderLines.Count.Should().Be(1);
+            newOrder.OrderLines.Should().Contain(
+                x => x.Title == bookRequest.Title &&
+                     x.Price == bookRequest.Price &&
+                     x.Quantity == bookRequest.Quantity);
+
+        }
+
     }
 }

@@ -20,6 +20,9 @@ namespace Core.Entities
 
         public void AddBookRequest(BookRequest bookRequest)
         {
+            if (State != BookOrderState.New)
+                throw new AddBookRequestException();
+
             OrderLine orderLine = new OrderLine(bookRequest.Title,
                 bookRequest.Price, bookRequest.Quantity);
 
