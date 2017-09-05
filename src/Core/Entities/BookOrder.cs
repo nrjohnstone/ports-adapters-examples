@@ -38,5 +38,13 @@ namespace Core.Entities
 
             State = BookOrderState.Sent;
         }
+
+        public void Approve()
+        {
+            if (State != BookOrderState.New)
+                throw new BookOrderApproveException();
+
+            State = BookOrderState.Approved;
+        }
     }
 }

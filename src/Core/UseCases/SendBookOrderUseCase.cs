@@ -23,6 +23,8 @@ namespace Core.UseCases
 
         public void Execute(Guid bookOrderId)
         {
+            Logger.Information("Execute SendBookOrderUseCase for Id: {Title}", bookOrderId);
+
             var bookOrder = _bookOrderRepository.Get(bookOrderId);
 
             bookOrder.Send();

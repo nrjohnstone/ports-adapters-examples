@@ -10,6 +10,11 @@ namespace Core.Tests.Unit.Helpers
         private decimal _price = 10.5M;
         private int _quantity = 1;
 
+        public BookRequestBuilder()
+        {
+            IgnoreAllProperties();
+        }
+
         public static implicit operator BookRequest(BookRequestBuilder builder)
         {
             return builder.build();
@@ -25,7 +30,7 @@ namespace Core.Tests.Unit.Helpers
             _supplier = supplier;
             return this;
         }
-
+        
         public BookRequest ForTitle(string title)
         {
             _title = title;

@@ -1,52 +1,48 @@
 ﻿using System;
 using Adapter.Persistence.Test;
 using Core.Entities;
-using Core.Ports.Notification;
 using Core.Ports.Persistence;
 using Core.Tests.Unit.Helpers;
 using Core.UseCases;
 using FluentAssertions;
-using NSubstitute;
 using Xunit;
 
 namespace Core.Tests.Unit
 {
-    public class SendBookOrderUseCaseTests
+    public class ApproveBookOrderUseCaseTests
     {
         private readonly IBookOrderRepository _bookOrderRepository;
-        private readonly IBookSupplierGateway _bookSupplierGateway;
 
-        public SendBookOrderUseCaseTests()
+        public ApproveBookOrderUseCaseTests()
         {
             _bookOrderRepository = new BookOrderRepository();
-            _bookSupplierGateway = Substitute.For<IBookSupplierGateway>();
         }
 
-
-        private SendBookOrderUseCase CreateSut()
+        private ApproveBookOrderUseCase CreateSut()
         {
-            return new SendBookOrderUseCase(_bookOrderRepository, _bookSupplierGateway);
+            return new ApproveBookOrderUseCase(_bookOrderRepository);
         }
 
         [Fact]
-        public void ApprovedBookOrder_ShouldBeSentToSupplierGateway()
+        public void NewBookOrder_ShouldBeApproved()
         {
             var sut = CreateSut();
-            BookOrder bookOrder = a.BookOrder.InState(BookOrderState.Approved);
-
+            BookOrder bookOrder = a.BookOrder.InState(BookOrderState.New);
             _bookOrderRepository.Store(bookOrder);
 
             sut.Execute(bookOrder.Id);
 
-            _bookSupplierGateway.Received().Send(bookOrder);
+            var storedBookOrder = _bookOrderRepository.Get(bookOrder.Id);
+            storedBookOrder.State.Should().Be(BookOrderState.Approved);
         }
 
         [Theory]
-        [InlineData(BookOrderState.New)]
+        [InlineData(BookOrderState.Approved)]
         [InlineData(BookOrderState.Sent)]
-        public void SendingABookOrder_WhenStateIsNotApproved_ShouldThrowDomainException(BookOrderState state)
+        public void ApproveABookOrder_WhenStateIsNotNew_ShouldThrowDomainException(BookOrderState state)
         {
             var sut = CreateSut();
+
             BookOrder bookOrder = a.BookOrder.InState(state);
             _bookOrderRepository.Store(bookOrder);
 
@@ -54,6 +50,5 @@ namespace Core.Tests.Unit
 
             sendBookOrderThatIsAlreadySent.ShouldThrow<Exception>();
         }
-
     }
 }
