@@ -3,10 +3,12 @@ using System.Threading;
 using Adapter.Command;
 using Adapter.Notification.Test;
 using Adapter.Persistence.Test;
+using Adapter.Trigger;
 using Core.Entities;
 using Core.Ports.Persistence;
 using Core.UseCases;
 using SimpleInjector;
+using TriggerAdapter = Adapter.Trigger.RabbitMq.TriggerAdapter;
 
 namespace Host.Console
 {
@@ -15,7 +17,7 @@ namespace Host.Console
         protected Container Container;
 
         private TriggerAdapter _commandAdapter;
-        private Thread threadApproveBookOrders;
+        private Thread _threadApproveBookOrders;
         private Thread _threadSendBookOrders;
 
         public Application()
@@ -25,7 +27,7 @@ namespace Host.Console
 
         public void Configure()
         {
-            Container.Register<OrderBookUseCase>();
+            //Container.Register<OrderBookUseCase>();
 
             var persistenceAdapter = new PersistenceAdapter();
             persistenceAdapter.Initialize();
@@ -35,6 +37,7 @@ namespace Host.Console
             notificationAdapter.Initialize();
             notificationAdapter.Register(Container);
 
+            //_commandAdapter = new TriggerAdapter();
             _commandAdapter = new TriggerAdapter();
             _commandAdapter.Initialize();
         }
@@ -45,8 +48,8 @@ namespace Host.Console
 
             _commandAdapter.Handle(orderBookCommand);
 
-            threadApproveBookOrders = new Thread(ApproveBookOrders);
-            threadApproveBookOrders.Start();
+            _threadApproveBookOrders = new Thread(ApproveBookOrders);
+            _threadApproveBookOrders.Start();
 
             _threadSendBookOrders = new Thread(SendBookOrders);
             _threadSendBookOrders.Start();
@@ -92,10 +95,10 @@ namespace Host.Console
         {
             _commandAdapter.Shutdown();
             _threadSendBookOrders.Abort();            
-            threadApproveBookOrders.Abort();
+            _threadApproveBookOrders.Abort();
 
             _threadSendBookOrders.Join();
-            threadApproveBookOrders.Join();
+            _threadApproveBookOrders.Join();
         }
     }
 }

@@ -15,7 +15,9 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{9234AD06
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Core.Tests.Unit", "test\Core.Tests.Unit\Core.Tests.Unit.csproj", "{222627B0-B4D5-4C36-9D57-D9E8D6BAAB28}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Adapter.Notification.Test", "Adapter.Notification.Test\Adapter.Notification.Test.csproj", "{E8989F66-5BA3-4576-9F5F-4A9F26EDF5E3}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Adapter.Notification.Test", "src\Adapter.Notification.Test\Adapter.Notification.Test.csproj", "{E8989F66-5BA3-4576-9F5F-4A9F26EDF5E3}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Adapter.Trigger.RabbitMq", "src\Adapter.Trigger.RabbitMq\Adapter.Trigger.RabbitMq.csproj", "{9874DC72-7D4E-4F04-B9D1-6AA175F58224}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -47,6 +49,10 @@ Global
 		{E8989F66-5BA3-4576-9F5F-4A9F26EDF5E3}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E8989F66-5BA3-4576-9F5F-4A9F26EDF5E3}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E8989F66-5BA3-4576-9F5F-4A9F26EDF5E3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9874DC72-7D4E-4F04-B9D1-6AA175F58224}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9874DC72-7D4E-4F04-B9D1-6AA175F58224}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9874DC72-7D4E-4F04-B9D1-6AA175F58224}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9874DC72-7D4E-4F04-B9D1-6AA175F58224}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

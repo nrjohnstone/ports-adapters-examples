@@ -80,7 +80,7 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\Adapter.Notification.Test\Adapter.Notification.Test.csproj">
+    <ProjectReference Include="..\..\src\Adapter.Notification.Test\Adapter.Notification.Test.csproj">
       <Project>{E8989F66-5BA3-4576-9F5F-4A9F26EDF5E3}</Project>
       <Name>Adapter.Notification.Test</Name>
     </ProjectReference>
