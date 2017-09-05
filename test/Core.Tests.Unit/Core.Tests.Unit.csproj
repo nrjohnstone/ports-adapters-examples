@@ -68,9 +68,11 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Helpers\a.cs" />
     <Compile Include="Helpers\BookRequestBuilder.cs" />
     <Compile Include="OrderBookUseCaseTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SendBookOrderUseCaseTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

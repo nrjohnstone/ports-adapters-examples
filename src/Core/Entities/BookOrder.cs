@@ -29,6 +29,14 @@ namespace Core.Entities
         public string Supplier { get; }
         public Guid Id { get; }
         public List<OrderLine> OrderLines { get; }
-        public BookOrderState State { get; }
+        public BookOrderState State { get; private set; }
+
+        public void Send()
+        {
+            if (State != BookOrderState.Approved)
+                throw new BookOrderSendException();
+
+            State = BookOrderState.Sent;
+        }
     }
 }

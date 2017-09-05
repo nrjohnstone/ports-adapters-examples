@@ -7,7 +7,6 @@ using Core.Tests.Unit.Helpers;
 using Core.UseCases;
 using Core.ValueObjects;
 using FluentAssertions;
-using NSubstitute;
 using Xunit;
 
 namespace Core.Tests.Unit
@@ -40,7 +39,7 @@ namespace Core.Tests.Unit
 
             var storedOrder = storedOrders.First();
             storedOrder.Supplier.Should().Be("SupplierFoo");
-            storedOrder.State.Should().Be(BookOrderState.Pending);
+            storedOrder.State.Should().Be(BookOrderState.New);
             storedOrder.OrderLines.Should().Contain(
                 x => x.Title == bookRequest.Title &&
                      x.Price == bookRequest.Price &&
@@ -108,7 +107,6 @@ namespace Core.Tests.Unit
                 x => x.Title == bookRequest.Title &&
                      x.Price == bookRequest.Price &&
                      x.Quantity == bookRequest.Quantity);
-
         }
 
         private void CreateBookOrderWithOrderLineForSupplier(string supplier)
@@ -116,7 +114,7 @@ namespace Core.Tests.Unit
             BookOrder bookOrder = new BookOrder(
                 "SupplierBar", 
                 Guid.NewGuid(),
-                BookOrderState.Pending);
+                BookOrderState.New);
 
             bookOrder.AddBookRequest(
                 a.BookRequest

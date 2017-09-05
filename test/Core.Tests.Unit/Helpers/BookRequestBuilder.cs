@@ -32,9 +32,4 @@ namespace Core.Tests.Unit.Helpers
             return this;
         }
     }
-
-    internal static class a
-    {
-        public static BookRequestBuilder BookRequest => new BookRequestBuilder();
-    }
 }
