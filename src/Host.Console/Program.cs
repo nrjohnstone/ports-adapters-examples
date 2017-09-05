@@ -17,9 +17,9 @@ namespace Host.Console
 
             application.Configure();
             application.Run();
-
-            Thread.Sleep(5000);
-
+            
+            System.Console.ReadLine();
+            
             Logger.Debug("Application shutting down");
             application.Shutdown();
         }

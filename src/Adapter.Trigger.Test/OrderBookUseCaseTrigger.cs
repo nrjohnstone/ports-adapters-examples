@@ -37,7 +37,7 @@ namespace Adapter.Command
             {
                 BookRequest bookRequest = _testBookRequests.Dequeue();
                 _orderBookUseCase.Execute(bookRequest);
-                Thread.Sleep(1000);
+                Thread.Sleep(5000);
             }
         }
 

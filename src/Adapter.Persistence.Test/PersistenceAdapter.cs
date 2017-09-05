@@ -17,7 +17,7 @@ namespace Adapter.Persistence.Test
             if (!_initialized)
                 throw new AdpaterNotInitializedException();
 
-            container.Register<IBookOrderRepository, BookOrderRepository>();
+            container.RegisterSingleton<IBookOrderRepository, BookOrderRepository>();
         }
     }
 }

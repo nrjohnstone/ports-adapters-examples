@@ -1,4 +1,5 @@
 ﻿using System;
+using Adapter.Notification.Test;
 using Adapter.Persistence.Test;
 using Core.Entities;
 using Core.Ports.Notification;
@@ -14,14 +15,13 @@ namespace Core.Tests.Unit
     public class SendBookOrderUseCaseTests
     {
         private readonly IBookOrderRepository _bookOrderRepository;
-        private readonly IBookSupplierGateway _bookSupplierGateway;
+        private readonly BookSupplierGateway _bookSupplierGateway;
 
         public SendBookOrderUseCaseTests()
         {
             _bookOrderRepository = new BookOrderRepository();
-            _bookSupplierGateway = Substitute.For<IBookSupplierGateway>();
+            _bookSupplierGateway = new BookSupplierGateway();
         }
-
 
         private SendBookOrderUseCase CreateSut()
         {
@@ -38,7 +38,7 @@ namespace Core.Tests.Unit
 
             sut.Execute(bookOrder.Id);
 
-            _bookSupplierGateway.Received().Send(bookOrder);
+            _bookSupplierGateway.SentBookOrders.Should().Contain(bookOrder);
         }
 
         [Theory]

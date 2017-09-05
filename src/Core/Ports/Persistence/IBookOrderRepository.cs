@@ -9,5 +9,6 @@ namespace Core.Ports.Persistence
         BookOrder Get(Guid id);
         void Store(BookOrder bookOrder);
         IEnumerable<BookOrder> GetBySupplier(string supplier);
+        IEnumerable<BookOrder> GetByState(BookOrderState state);
     }
 }
