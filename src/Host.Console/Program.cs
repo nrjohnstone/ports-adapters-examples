@@ -20,8 +20,8 @@ namespace Host.Console
                 Settings settings = new Settings()
                 {
                     TriggerAdapter = "Test",
-                    NotificationAdapter = "RabbitMq",
-                    PersistenceAdapter = "MySql",
+                    NotificationAdapter = "Test",
+                    PersistenceAdapter = "Test",
                     PersistenceConnectionString = "server=127.0.0.1;" +
                                                   "uid=bookorder_service;" +
                                                   "pwd=123;" +
@@ -32,6 +32,7 @@ namespace Host.Console
 
                 application.Configure();
                 application.Run();
+                
                 System.Console.ReadLine();
 
                 Logger.Debug("Application shutting down");
