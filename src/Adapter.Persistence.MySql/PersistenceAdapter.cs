@@ -1,11 +1,20 @@
-﻿using Core.Ports.Persistence;
+﻿using System;
+using Adapter.Persistence.MySql.Repositories;
+using Core.Ports.Persistence;
 using SimpleInjector;
 
 namespace Adapter.Persistence.MySql
 {
     public class PersistenceAdapter
     {
+        private readonly PersistenceAdapterSettings _settings;
         private bool _initialized;
+
+        public PersistenceAdapter(PersistenceAdapterSettings settings)
+        {
+            if (settings == null) throw new ArgumentNullException(nameof(settings));
+            _settings = settings;
+        }
 
         public void Initialize()
         {
@@ -17,7 +26,9 @@ namespace Adapter.Persistence.MySql
             if (!_initialized)
                 throw new AdpaterNotInitializedException();
 
-            container.RegisterSingleton<IBookOrderRepository, BookOrderRepository>();
+            BookOrderRepository bookOrderRepository = new BookOrderRepository(_settings.ConnectionString);
+
+            container.RegisterSingleton<IBookOrderRepository>(bookOrderRepository);
         }
     }
 }

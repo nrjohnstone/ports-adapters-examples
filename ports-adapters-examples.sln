@@ -23,6 +23,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Adapter.Notification.Rabbit
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Adapter.Persistence.MySql", "src\Adapter.Persistence.MySql\Adapter.Persistence.MySql.csproj", "{B4F64E5C-A80A-4E48-A307-6ED26233C394}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Adapter.Persistence.MySql.Tests.Integration", "test\Adapter.Persistence.MySql.Tests.Integration\Adapter.Persistence.MySql.Tests.Integration.csproj", "{55E378B7-78B8-4B18-83B8-E174B9028A43}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -65,12 +67,17 @@ Global
 		{B4F64E5C-A80A-4E48-A307-6ED26233C394}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B4F64E5C-A80A-4E48-A307-6ED26233C394}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B4F64E5C-A80A-4E48-A307-6ED26233C394}.Release|Any CPU.Build.0 = Release|Any CPU
+		{55E378B7-78B8-4B18-83B8-E174B9028A43}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{55E378B7-78B8-4B18-83B8-E174B9028A43}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{55E378B7-78B8-4B18-83B8-E174B9028A43}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{55E378B7-78B8-4B18-83B8-E174B9028A43}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{222627B0-B4D5-4C36-9D57-D9E8D6BAAB28} = {9234AD06-323F-461D-AC33-43C22EFF20B7}
+		{55E378B7-78B8-4B18-83B8-E174B9028A43} = {9234AD06-323F-461D-AC33-43C22EFF20B7}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {EC0DDD5A-EE19-4A43-AC53-2C779638CE26}

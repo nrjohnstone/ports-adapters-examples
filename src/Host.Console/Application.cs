@@ -3,12 +3,13 @@ using System.Linq;
 using System.Threading;
 using Adapter.Command;
 using Adapter.Notification.Test;
-using Adapter.Persistence.Test;
+using Adapter.Persistence.MySql;
 using Adapter.Trigger;
 using Core.Entities;
 using Core.Ports.Persistence;
 using Core.UseCases;
 using SimpleInjector;
+using PersistenceAdapter = Adapter.Persistence.Test.PersistenceAdapter;
 
 namespace Host.Console
 {
@@ -52,7 +53,12 @@ namespace Host.Console
             }
             else if (_settings.PersistenceAdapter == "MySql")
             {
-                var persistenceAdapter = new Adapter.Persistence.MySql.PersistenceAdapter();
+                var persistenceAdapter = new Adapter.Persistence.MySql.PersistenceAdapter(
+                    new PersistenceAdapterSettings()
+                    {
+                        ConnectionString = _settings.ConnectionString
+                    });
+
                 persistenceAdapter.Initialize();
                 persistenceAdapter.Register(Container);
             }

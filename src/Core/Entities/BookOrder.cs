@@ -16,7 +16,21 @@ namespace Core.Entities
             State = state;
 
             OrderLines = new List<OrderLine>();
+        }     
+
+        public BookOrder(string supplier, Guid id, BookOrderState state, IEnumerable<OrderLine> orderLines)
+        {
+            if (string.IsNullOrWhiteSpace(supplier))
+                throw new ArgumentException("Value cannot be null or whitespace.", nameof(supplier));
+
+            Supplier = supplier;
+            Id = id;
+            State = state;
+
+            OrderLines = new List<OrderLine>();
+            OrderLines.AddRange(orderLines);
         }
+
 
         public void AddBookRequest(BookRequest bookRequest)
         {
@@ -24,7 +38,7 @@ namespace Core.Entities
                 throw new AddBookRequestException();
 
             OrderLine orderLine = new OrderLine(bookRequest.Title,
-                bookRequest.Price, bookRequest.Quantity);
+                bookRequest.Price, bookRequest.Quantity, Guid.NewGuid());
 
             OrderLines.Add(orderLine);
         }

@@ -18,7 +18,11 @@ namespace Host.Console
             {
                 TriggerAdapter = "Test",
                 NotificationAdapter = "RabbitMq",
-                PersistenceAdapter = "Test"
+                PersistenceAdapter = "MySql",
+                ConnectionString = "server=127.0.0.1;" +
+                                   "uid=bookorder_service;" +
+                                   "pwd=123;" +
+                                   "database=bookorders"
             };
 
             Application application = new Application(settings);
@@ -46,5 +50,6 @@ namespace Host.Console
         public string TriggerAdapter { get; set; }
         public string NotificationAdapter { get; set; }
         public string PersistenceAdapter { get; set; }
+        public string ConnectionString { get; set; }
     }
 }
