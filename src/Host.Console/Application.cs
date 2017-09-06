@@ -73,6 +73,7 @@ namespace Host.Console
             {
                 var triggerAdapter = new Adapter.Trigger.RabbitMq.TriggerAdapter();
                 triggerAdapter.Initialize();
+                _triggerAdapterShutdown = () => { triggerAdapter.Shutdown(); };
                 _triggerAdapterHandleOrderBookUseCase = (usecase) => { triggerAdapter.Handle(usecase); };
             }
         }
