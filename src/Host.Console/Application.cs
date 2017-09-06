@@ -56,7 +56,7 @@ namespace Host.Console
                 var persistenceAdapter = new Adapter.Persistence.MySql.PersistenceAdapter(
                     new PersistenceAdapterSettings()
                     {
-                        ConnectionString = _settings.ConnectionString
+                        ConnectionString = _settings.PersistenceConnectionString
                     });
 
                 persistenceAdapter.Initialize();

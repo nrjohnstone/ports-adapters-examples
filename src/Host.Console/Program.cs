@@ -19,7 +19,7 @@ namespace Host.Console
                 TriggerAdapter = "Test",
                 NotificationAdapter = "RabbitMq",
                 PersistenceAdapter = "MySql",
-                ConnectionString = "server=127.0.0.1;" +
+                PersistenceConnectionString = "server=127.0.0.1;" +
                                    "uid=bookorder_service;" +
                                    "pwd=123;" +
                                    "database=bookorders"
