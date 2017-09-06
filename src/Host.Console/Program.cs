@@ -44,12 +44,4 @@ namespace Host.Console
                 .CreateLogger();
         }
     }
-
-    public class Settings
-    {
-        public string TriggerAdapter { get; set; }
-        public string NotificationAdapter { get; set; }
-        public string PersistenceAdapter { get; set; }
-        public string ConnectionString { get; set; }
-    }
 }
