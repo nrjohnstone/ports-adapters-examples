@@ -30,6 +30,7 @@ namespace Core.UseCases
             bookOrder.Send();
 
             _bookSupplierGateway.Send(bookOrder);
+            _bookOrderRepository.Store(bookOrder);
         }
 
     }
