@@ -34,7 +34,9 @@ namespace Host.Console
 
         public void Configure()
         {
-            Container.Register<SendBookOrderUseCase>();
+            Container.Register<OrderBookUseCase>();
+            Container.Register<ApproveBookOrderUseCase>();
+            Container.Register<SendBookOrderUseCase>();            
 
             ConfigurePersistenceAdapter();
             ConfigureNotificationAdapter();
