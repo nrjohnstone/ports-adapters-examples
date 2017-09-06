@@ -72,7 +72,7 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\Adapter.Notification.RabbitMq\Adapter.Notification.RabbitMq.csproj">
+    <ProjectReference Include="..\Adapter.Notification.RabbitMq\Adapter.Notification.RabbitMq.csproj">
       <Project>{f939005a-4433-475d-bcea-41671de4d8c8}</Project>
       <Name>Adapter.Notification.RabbitMq</Name>
     </ProjectReference>

@@ -19,8 +19,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Adapter.Notification.Test",
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Adapter.Trigger.RabbitMq", "src\Adapter.Trigger.RabbitMq\Adapter.Trigger.RabbitMq.csproj", "{9874DC72-7D4E-4F04-B9D1-6AA175F58224}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Adapter.Notification.RabbitMq", "Adapter.Notification.RabbitMq\Adapter.Notification.RabbitMq.csproj", "{F939005A-4433-475D-BCEA-41671DE4D8C8}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Adapter.Persistence.MySql", "src\Adapter.Persistence.MySql\Adapter.Persistence.MySql.csproj", "{B4F64E5C-A80A-4E48-A307-6ED26233C394}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Adapter.Persistence.MySql.Tests.Integration", "test\Adapter.Persistence.MySql.Tests.Integration\Adapter.Persistence.MySql.Tests.Integration.csproj", "{55E378B7-78B8-4B18-83B8-E174B9028A43}"
@@ -28,6 +26,8 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Adapters", "Adapters", "{E188439D-1F1D-4EBA-B0DE-A7074E348190}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Hosts", "Hosts", "{291979A6-2D81-4532-945E-47F00C7DEC70}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Adapter.Notification.RabbitMq", "src\Adapter.Notification.RabbitMq\Adapter.Notification.RabbitMq.csproj", "{F939005A-4433-475D-BCEA-41671DE4D8C8}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -63,10 +63,6 @@ Global
 		{9874DC72-7D4E-4F04-B9D1-6AA175F58224}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9874DC72-7D4E-4F04-B9D1-6AA175F58224}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9874DC72-7D4E-4F04-B9D1-6AA175F58224}.Release|Any CPU.Build.0 = Release|Any CPU
-		{F939005A-4433-475D-BCEA-41671DE4D8C8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{F939005A-4433-475D-BCEA-41671DE4D8C8}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{F939005A-4433-475D-BCEA-41671DE4D8C8}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{F939005A-4433-475D-BCEA-41671DE4D8C8}.Release|Any CPU.Build.0 = Release|Any CPU
 		{B4F64E5C-A80A-4E48-A307-6ED26233C394}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{B4F64E5C-A80A-4E48-A307-6ED26233C394}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B4F64E5C-A80A-4E48-A307-6ED26233C394}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -75,6 +71,10 @@ Global
 		{55E378B7-78B8-4B18-83B8-E174B9028A43}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{55E378B7-78B8-4B18-83B8-E174B9028A43}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{55E378B7-78B8-4B18-83B8-E174B9028A43}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F939005A-4433-475D-BCEA-41671DE4D8C8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F939005A-4433-475D-BCEA-41671DE4D8C8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F939005A-4433-475D-BCEA-41671DE4D8C8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F939005A-4433-475D-BCEA-41671DE4D8C8}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -86,9 +86,9 @@ Global
 		{222627B0-B4D5-4C36-9D57-D9E8D6BAAB28} = {9234AD06-323F-461D-AC33-43C22EFF20B7}
 		{E8989F66-5BA3-4576-9F5F-4A9F26EDF5E3} = {E188439D-1F1D-4EBA-B0DE-A7074E348190}
 		{9874DC72-7D4E-4F04-B9D1-6AA175F58224} = {E188439D-1F1D-4EBA-B0DE-A7074E348190}
-		{F939005A-4433-475D-BCEA-41671DE4D8C8} = {E188439D-1F1D-4EBA-B0DE-A7074E348190}
 		{B4F64E5C-A80A-4E48-A307-6ED26233C394} = {E188439D-1F1D-4EBA-B0DE-A7074E348190}
 		{55E378B7-78B8-4B18-83B8-E174B9028A43} = {9234AD06-323F-461D-AC33-43C22EFF20B7}
+		{F939005A-4433-475D-BCEA-41671DE4D8C8} = {E188439D-1F1D-4EBA-B0DE-A7074E348190}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {EC0DDD5A-EE19-4A43-AC53-2C779638CE26}
