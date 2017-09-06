@@ -16,7 +16,6 @@ namespace Host.Console
         private readonly Settings _settings;
         protected Container Container;
 
-        private TriggerAdapter _triggerAdapter;
         private Thread _threadApproveBookOrders;
         private Thread _threadSendBookOrders;
 
@@ -98,8 +97,8 @@ namespace Host.Console
 
         public void Run()
         {
-            var orderBookCommand = Container.GetInstance<OrderBookUseCase>();
-            _triggerAdapterHandleOrderBookUseCase(orderBookCommand);
+            var orderBookUseCase = Container.GetInstance<OrderBookUseCase>();
+            _triggerAdapterHandleOrderBookUseCase(orderBookUseCase);
             
             _threadApproveBookOrders = new Thread(ApproveBookOrders);
             _threadApproveBookOrders.Start();
