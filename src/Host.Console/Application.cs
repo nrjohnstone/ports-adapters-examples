@@ -23,6 +23,7 @@ namespace Host.Console
         private Action _notificationAdapterShutdown = () => { };
 
         private Action<OrderBookUseCase> _triggerAdapterHandleOrderBookUseCase = (usecase) => { };
+        private bool _shutdown;
 
         public Application(Settings settings)
         {
@@ -67,6 +68,7 @@ namespace Host.Console
             {
                 var triggerAdapter = new TriggerAdapter();
                 triggerAdapter.Initialize();
+                _triggerAdapterShutdown = () => { triggerAdapter.Shutdown(); };
                 _triggerAdapterHandleOrderBookUseCase = (usecase) => { triggerAdapter.Handle(usecase); };
             }
             else if (_settings.TriggerAdapter == "RabbitMq")
@@ -113,7 +115,7 @@ namespace Host.Console
             IBookOrderRepository bookOrderRepository = Container.GetInstance<IBookOrderRepository>();
             SendBookOrderUseCase sendBookOrderUseCase = Container.GetInstance<SendBookOrderUseCase>();
 
-            while (true)
+            while (!_shutdown)
             {
                 var bookOrderToSend = bookOrderRepository.GetByState(BookOrderState.Approved).FirstOrDefault();
 
@@ -131,7 +133,7 @@ namespace Host.Console
             IBookOrderRepository bookOrderRepository = Container.GetInstance<IBookOrderRepository>();
             ApproveBookOrderUseCase approveBookOrderUseCase = Container.GetInstance<ApproveBookOrderUseCase>();
 
-            while (true)
+            while (!_shutdown)
             {
                 var bookOrderToApprove = bookOrderRepository.GetByState(BookOrderState.New).FirstOrDefault();
 
@@ -146,14 +148,15 @@ namespace Host.Console
 
         public void Shutdown()
         {
+            _shutdown = true;
             _triggerAdapterShutdown();
             _notificationAdapterShutdown();
 
-            _threadSendBookOrders.Abort();            
-            _threadApproveBookOrders.Abort();
+            if (!_threadSendBookOrders.Join(TimeSpan.FromSeconds(1)))
+                _threadSendBookOrders.Abort();            
 
-            _threadSendBookOrders.Join();
-            _threadApproveBookOrders.Join();
+            if (!_threadApproveBookOrders.Join(TimeSpan.FromSeconds(1)))
+                _threadApproveBookOrders.Abort();
         }
 
         public void Dispose()
