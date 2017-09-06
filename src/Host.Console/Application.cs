@@ -2,14 +2,12 @@
 using System.Linq;
 using System.Threading;
 using Adapter.Command;
-using Adapter.Notification.Test;
 using Adapter.Persistence.MySql;
-using Adapter.Trigger;
 using Core.Entities;
 using Core.Ports.Persistence;
 using Core.UseCases;
 using SimpleInjector;
-using PersistenceAdapter = Adapter.Persistence.Test.PersistenceAdapter;
+
 
 namespace Host.Console
 {
@@ -47,7 +45,7 @@ namespace Host.Console
         {
             if (_settings.PersistenceAdapter == "Test")
             {
-                var persistenceAdapter = new PersistenceAdapter();
+                var persistenceAdapter = new Adapter.Persistence.Test.PersistenceAdapter();
                 persistenceAdapter.Initialize();
                 persistenceAdapter.Register(Container);
             }
@@ -101,7 +99,6 @@ namespace Host.Console
         public void Run()
         {
             var orderBookCommand = Container.GetInstance<OrderBookUseCase>();
-
             _triggerAdapterHandleOrderBookUseCase(orderBookCommand);
             
             _threadApproveBookOrders = new Thread(ApproveBookOrders);

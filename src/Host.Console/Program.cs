@@ -1,4 +1,5 @@
-﻿using System.Threading;
+﻿using System;
+using System.Threading;
 using AmbientContext.LogService.Serilog;
 using Serilog;
 using Serilog.Core;
@@ -14,26 +15,32 @@ namespace Host.Console
             ConfigureSerilog();
             Logger.Debug("Application starting");
 
-            Settings settings = new Settings()
+            try
             {
-                TriggerAdapter = "Test",
-                NotificationAdapter = "RabbitMq",
-                PersistenceAdapter = "MySql",
-                PersistenceConnectionString = "server=127.0.0.1;" +
-                                   "uid=bookorder_service;" +
-                                   "pwd=123;" +
-                                   "database=bookorders"
-            };
+                Settings settings = new Settings()
+                {
+                    TriggerAdapter = "Test",
+                    NotificationAdapter = "RabbitMq",
+                    PersistenceAdapter = "MySql",
+                    PersistenceConnectionString = "server=127.0.0.1;" +
+                                                  "uid=bookorder_service;" +
+                                                  "pwd=123;" +
+                                                  "database=bookorders"
+                };
 
-            Application application = new Application(settings);
+                Application application = new Application(settings);
 
-            application.Configure();
-            application.Run();
-            
-            System.Console.ReadLine();
-            
-            Logger.Debug("Application shutting down");
-            application.Shutdown();
+                application.Configure();
+                application.Run();
+                System.Console.ReadLine();
+
+                Logger.Debug("Application shutting down");
+                application.Shutdown();
+            }
+            catch (Exception ex)
+            {
+                Logger.Error(ex, ex.StackTrace);
+            }                     
         }
 
         private static void ConfigureSerilog()
