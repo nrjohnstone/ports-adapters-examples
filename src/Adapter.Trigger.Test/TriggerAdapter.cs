@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using Core.UseCases;
 using Core.ValueObjects;
 
-namespace Adapter.Command
+namespace Adapter.Trigger.Test
 {
     public class TriggerAdapter
     {

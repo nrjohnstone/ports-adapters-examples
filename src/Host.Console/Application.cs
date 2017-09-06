@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Linq;
 using System.Threading;
-using Adapter.Command;
 using Adapter.Persistence.MySql;
+using Adapter.Trigger.Test;
 using Core.Entities;
 using Core.Ports.Persistence;
 using Core.UseCases;
@@ -66,7 +66,7 @@ namespace Host.Console
         {
             if (_settings.TriggerAdapter == "Test")
             {
-                var triggerAdapter = new Adapter.Command.TriggerAdapter();
+                var triggerAdapter = new TriggerAdapter();
                 triggerAdapter.Initialize();
                 _triggerAdapterHandleOrderBookUseCase = (usecase) => { triggerAdapter.Handle(usecase); };
             }

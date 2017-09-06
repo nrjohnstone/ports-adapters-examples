@@ -7,8 +7,8 @@
     <ProjectGuid>{408F72C9-ED46-4B95-A1AA-9BA45D5681EE}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Adapter.Command</RootNamespace>
-    <AssemblyName>Adapter.Command.Test</AssemblyName>
+    <RootNamespace>Adapter.Trigger.Test</RootNamespace>
+    <AssemblyName>Adapter.Trigger.Test</AssemblyName>
     <TargetFrameworkVersion>v4.6.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkProfile />
