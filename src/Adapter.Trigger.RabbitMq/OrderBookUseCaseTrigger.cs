@@ -9,7 +9,7 @@ using RabbitMQ.Client.Events;
 
 namespace Adapter.Trigger.RabbitMq
 {
-    public class OrderBookUseCaseTrigger
+    internal class OrderBookUseCaseTrigger
     {
         public AmbientLogService Logger { get; } = new AmbientLogService();
         private readonly OrderBookUseCase _orderBookUseCase;
