@@ -50,6 +50,12 @@ namespace Host.Console
                 persistenceAdapter.Initialize();
                 persistenceAdapter.Register(Container);
             }
+            else if (_settings.PersistenceAdapter == "MySql")
+            {
+                var persistenceAdapter = new Adapter.Persistence.MySql.PersistenceAdapter();
+                persistenceAdapter.Initialize();
+                persistenceAdapter.Register(Container);
+            }
         }
 
         private void ConfigureTriggerAdapter()
@@ -60,7 +66,7 @@ namespace Host.Console
                 triggerAdapter.Initialize();
                 _triggerAdapterHandleOrderBookUseCase = (usecase) => { triggerAdapter.Handle(usecase); };
             }
-            else
+            else if (_settings.TriggerAdapter == "RabbitMq")
             {
                 var triggerAdapter = new Adapter.Trigger.RabbitMq.TriggerAdapter();
                 triggerAdapter.Initialize();

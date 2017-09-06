@@ -17,7 +17,8 @@ namespace Host.Console
             Settings settings = new Settings()
             {
                 TriggerAdapter = "Test",
-                NotificationAdapter = "RabbitMq"
+                NotificationAdapter = "RabbitMq",
+                PersistenceAdapter = "Test"
             };
 
             Application application = new Application(settings);
