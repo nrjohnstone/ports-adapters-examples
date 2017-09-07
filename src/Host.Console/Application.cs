@@ -98,6 +98,16 @@ namespace Host.Console
                 notificationAdapter.Register(Container);
                 _notificationAdapterShutdown = () => notificationAdapter.Shutdown();
             }
+            else if (_settings.NotificationAdapter == "Email")
+            {
+                Adapter.Notification.Email.NotificationAdapterSettings settings =
+                    new Adapter.Notification.Email.NotificationAdapterSettings(
+                        "localhost", 1025, bookSupplierEmail: "BookSupplierGateway@fakedomain.com");
+                var notificationAdapter = new Adapter.Notification.Email.NotificationAdapter(settings);
+                notificationAdapter.Initialize();
+                notificationAdapter.Register(Container);
+                _notificationAdapterShutdown = () => notificationAdapter.Shutdown();
+            }
         }
 
         public void Run()

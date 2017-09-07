@@ -29,6 +29,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Hosts", "Hosts", "{291979A6
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Adapter.Notification.RabbitMq", "src\Adapter.Notification.RabbitMq\Adapter.Notification.RabbitMq.csproj", "{F939005A-4433-475D-BCEA-41671DE4D8C8}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Adapter.Notification.Email", "src\Adapter.Notification.Email\Adapter.Notification.Email.csproj", "{BF17C870-A263-4D73-A1C2-BE17C642F0BF}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -75,6 +77,10 @@ Global
 		{F939005A-4433-475D-BCEA-41671DE4D8C8}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F939005A-4433-475D-BCEA-41671DE4D8C8}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F939005A-4433-475D-BCEA-41671DE4D8C8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BF17C870-A263-4D73-A1C2-BE17C642F0BF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BF17C870-A263-4D73-A1C2-BE17C642F0BF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BF17C870-A263-4D73-A1C2-BE17C642F0BF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BF17C870-A263-4D73-A1C2-BE17C642F0BF}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -89,6 +95,7 @@ Global
 		{B4F64E5C-A80A-4E48-A307-6ED26233C394} = {E188439D-1F1D-4EBA-B0DE-A7074E348190}
 		{55E378B7-78B8-4B18-83B8-E174B9028A43} = {9234AD06-323F-461D-AC33-43C22EFF20B7}
 		{F939005A-4433-475D-BCEA-41671DE4D8C8} = {E188439D-1F1D-4EBA-B0DE-A7074E348190}
+		{BF17C870-A263-4D73-A1C2-BE17C642F0BF} = {E188439D-1F1D-4EBA-B0DE-A7074E348190}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {EC0DDD5A-EE19-4A43-AC53-2C779638CE26}

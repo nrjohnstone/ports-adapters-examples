@@ -20,7 +20,7 @@ namespace Host.Console
                 Settings settings = new Settings()
                 {
                     TriggerAdapter = "Test",
-                    NotificationAdapter = "Test",
+                    NotificationAdapter = "Email",
                     PersistenceAdapter = "Test",
                     PersistenceConnectionString = "server=127.0.0.1;" +
                                                   "uid=bookorder_service;" +
