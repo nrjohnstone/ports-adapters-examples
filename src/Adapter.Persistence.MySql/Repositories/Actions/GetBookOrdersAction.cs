@@ -11,10 +11,7 @@ namespace Adapter.Persistence.MySql.Repositories.Actions
     {
         public static IEnumerable<BookOrder> Execute(IDbConnection connection, string supplier = null, 
             BookOrderState? state = null)
-        {
-            if (supplier == null & !state.HasValue)
-                throw new InvalidOperationException("At least one filter argument must be non null");
-
+        {           
             DynamicParameters parameters = new DynamicParameters();
             var sqlStatement =
                 "SELECT supplier, order_id, state FROM book_orders ";

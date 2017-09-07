@@ -48,5 +48,10 @@ namespace Adapter.Persistence.Test
         {
             return _bookOrders.Values.Where(x => x.State == state);
         }
+
+        public IEnumerable<BookOrder> Get()
+        {
+            return _bookOrders.Values;
+        }
     }
 }

@@ -71,6 +71,14 @@ namespace Adapter.Persistence.MySql.Repositories
             }            
         }
 
+        public IEnumerable<BookOrder> Get()
+        {
+            using (var connection = CreateConnection())
+            {
+                return GetBookOrdersAction.Execute(connection);
+            }
+        }
+
         private IDbConnection CreateConnection()
         {
             return new MySqlConnection(_connectionString);                        

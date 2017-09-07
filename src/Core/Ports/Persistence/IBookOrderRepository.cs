@@ -11,5 +11,6 @@ namespace Core.Ports.Persistence
         IEnumerable<BookOrder> GetBySupplier(string supplier);
         IEnumerable<BookOrder> GetBySupplier(string supplier, BookOrderState state);
         IEnumerable<BookOrder> GetByState(BookOrderState state);
+        IEnumerable<BookOrder> Get();
     }
 }

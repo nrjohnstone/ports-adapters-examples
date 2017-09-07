@@ -1,8 +1,11 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Net;
 using Core.Entities;
 using FluentAssertions;
 using Microsoft.Owin;
+using Newtonsoft.Json;
 using NSubstitute;
 using Xunit;
 
@@ -82,5 +85,54 @@ namespace Host.WebService1.Tests.Unit
                     x => x.Id == bookOrderId &&
                     x.State == BookOrderState.Sent));
         }
+
+        [Fact]
+        public void Get_ShouldReturnAllBookOrders()
+        {
+            var bookOrders = new List<BookOrder>();
+            var bookOrder = new BookOrder("Supplier1", Guid.NewGuid(), BookOrderState.New, 
+                new List<OrderLine>() { new OrderLine("Title1", 10.5M, 1, Guid.NewGuid())});
+            
+            bookOrders.Add(bookOrder);
+            bookOrders.Add(new BookOrder("Supplier2", Guid.NewGuid(), BookOrderState.Approved));
+
+            MockBookOrderRepository.Get().Returns(bookOrders);
+
+            StartServer();
+
+            var result = Client.GetAsync("bookOrders").Result;
+
+            result.StatusCode.Should().Be(HttpStatusCode.OK);
+            var bookOrdersResponse =
+                JsonConvert.DeserializeObject<IEnumerable<BookOrderResponse>>(result.Content.ReadAsStringAsync().Result)
+                    .ToList();
+
+            bookOrdersResponse.Count.Should().Be(2);
+            bookOrdersResponse[0].Supplier.Should().Be("Supplier1");
+            bookOrdersResponse[0].State.Should().Be("New");
+            bookOrdersResponse[0].Id.Should().Be(bookOrders[0].Id.ToString());
+            bookOrdersResponse[0].OrderLines.Count.Should().Be(1);
+            bookOrdersResponse[0].OrderLines[0].Title.Should().Be("Title1");
+            bookOrdersResponse[0].OrderLines[0].Price.Should().Be(10.5M);
+            bookOrdersResponse[0].OrderLines[0].Quantity.Should().Be(1);
+            bookOrdersResponse[1].Supplier.Should().Be("Supplier2");
+            bookOrdersResponse[1].State.Should().Be("Approved");
+            bookOrdersResponse[1].Id.Should().Be(bookOrders[1].Id.ToString());
+        }
+    }
+
+    internal class BookOrderResponse
+    {
+        public string Supplier { get; set; }
+        public string State { get; set; }
+        public string Id { get; set; }
+        public IList<OrderLineResponse> OrderLines { get; set; }
+    }
+
+    internal class OrderLineResponse
+    {
+        public string Title { get; set; }
+        public decimal Price { get; set; }
+        public int Quantity { get; set; }
     }
 }
