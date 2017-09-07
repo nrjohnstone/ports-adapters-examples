@@ -3,35 +3,35 @@ using Fluency;
 
 namespace Core.Tests.Unit.Helpers
 {
-    public class BookRequestBuilder : FluentBuilder<BookRequest>
+    public class BookTitleOrderBuilder : FluentBuilder<BookTitleOrder>
     {
         private string _title = "BookTitle";
         private string _supplier = "BookSupplier";
         private decimal _price = 10.5M;
         private int _quantity = 1;
 
-        public BookRequestBuilder()
+        public BookTitleOrderBuilder()
         {
             IgnoreAllProperties();
         }
 
-        public static implicit operator BookRequest(BookRequestBuilder builder)
+        public static implicit operator BookTitleOrder(BookTitleOrderBuilder builder)
         {
             return builder.build();
         }
 
-        protected override BookRequest GetNewInstance()
+        protected override BookTitleOrder GetNewInstance()
         {
-            return new BookRequest(_title, _supplier, _price, _quantity);
+            return new BookTitleOrder(_title, _supplier, _price, _quantity);
         }
 
-        public BookRequestBuilder ForSupplier(string supplier)
+        public BookTitleOrderBuilder ForSupplier(string supplier)
         {
             _supplier = supplier;
             return this;
         }
         
-        public BookRequest ForTitle(string title)
+        public BookTitleOrder ForTitle(string title)
         {
             _title = title;
             return this;

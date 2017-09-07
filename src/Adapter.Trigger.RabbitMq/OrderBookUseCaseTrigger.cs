@@ -35,7 +35,7 @@ namespace Adapter.Trigger.RabbitMq
 
                 try
                 {
-                    var bookRequest = JsonConvert.DeserializeObject<BookRequest>(message);
+                    var bookRequest = JsonConvert.DeserializeObject<BookTitleOrder>(message);
                     _orderBookUseCase.Execute(bookRequest);                              
                 }
                 catch (Exception ex)

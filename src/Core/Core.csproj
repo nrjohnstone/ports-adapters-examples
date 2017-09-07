@@ -63,7 +63,7 @@
     <Compile Include="UseCases\GetBookOrdersUseCase.cs" />
     <Compile Include="UseCases\OrderBookUseCase.cs" />
     <Compile Include="UseCases\SendBookOrderUseCase.cs" />
-    <Compile Include="ValueObjects\BookRequest.cs" />
+    <Compile Include="ValueObjects\BookTitleOrder.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

@@ -20,21 +20,21 @@ namespace Core.UseCases
             _bookOrderRepository = bookOrderRepository;
         }
 
-        public Guid Execute(BookRequest bookRequest)
+        public Guid Execute(BookTitleOrder bookTitleOrder)
         {
-            Logger.Information("Execute OrderBookUseCase for Title: {Title}", bookRequest.Title);
+            Logger.Information("Execute OrderBookUseCase for Title: {Title}", bookTitleOrder.Title);
 
             IEnumerable<BookOrder> bookOrders = _bookOrderRepository.GetBySupplier(
-                bookRequest.Supplier, BookOrderState.New);
+                bookTitleOrder.Supplier, BookOrderState.New);
             var bookOrder = bookOrders.FirstOrDefault();
 
             if (bookOrder == null)
             {
                 bookOrder = new BookOrder(
-                    bookRequest.Supplier, Guid.NewGuid(), BookOrderState.New);
+                    bookTitleOrder.Supplier, Guid.NewGuid(), BookOrderState.New);
             }
            
-            bookOrder.AddBookRequest(bookRequest);
+            bookOrder.AddBookRequest(bookTitleOrder);
             
             _bookOrderRepository.Store(bookOrder);
 

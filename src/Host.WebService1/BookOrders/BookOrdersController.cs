@@ -42,7 +42,7 @@ namespace Host.WebService1.BookOrders
             if (bookRequestDto == null)
                 return BadRequest();
 
-            Guid bookOrderId = _orderBookUseCase.Execute(new BookRequest(
+            Guid bookOrderId = _orderBookUseCase.Execute(new BookTitleOrder(
                 bookRequestDto.Title, 
                 bookRequestDto.Supplier,
                 bookRequestDto.Price,

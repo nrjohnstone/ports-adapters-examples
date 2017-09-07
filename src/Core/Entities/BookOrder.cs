@@ -32,13 +32,13 @@ namespace Core.Entities
         }
 
 
-        public void AddBookRequest(BookRequest bookRequest)
+        public void AddBookRequest(BookTitleOrder bookTitleOrder)
         {
             if (State != BookOrderState.New)
                 throw new AddBookRequestException();
 
-            OrderLine orderLine = new OrderLine(bookRequest.Title,
-                bookRequest.Price, bookRequest.Quantity, Guid.NewGuid());
+            OrderLine orderLine = new OrderLine(bookTitleOrder.Title,
+                bookTitleOrder.Price, bookTitleOrder.Quantity, Guid.NewGuid());
 
             OrderLines.Add(orderLine);
         }

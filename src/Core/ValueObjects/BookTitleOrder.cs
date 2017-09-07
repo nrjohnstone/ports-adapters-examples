@@ -2,9 +2,9 @@
 
 namespace Core.ValueObjects
 {
-    public class BookRequest
+    public class BookTitleOrder
     {
-        public BookRequest(string title, string supplier, decimal price, int quantity)
+        public BookTitleOrder(string title, string supplier, decimal price, int quantity)
         {
             if (string.IsNullOrWhiteSpace(title))
                 throw new ArgumentException("Value cannot be null or whitespace.", nameof(title));

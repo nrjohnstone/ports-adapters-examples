@@ -2,7 +2,7 @@
 {
     internal static class a
     {
-        public static BookRequestBuilder BookRequest => new BookRequestBuilder();
+        public static BookTitleOrderBuilder BookTitleOrder => new BookTitleOrderBuilder();
         public static BookOrderBuilder BookOrder => new BookOrderBuilder();
     }
 }
