@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Web.Http;
 using Owin;
+using Swashbuckle.Application;
 
 namespace Host.WebService1
 {
@@ -17,8 +18,11 @@ namespace Host.WebService1
             config.MapHttpAttributeRoutes();
             config.Routes.IgnoreRoute("IgnoreAxdFiles", "{resource}.axd/{*pathInfo}");
 
-            config.EnsureInitialized();
+            config.EnableSwagger(c => c.SingleApiVersion("v1", "BookOrders"))
+                .EnableSwaggerUi();
 
+            config.EnsureInitialized();
+            
             appBuilder.UseWebApi(config);
         }
     }
