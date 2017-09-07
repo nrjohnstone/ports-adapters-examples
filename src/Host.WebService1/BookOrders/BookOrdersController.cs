@@ -37,16 +37,16 @@ namespace Host.WebService1.BookOrders
 
         [HttpPost]
         [Route("bookRequests")]
-        public IHttpActionResult CreateBookRequest([FromBody] BookRequestDto bookRequestDto)
+        public IHttpActionResult CreateBookRequest([FromBody] BookTitleOrderRequest bookTitleOrderRequest)
         {
-            if (bookRequestDto == null)
+            if (bookTitleOrderRequest == null)
                 return BadRequest();
 
             Guid bookOrderId = _orderBookUseCase.Execute(new BookTitleOrder(
-                bookRequestDto.Title, 
-                bookRequestDto.Supplier,
-                bookRequestDto.Price,
-                bookRequestDto.Quantity ));
+                bookTitleOrderRequest.Title, 
+                bookTitleOrderRequest.Supplier,
+                bookTitleOrderRequest.Price,
+                bookTitleOrderRequest.Quantity ));
             
             return Created<string>($"bookOrders/{bookOrderId}", null);
         }

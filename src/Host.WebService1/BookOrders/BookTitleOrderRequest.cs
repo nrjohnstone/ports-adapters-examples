@@ -1,6 +1,6 @@
 namespace Host.WebService1.BookOrders
 {
-    public class BookRequestDto
+    public class BookTitleOrderRequest
     {
         public string Title { get; set; }
         public string Supplier { get; set; }
