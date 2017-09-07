@@ -1,13 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Web.Http;
-using Core.Entities;
-using Core.Ports.Persistence;
 using Core.UseCases;
 using Core.ValueObjects;
 
-namespace Host.WebService1
+namespace Host.WebService1.BookOrders
 {
     public class BookOrdersController : ApiController
     {
@@ -111,28 +108,5 @@ namespace Host.WebService1
             _sendBookOrderUseCase.Execute(bookOrderId);
             return Ok();
         }
-    }
-
-    public class BookOrderResponse
-    {
-        public string Supplier { get; set; }
-        public string State { get; set; }
-        public string Id { get; set; }
-        public IEnumerable<OrderLineResponse> OrderLines { get; set; }
-    }
-
-    public class OrderLineResponse
-    {
-        public string Title { get; set; }
-        public decimal Price { get; set; }
-        public int Quantity { get; set; }
-    }
-
-    public class BookRequestDto
-    {
-        public string Title { get; set; }
-        public string Supplier { get; set; }
-        public decimal Price { get; set; }
-        public int Quantity { get; set; }
     }
 }

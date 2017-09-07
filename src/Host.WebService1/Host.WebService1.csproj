@@ -86,7 +86,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\SwaggerConfig.cs" />
-    <Compile Include="BookOrdersController.cs" />
+    <Compile Include="BookOrders\BookOrderResponse.cs" />
+    <Compile Include="BookOrders\BookOrdersController.cs" />
+    <Compile Include="BookOrders\BookRequestDto.cs" />
+    <Compile Include="BookOrders\OrderLineResponse.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Startup.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

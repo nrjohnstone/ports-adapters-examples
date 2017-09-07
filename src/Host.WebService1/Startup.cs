@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using System.Web.Http;
 using Adapter.Notification.Email;
 using Adapter.Persistence.MySql;
+using Host.WebService1.BookOrders;
 using Owin;
 using SimpleInjector;
 using SimpleInjector.Integration.WebApi;
