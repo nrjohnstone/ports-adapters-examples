@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Web.Http;
 using Core.Ports.Persistence;
 using Core.UseCases;
@@ -9,11 +10,19 @@ namespace Host.WebService1
     public class BookOrdersController : ApiController
     {
         private readonly OrderBookUseCase _orderBookUseCase;
-        
-        public BookOrdersController(OrderBookUseCase orderBookUseCase)
+        private readonly ApproveBookOrderUseCase _approveBookOrderUseCase;
+        private readonly SendBookOrderUseCase _sendBookOrderUseCase;
+
+        public BookOrdersController(OrderBookUseCase orderBookUseCase,
+            ApproveBookOrderUseCase approveBookOrderUseCase,
+            SendBookOrderUseCase sendBookOrderUseCase)
         {
             if (orderBookUseCase == null) throw new ArgumentNullException(nameof(orderBookUseCase));
+            if (approveBookOrderUseCase == null) throw new ArgumentNullException(nameof(approveBookOrderUseCase));
+            if (sendBookOrderUseCase == null) throw new ArgumentNullException(nameof(sendBookOrderUseCase));
             _orderBookUseCase = orderBookUseCase;
+            _approveBookOrderUseCase = approveBookOrderUseCase;
+            _sendBookOrderUseCase = sendBookOrderUseCase;
         }
 
         [HttpGet]
@@ -30,13 +39,35 @@ namespace Host.WebService1
             if (bookRequestDto == null)
                 return BadRequest();
 
-            _orderBookUseCase.Execute(new BookRequest(
+            Guid bookOrderId = _orderBookUseCase.Execute(new BookRequest(
                 bookRequestDto.Title, 
                 bookRequestDto.Supplier,
                 bookRequestDto.Price,
                 bookRequestDto.Quantity ));
+            
+            return Created<string>($"bookOrders/{bookOrderId}", null);
+        }
+        
+        [HttpPost]
+        [Route("bookOrders/{bookOrderId}/approve")]
+        public IHttpActionResult ApproveBookOrder(Guid bookOrderId)
+        {
+            if (bookOrderId == Guid.Empty)
+                return BadRequest();
 
-            return Created<string>("", "");
+            _approveBookOrderUseCase.Execute(bookOrderId);
+            return Ok();
+        }
+
+        [HttpPost]
+        [Route("bookOrders/{bookOrderId}/send")]
+        public IHttpActionResult SendBookOrder(Guid bookOrderId)
+        {
+            if (bookOrderId == Guid.Empty)
+                return BadRequest();
+
+            _sendBookOrderUseCase.Execute(bookOrderId);
+            return Ok();
         }
     }
 

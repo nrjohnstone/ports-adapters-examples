@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Web.Http;
+using Adapter.Notification.Email;
 using Adapter.Persistence.MySql;
 using Owin;
 using SimpleInjector;
@@ -26,6 +27,8 @@ namespace Host.WebService1
             HttpConfiguration config = new HttpConfiguration();
 
             RegisterPersistenceAdapter();
+            RegisterNotificationAdapter();
+            RegisterControllers();
 
             config.DependencyResolver = new SimpleInjectorWebApiDependencyResolver(Container);
 
@@ -38,6 +41,20 @@ namespace Host.WebService1
             config.EnsureInitialized();
             
             appBuilder.UseWebApi(config);
+        }
+
+        private void RegisterControllers()
+        {
+            Container.Register<BookOrdersController>();
+        }
+
+        protected virtual void RegisterNotificationAdapter()
+        {
+            var notificationAdapter = new Adapter.Notification.Email.NotificationAdapter(
+                new NotificationAdapterSettings(
+                    "localhost", 1025, bookSupplierEmail: "BookSupplierGateway@fakedomain.com"));
+            notificationAdapter.Initialize();
+            notificationAdapter.Register(Container);
         }
 
         protected virtual void RegisterPersistenceAdapter()

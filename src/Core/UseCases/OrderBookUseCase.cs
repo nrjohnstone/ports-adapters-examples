@@ -20,7 +20,7 @@ namespace Core.UseCases
             _bookOrderRepository = bookOrderRepository;
         }
 
-        public void Execute(BookRequest bookRequest)
+        public Guid Execute(BookRequest bookRequest)
         {
             Logger.Information("Execute OrderBookUseCase for Title: {Title}", bookRequest.Title);
 
@@ -37,6 +37,8 @@ namespace Core.UseCases
             bookOrder.AddBookRequest(bookRequest);
             
             _bookOrderRepository.Store(bookOrder);
+
+            return bookOrder.Id;
         }
     }
 }

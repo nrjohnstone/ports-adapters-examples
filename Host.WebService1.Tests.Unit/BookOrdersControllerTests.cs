@@ -42,5 +42,45 @@ namespace Host.WebService1.Tests.Unit
                     x.OrderLines[0].Price == 25.5M &&
                     x.OrderLines[0].Quantity == 1));
         }
+
+        [Fact]
+        public void Post_ApproveBookOrder_WhenBookOrderIsNew_ShouldApproveBookOrder()
+        {
+            Guid bookOrderId = Guid.NewGuid();
+            MockBookOrderRepository.Get(bookOrderId).Returns(new BookOrder(
+                "SupplierFoo", bookOrderId, BookOrderState.New));
+
+            StartServer();
+            
+            var result = Client.Post($"bookOrders/{bookOrderId}/approve", null);
+
+            result.StatusCode.Should().Be(HttpStatusCode.OK);
+            MockBookOrderRepository.Received(1).Store(
+                Arg.Is<BookOrder>(
+                    x => x.Id == bookOrderId &&
+                    x.State == BookOrderState.Approved));
+        }
+
+        [Fact]
+        public void Post_SendBookOrder_WhenBookOrderIsApproved_ShouldSendBookOrder()
+        {
+            Guid bookOrderId = Guid.NewGuid();
+            MockBookOrderRepository.Get(bookOrderId).Returns(new BookOrder(
+                "SupplierFoo", bookOrderId, BookOrderState.Approved));
+
+            StartServer();
+
+            var result = Client.Post($"bookOrders/{bookOrderId}/send", null);
+
+            result.StatusCode.Should().Be(HttpStatusCode.OK);
+            MockBookOrderRepository.Received(1).Store(
+                Arg.Is<BookOrder>(
+                    x => x.Id == bookOrderId &&
+                         x.State == BookOrderState.Sent));
+            MockBookSupplierGateway.Received(1).Send(
+                Arg.Is<BookOrder>(
+                    x => x.Id == bookOrderId &&
+                    x.State == BookOrderState.Sent));
+        }
     }
 }
