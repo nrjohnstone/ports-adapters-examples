@@ -35,16 +35,16 @@ Multiple clients want to run the book ordering service and each has a slightly d
 
 ### Client 1 ###
 
-* Client 1 wants to use a REST endpoint to allow their client applications to submit book title orders
-* Client 1 wants to use a REST endpoint to allow their client applications to approve book title orders
-* Client 1 wants to use a REST endpoint to allow their client applications to send book title orders
-* Client 1 wants to use email to notify their book wholesaler of their orders when sending
+* wants to use a REST endpoint to allow their client applications to submit book title orders
+* wants to use a REST endpoint to allow their client applications to approve book title orders
+* wants to use a REST endpoint to allow their client applications to send book title orders
+* wants to use email to notify their book wholesaler of their orders when sending
 
 ### Client 2 ###
 
-* Client 2 wants to use a message queue (RabbitMq) to allow their client applications to submit book title orders
-* Client 1 wants to use a REST endpoint to allow their client applications to approve book title orders
-* Client 1 wants to use a REST endpoint to allow their client applications to send book title orders
-* Client 2 wants to use a message queue (RabbitMq) to notify their book wholesaler of their orders when sending
+* wants to use a message queue (RabbitMq) to allow their client applications to submit book title orders
+* wants to use a REST endpoint to allow their client applications to approve book title orders
+* wants to use a REST endpoint to allow their client applications to send book title orders
+* wants to use a message queue (RabbitMq) to notify their book wholesaler of their orders when sending
 
 * Both clients want to store their state in a MySql database
