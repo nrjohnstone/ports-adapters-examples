@@ -21,8 +21,7 @@ namespace Host.Console
 
         private Action _triggerAdapterShutdown = () => { };
         private Action _notificationAdapterShutdown = () => { };
-
-        private Action<OrderBookUseCase> _triggerAdapterHandleOrderBookUseCase = (usecase) => { };
+        
         private bool _shutdown;
 
         public Application(Settings settings)
@@ -71,14 +70,18 @@ namespace Host.Console
                 var triggerAdapter = new TriggerAdapter();
                 triggerAdapter.Initialize();
                 _triggerAdapterShutdown = () => { triggerAdapter.Shutdown(); };
-                _triggerAdapterHandleOrderBookUseCase = (usecase) => { triggerAdapter.Handle(usecase); };
+
+                // Wire upstream ports into adapter
+                triggerAdapter.Handle(Container.GetInstance<OrderBookUseCase>());                
             }
             else if (_settings.TriggerAdapter == "RabbitMq")
             {
                 var triggerAdapter = new Adapter.Trigger.RabbitMq.TriggerAdapter();
                 triggerAdapter.Initialize();
                 _triggerAdapterShutdown = () => { triggerAdapter.Shutdown(); };
-                _triggerAdapterHandleOrderBookUseCase = (usecase) => { triggerAdapter.Handle(usecase); };
+
+                // Wire upstream ports into adapter
+                triggerAdapter.Handle(Container.GetInstance<OrderBookUseCase>());                
             }
         }
 
@@ -112,9 +115,6 @@ namespace Host.Console
 
         public void Run()
         {
-            var orderBookUseCase = Container.GetInstance<OrderBookUseCase>();
-            _triggerAdapterHandleOrderBookUseCase(orderBookUseCase);
-            
             _threadApproveBookOrders = new Thread(ApproveBookOrders);
             _threadApproveBookOrders.Start();
 
