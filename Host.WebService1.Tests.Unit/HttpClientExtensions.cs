@@ -2,7 +2,7 @@
 using System.Text;
 using Newtonsoft.Json;
 
-namespace Host.WebService1.Tests.Unit
+namespace Host.WebService.Client1.Tests.Unit
 {
     public static class HttpClientExtensions
     {

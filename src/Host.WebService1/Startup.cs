@@ -1,19 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Web.Http;
+﻿using System.Web.Http;
 using Adapter.Notification.Email;
 using Adapter.Persistence.MySql;
 using Core.UseCases;
-using Host.WebService1.BookOrders;
+using Host.WebService.Client1.BookOrders;
 using Owin;
 using SimpleInjector;
 using SimpleInjector.Integration.WebApi;
 using Swashbuckle.Application;
 
-namespace Host.WebService1
+namespace Host.WebService.Client1
 {
     public class Startup
     {

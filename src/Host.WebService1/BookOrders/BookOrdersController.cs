@@ -4,7 +4,7 @@ using System.Web.Http;
 using Core.UseCases;
 using Core.ValueObjects;
 
-namespace Host.WebService1.BookOrders
+namespace Host.WebService.Client1.BookOrders
 {
     public class BookOrdersController : ApiController
     {

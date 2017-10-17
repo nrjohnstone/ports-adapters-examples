@@ -1,8 +1,7 @@
 ﻿using System;
-using System.Net.Http;
 using Microsoft.Owin.Hosting;
 
-namespace Host.WebService1
+namespace Host.WebService.Client1
 {
     public class Program
     {

@@ -7,8 +7,8 @@
     <ProjectGuid>{8CAB6AE1-0317-4D8F-AFE2-92B1684E34E5}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Host.WebService1.Tests.Unit</RootNamespace>
-    <AssemblyName>Host.WebService1.Tests.Unit</AssemblyName>
+    <RootNamespace>Host.WebService.Client1.Tests.Unit</RootNamespace>
+    <AssemblyName>Host.WebService.Client1.Tests.Unit</AssemblyName>
     <TargetFrameworkVersion>v4.6.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{3AC096D0-A1C2-E12C-1390-A8335801FDAB};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
@@ -100,9 +100,9 @@
       <Project>{97E5E8EB-26D7-49D9-A412-3DF4F5716643}</Project>
       <Name>Core</Name>
     </ProjectReference>
-    <ProjectReference Include="..\src\Host.WebService1\Host.WebService1.csproj">
+    <ProjectReference Include="..\src\Host.WebService1\Host.WebService.Client1.csproj">
       <Project>{11455D71-79B1-4F03-8568-734A50B946A8}</Project>
-      <Name>Host.WebService1</Name>
+      <Name>Host.WebService.Client1</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets" Condition="Exists('$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets')" />

@@ -7,8 +7,8 @@
     <ProjectGuid>{11455D71-79B1-4F03-8568-734A50B946A8}</ProjectGuid>
     <OutputType>Exe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Host.WebService1</RootNamespace>
-    <AssemblyName>Host.WebService1</AssemblyName>
+    <RootNamespace>Host.WebService.Client1</RootNamespace>
+    <AssemblyName>Host.WebService.Client1</AssemblyName>
     <TargetFrameworkVersion>v4.6.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>

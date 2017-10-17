@@ -2,7 +2,7 @@
 using Core.Ports.Persistence;
 using NSubstitute;
 
-namespace Host.WebService1.Tests.Unit
+namespace Host.WebService.Client1.Tests.Unit
 {
     /// <summary>
     /// Startup class for testing that derives from the real startup class but provides

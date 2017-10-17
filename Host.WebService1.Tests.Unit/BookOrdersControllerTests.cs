@@ -4,12 +4,11 @@ using System.Linq;
 using System.Net;
 using Core.Entities;
 using FluentAssertions;
-using Microsoft.Owin;
 using Newtonsoft.Json;
 using NSubstitute;
 using Xunit;
 
-namespace Host.WebService1.Tests.Unit
+namespace Host.WebService.Client1.Tests.Unit
 {
     public class BookOrdersControllerTests : WebServiceTestFixtureBase
     {

@@ -4,7 +4,7 @@ using Core.Ports.Notification;
 using Core.Ports.Persistence;
 using Microsoft.Owin.Testing;
 
-namespace Host.WebService1.Tests.Unit
+namespace Host.WebService.Client1.Tests.Unit
 {
     public class WebServiceTestFixtureBase : IDisposable
     {

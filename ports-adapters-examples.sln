@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.26730.12
+VisualStudioVersion = 15.0.26730.15
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Adapter.Trigger.Test", "src\Adapter.Trigger.Test\Adapter.Trigger.Test.csproj", "{408F72C9-ED46-4B95-A1AA-9BA45D5681EE}"
 EndProject
@@ -31,9 +31,9 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Adapter.Notification.Rabbit
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Adapter.Notification.Email", "src\Adapter.Notification.Email\Adapter.Notification.Email.csproj", "{BF17C870-A263-4D73-A1C2-BE17C642F0BF}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Host.WebService1", "src\Host.WebService1\Host.WebService1.csproj", "{11455D71-79B1-4F03-8568-734A50B946A8}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Host.WebService.Client1", "src\Host.WebService1\Host.WebService.Client1.csproj", "{11455D71-79B1-4F03-8568-734A50B946A8}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Host.WebService1.Tests.Unit", "Host.WebService1.Tests.Unit\Host.WebService1.Tests.Unit.csproj", "{8CAB6AE1-0317-4D8F-AFE2-92B1684E34E5}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Host.WebService.Client1.Tests.Unit", "Host.WebService1.Tests.Unit\Host.WebService.Client1.Tests.Unit.csproj", "{8CAB6AE1-0317-4D8F-AFE2-92B1684E34E5}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
