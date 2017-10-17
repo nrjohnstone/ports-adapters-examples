@@ -1,6 +1,7 @@
 ﻿using System;
 using Core.UseCases;
 using RabbitMQ.Client;
+using static Adapter.Trigger.RabbitMq.RabbitMqConstants;
 
 namespace Adapter.Trigger.RabbitMq
 {
@@ -26,7 +27,7 @@ namespace Adapter.Trigger.RabbitMq
         {
             using (var channel = _connection.CreateModel())
             {
-                channel.QueueBind("bookrequest", "bookorder", "bookrequest");
+                channel.QueueBind(BookRequestQueueName, BookOrderExchangeName, "bookrequest");
             }
         }
 
@@ -34,7 +35,7 @@ namespace Adapter.Trigger.RabbitMq
         {
             using (var channel = _connection.CreateModel())
             {
-                channel.QueueDeclare("bookrequest", durable:false, exclusive: false, autoDelete:true);
+                channel.QueueDeclare(BookRequestQueueName, durable:false, exclusive: false, autoDelete:true);
             }
         }
 
@@ -52,7 +53,7 @@ namespace Adapter.Trigger.RabbitMq
         {            
             using (var channel = _connection.CreateModel())
             {
-                channel.ExchangeDeclare("bookorder", ExchangeType.Topic,
+                channel.ExchangeDeclare(BookOrderExchangeName, ExchangeType.Topic,
                     durable: false, autoDelete: true);
             }                                
         }

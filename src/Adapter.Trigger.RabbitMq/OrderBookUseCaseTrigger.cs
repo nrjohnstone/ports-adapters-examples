@@ -6,6 +6,7 @@ using Core.ValueObjects;
 using Newtonsoft.Json;
 using RabbitMQ.Client;
 using RabbitMQ.Client.Events;
+using static Adapter.Trigger.RabbitMq.RabbitMqConstants;
 
 namespace Adapter.Trigger.RabbitMq
 {
@@ -29,7 +30,7 @@ namespace Adapter.Trigger.RabbitMq
             var consumer = new EventingBasicConsumer(_channel);
             consumer.Received += (model, args) => OnReceive(args);
 
-            _channel.BasicConsume("bookrequest", false, consumer);                                                
+            _channel.BasicConsume(BookRequestQueueName, false, consumer);                                                
         }
 
         private void OnReceive(BasicDeliverEventArgs args)

@@ -59,6 +59,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="OrderBookUseCaseTrigger.cs" />
+    <Compile Include="RabbitMqConstants.cs" />
     <Compile Include="TriggerAdapter.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
