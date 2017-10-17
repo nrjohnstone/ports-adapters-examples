@@ -27,24 +27,25 @@ namespace Adapter.Trigger.RabbitMq
             _channel = _connection.CreateModel();
 
             var consumer = new EventingBasicConsumer(_channel);
-            consumer.Received += (model, ea) =>
-            {
-                var body = ea.Body;
-                var message = Encoding.UTF8.GetString(body);
-                Logger.Debug("Received {RabbitMqMessage}", message);
-
-                try
-                {
-                    var bookRequest = JsonConvert.DeserializeObject<BookTitleOrder>(message);
-                    _orderBookUseCase.Execute(bookRequest);                              
-                }
-                catch (Exception ex)
-                {
-                    Console.WriteLine($"EXCEPTION: {ex.StackTrace}");
-                }                
-            };
+            consumer.Received += (model, args) => OnReceive(args);
 
             _channel.BasicConsume("bookrequest", false, consumer);                                                
+        }
+
+        private void OnReceive(BasicDeliverEventArgs args)
+        {
+            var message = Encoding.UTF8.GetString(args.Body);
+            Logger.Debug("Received {RabbitMqMessage}", message);
+
+            try
+            {
+                var bookRequest = JsonConvert.DeserializeObject<BookTitleOrder>(message);
+                _orderBookUseCase.Execute(bookRequest);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"EXCEPTION: {ex.StackTrace}");
+            }
         }
 
         public void Stop()
