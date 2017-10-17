@@ -161,14 +161,15 @@ namespace Host.Console
         public void Shutdown()
         {
             _shutdown = true;
-            _triggerAdapterShutdown();
-            _notificationAdapterShutdown();
-
+    
             if (!_threadSendBookOrders.Join(TimeSpan.FromSeconds(1)))
                 _threadSendBookOrders.Abort();            
 
             if (!_threadApproveBookOrders.Join(TimeSpan.FromSeconds(1)))
                 _threadApproveBookOrders.Abort();
+
+            _triggerAdapterShutdown();
+            _notificationAdapterShutdown();
         }
 
         public void Dispose()
