@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using System.Web.Http;
 using Adapter.Notification.Email;
 using Adapter.Persistence.MySql;
+using Core.UseCases;
 using Host.WebService1.BookOrders;
 using Owin;
 using SimpleInjector;
@@ -30,6 +31,7 @@ namespace Host.WebService1
             RegisterPersistenceAdapter();
             RegisterNotificationAdapter();
             RegisterControllers();
+            RegisterHostAdapter();
 
             config.DependencyResolver = new SimpleInjectorWebApiDependencyResolver(Container);
 
@@ -47,6 +49,20 @@ namespace Host.WebService1
         private void RegisterControllers()
         {
             Container.Register<BookOrdersController>();
+        }
+
+        /// <summary>
+        /// Wire upstream ports to host implementations, in this case
+        /// we are registering the ports (use cases) in the IoC container
+        /// as the Controllers are the host adapter implementations as they 
+        /// call into the use cases
+        /// </summary>
+        private void RegisterHostAdapter()
+        {
+            Container.Register<OrderBookUseCase>();
+            Container.Register<ApproveBookOrderUseCase>();
+            Container.Register<SendBookOrderUseCase>();
+            Container.Register<GetBookOrdersUseCase>();
         }
 
         protected virtual void RegisterNotificationAdapter()
