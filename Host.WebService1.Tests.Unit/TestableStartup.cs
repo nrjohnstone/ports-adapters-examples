@@ -4,6 +4,10 @@ using NSubstitute;
 
 namespace Host.WebService1.Tests.Unit
 {
+    /// <summary>
+    /// Startup class for testing that derives from the real startup class but provides
+    /// seams for injecting testable dependencies for ports where required
+    /// </summary>
     internal class TestableStartup : Startup
     {
         public IBookOrderRepository MockBookOrderRepository { get; set; }
@@ -18,8 +22,7 @@ namespace Host.WebService1.Tests.Unit
         
         protected override void RegisterPersistenceAdapter()
         {
-            Container.RegisterSingleton<IBookOrderRepository>(MockBookOrderRepository);
-            
+            Container.RegisterSingleton<IBookOrderRepository>(MockBookOrderRepository);            
         }
 
         protected override void RegisterNotificationAdapter()
