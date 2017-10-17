@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-using Core.Entities;
-using Core.Ports.Notification;
+﻿using Core.Ports.Notification;
 using SimpleInjector;
 
 namespace Adapter.Notification.Test
@@ -21,15 +19,5 @@ namespace Adapter.Notification.Test
 
             container.Register<IBookSupplierGateway, BookSupplierGateway>();
         }
-    }
-
-    public class BookSupplierGateway : IBookSupplierGateway
-    {
-        public List<BookOrder> SentBookOrders { get; } = new List<BookOrder>();
-
-        public void Send(BookOrder bookOrder)
-        {
-            SentBookOrders.Add(bookOrder);
-        }        
     }
 }
