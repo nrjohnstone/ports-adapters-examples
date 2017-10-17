@@ -39,7 +39,18 @@ namespace Host.Console
 
             ConfigurePersistenceAdapter();
             ConfigureNotificationAdapter();
-            ConfigureTriggerAdapter();            
+            ConfigureTriggerAdapter();
+            ConfigureHostAdapter();
+        }
+
+        /// <summary>
+        /// Wire upstream ports into host implementations, in this case
+        /// some private methods running on separate threads
+        /// </summary>
+        private void ConfigureHostAdapter()
+        {
+            _threadApproveBookOrders = new Thread(ApproveBookOrders);
+            _threadSendBookOrders = new Thread(SendBookOrders);
         }
 
         private void ConfigurePersistenceAdapter()
@@ -115,10 +126,7 @@ namespace Host.Console
 
         public void Run()
         {
-            _threadApproveBookOrders = new Thread(ApproveBookOrders);
             _threadApproveBookOrders.Start();
-
-            _threadSendBookOrders = new Thread(SendBookOrders);
             _threadSendBookOrders.Start();
         }
 
