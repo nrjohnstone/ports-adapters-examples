@@ -4,7 +4,7 @@ using System.Web.Http;
 using Domain.UseCases;
 using Domain.ValueObjects;
 
-namespace Host.WebService.Client1.BookOrders
+namespace Host.WebService.Client2.BookOrders
 {
     public class BookOrdersController : ApiController
     {
@@ -34,7 +34,7 @@ namespace Host.WebService.Client1.BookOrders
         {
             return Ok();
         }
-        
+
         [HttpPost]
         [Route("bookRequests")]
         public IHttpActionResult CreateBookRequest([FromBody] BookTitleOrderRequest bookTitleOrderRequest)
