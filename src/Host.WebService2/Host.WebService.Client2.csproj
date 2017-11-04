@@ -99,9 +99,9 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Adapter.Notification.Email\Adapter.Notification.Email.csproj">
-      <Project>{bf17c870-a263-4d73-a1c2-be17c642f0bf}</Project>
-      <Name>Adapter.Notification.Email</Name>
+    <ProjectReference Include="..\Adapter.Notification.RabbitMq\Adapter.Notification.RabbitMq.csproj">
+      <Project>{f939005a-4433-475d-bcea-41671de4d8c8}</Project>
+      <Name>Adapter.Notification.RabbitMq</Name>
     </ProjectReference>
     <ProjectReference Include="..\Adapter.Persistence.MySql\Adapter.Persistence.MySql.csproj">
       <Project>{b4f64e5c-a80a-4e48-a307-6ed26233c394}</Project>

@@ -1,5 +1,4 @@
 ﻿using System.Web.Http;
-using Adapter.Notification.Email;
 using Adapter.Persistence.MySql;
 using Domain.UseCases;
 using Host.WebService.Client2.BookOrders;
@@ -62,9 +61,7 @@ namespace Host.WebService.Client2
 
         protected virtual void RegisterNotificationAdapter()
         {
-            var notificationAdapter = new Adapter.Notification.Email.NotificationAdapter(
-                new NotificationAdapterSettings(
-                    "localhost", 1025, bookSupplierEmail: "BookSupplierGateway@fakedomain.com"));
+            var notificationAdapter = new Adapter.Notification.RabbitMq.NotificationAdapter();
             notificationAdapter.Initialize();
             notificationAdapter.Register(Container);
         }
