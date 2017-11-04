@@ -49,10 +49,28 @@ namespace Host.WebService.Client2
             appBuilder.UseWebApi(config);
         }
 
-        private void AttachUseCasesToTriggers()
+        protected virtual void RegisterPersistenceAdapter()
         {
-            // Wire upstream ports into adapter
-            _triggerAdapter.Handle(Container.GetInstance<OrderBookUseCase>());
+            var persistenceAdapter = new Adapter.Persistence.MySql.PersistenceAdapter(
+                new PersistenceAdapterSettings()
+                {
+                    ConnectionString = "server=127.0.0.1;" +
+                                       "uid=bookorder_service;" +
+                                       "pwd=123;" +
+                                       "database=bookorders"
+                });
+
+            persistenceAdapter.Initialize();
+            persistenceAdapter.Register(Container);
+        }
+
+        protected virtual void RegisterNotificationAdapter()
+        {
+            var notificationAdapter = new Adapter.Notification.RabbitMq.NotificationAdapter();
+            notificationAdapter.Initialize();
+            notificationAdapter.Register(Container);
+            _notificationAdapterShutdown = () => { notificationAdapter.Shutdown(); };
+
         }
 
         private void RegisterTriggerAdapter()
@@ -81,28 +99,10 @@ namespace Host.WebService.Client2
             Container.Register<GetBookOrdersUseCase>();
         }
 
-        protected virtual void RegisterNotificationAdapter()
+        private void AttachUseCasesToTriggers()
         {
-            var notificationAdapter = new Adapter.Notification.RabbitMq.NotificationAdapter();
-            notificationAdapter.Initialize();
-            notificationAdapter.Register(Container);
-            _notificationAdapterShutdown = () => { notificationAdapter.Shutdown(); };
-
-        }
-
-        protected virtual void RegisterPersistenceAdapter()
-        {
-            var persistenceAdapter = new Adapter.Persistence.MySql.PersistenceAdapter(
-                new PersistenceAdapterSettings()
-                {
-                    ConnectionString = "server=127.0.0.1;" +
-                                       "uid=bookorder_service;" +
-                                       "pwd=123;" +
-                                       "database=bookorders"
-                });
-
-            persistenceAdapter.Initialize();
-            persistenceAdapter.Register(Container);
+            // Wire upstream ports into adapter
+            _triggerAdapter.Handle(Container.GetInstance<OrderBookUseCase>());
         }
 
         public void Shutdown()
