@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Web.Http;
+using AmbientContext.LogService.Serilog;
 using Domain.UseCases;
 using Domain.ValueObjects;
 
@@ -8,24 +9,29 @@ namespace Host.WebService.Client1.BookOrders
 {
     public class BookOrdersController : ApiController
     {
+        public AmbientLogService Log { get; set; }
         private readonly OrderBookUseCase _orderBookUseCase;
         private readonly ApproveBookOrderUseCase _approveBookOrderUseCase;
         private readonly SendBookOrderUseCase _sendBookOrderUseCase;
         private readonly GetBookOrdersUseCase _getBookOrdersUseCase;
+        private readonly DeleteBookOrdersUseCase _deleteBookOrdersUseCase;
 
         public BookOrdersController(OrderBookUseCase orderBookUseCase,
             ApproveBookOrderUseCase approveBookOrderUseCase,
             SendBookOrderUseCase sendBookOrderUseCase,
-            GetBookOrdersUseCase getBookOrdersUseCase)
+            GetBookOrdersUseCase getBookOrdersUseCase,
+            DeleteBookOrdersUseCase deleteBookOrdersUseCase)
         {
             if (orderBookUseCase == null) throw new ArgumentNullException(nameof(orderBookUseCase));
             if (approveBookOrderUseCase == null) throw new ArgumentNullException(nameof(approveBookOrderUseCase));
             if (sendBookOrderUseCase == null) throw new ArgumentNullException(nameof(sendBookOrderUseCase));
             if (getBookOrdersUseCase == null) throw new ArgumentNullException(nameof(getBookOrdersUseCase));
+            if (deleteBookOrdersUseCase == null) throw new ArgumentNullException(nameof(deleteBookOrdersUseCase));
             _orderBookUseCase = orderBookUseCase;
             _approveBookOrderUseCase = approveBookOrderUseCase;
             _sendBookOrderUseCase = sendBookOrderUseCase;
             _getBookOrdersUseCase = getBookOrdersUseCase;
+            _deleteBookOrdersUseCase = deleteBookOrdersUseCase;
         }
 
         [HttpGet]
@@ -87,6 +93,22 @@ namespace Host.WebService.Client1.BookOrders
             return Ok(bookOrdersResponse);
         }
 
+        [HttpDelete]
+        [Route("bookOrders")]
+        public IHttpActionResult DeleteBookOrders()
+        {
+            try
+            {
+                _deleteBookOrdersUseCase.Execute();
+            }
+            catch (Exception ex)
+            {
+                Log.Error(ex ,"Exception occurred while deleting book orders");
+                return InternalServerError();
+            }
+            return Ok();
+        }
+
         [HttpPost]
         [Route("bookOrders/{bookOrderId}/approve")]
         public IHttpActionResult ApproveBookOrder(Guid bookOrderId)
@@ -108,5 +130,6 @@ namespace Host.WebService.Client1.BookOrders
             _sendBookOrderUseCase.Execute(bookOrderId);
             return Ok();
         }
+
     }
 }

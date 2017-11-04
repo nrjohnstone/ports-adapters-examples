@@ -60,6 +60,7 @@
     <Compile Include="Ports\Persistence\IBookOrderRepository.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="UseCases\ApproveBookOrderUseCase.cs" />
+    <Compile Include="UseCases\DeleteBookOrdersUseCase.cs" />
     <Compile Include="UseCases\GetBookOrdersUseCase.cs" />
     <Compile Include="UseCases\OrderBookUseCase.cs" />
     <Compile Include="UseCases\SendBookOrderUseCase.cs" />

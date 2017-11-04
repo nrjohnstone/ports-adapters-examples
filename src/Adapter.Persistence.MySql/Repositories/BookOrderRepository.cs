@@ -79,6 +79,14 @@ namespace Adapter.Persistence.MySql.Repositories
             }
         }
 
+        public void Delete()
+        {
+            using (var connection = CreateConnection())
+            {
+                DeleteBookOrdersAction.Execute(connection);
+            }
+        }
+
         private IDbConnection CreateConnection()
         {
             return new MySqlConnection(_connectionString);                        

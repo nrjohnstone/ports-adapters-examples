@@ -52,6 +52,7 @@
     <Compile Include="AdpaterNotInitializedException.cs" />
     <Compile Include="PersistenceAdapterSettings.cs" />
     <Compile Include="Repositories\Actions\BookOrderExistsAction.cs" />
+    <Compile Include="Repositories\Actions\DeleteBookOrdersAction.cs" />
     <Compile Include="Repositories\Dtos\BookOrderDto.cs" />
     <Compile Include="Repositories\BookOrderRepository.cs" />
     <Compile Include="Repositories\Actions\InsertBookOrderAction.cs" />

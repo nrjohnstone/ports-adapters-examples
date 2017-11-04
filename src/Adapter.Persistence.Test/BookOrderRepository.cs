@@ -53,5 +53,10 @@ namespace Adapter.Persistence.Test
         {
             return _bookOrders.Values;
         }
+
+        public void Delete()
+        {
+            throw new NotImplementedException();
+        }
     }
 }

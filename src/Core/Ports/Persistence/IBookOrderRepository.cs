@@ -12,5 +12,6 @@ namespace Domain.Ports.Persistence
         IEnumerable<BookOrder> GetBySupplier(string supplier, BookOrderState state);
         IEnumerable<BookOrder> GetByState(BookOrderState state);
         IEnumerable<BookOrder> Get();
+        void Delete();
     }
 }
