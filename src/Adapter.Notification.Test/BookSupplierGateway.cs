@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
-using Core.Entities;
-using Core.Ports.Notification;
+using Domain.Entities;
+using Domain.Ports.Notification;
 
 namespace Adapter.Notification.Test
 {

@@ -2,11 +2,11 @@
 using System.Collections.Generic;
 using System.Linq;
 using AmbientContext.LogService.Serilog;
-using Core.Entities;
-using Core.Ports.Persistence;
-using Core.ValueObjects;
+using Domain.Entities;
+using Domain.Ports.Persistence;
+using Domain.ValueObjects;
 
-namespace Core.UseCases
+namespace Domain.UseCases
 {
     public class OrderBookUseCase
     {

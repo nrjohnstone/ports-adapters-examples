@@ -3,9 +3,9 @@ using System.Linq;
 using System.Threading;
 using Adapter.Persistence.MySql;
 using Adapter.Trigger.Test;
-using Core.Entities;
-using Core.Ports.Persistence;
-using Core.UseCases;
+using Domain.Entities;
+using Domain.Ports.Persistence;
+using Domain.UseCases;
 using SimpleInjector;
 
 

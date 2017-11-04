@@ -1,5 +1,5 @@
 ﻿using System;
-using Core.Entities;
+using Domain.Entities;
 using Fluency;
 
 namespace Core.Tests.Unit.Helpers

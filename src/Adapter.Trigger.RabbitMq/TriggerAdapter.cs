@@ -1,5 +1,5 @@
 ﻿using System;
-using Core.UseCases;
+using Domain.UseCases;
 using RabbitMQ.Client;
 using static Adapter.Trigger.RabbitMq.RabbitMqConstants;
 

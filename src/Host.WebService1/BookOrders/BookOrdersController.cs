@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Web.Http;
-using Core.UseCases;
-using Core.ValueObjects;
+using Domain.UseCases;
+using Domain.ValueObjects;
 
 namespace Host.WebService.Client1.BookOrders
 {

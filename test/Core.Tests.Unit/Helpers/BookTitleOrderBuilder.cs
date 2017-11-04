@@ -1,4 +1,4 @@
-﻿using Core.ValueObjects;
+﻿using Domain.ValueObjects;
 using Fluency;
 
 namespace Core.Tests.Unit.Helpers

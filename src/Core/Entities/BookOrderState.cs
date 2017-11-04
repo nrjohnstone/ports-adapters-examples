@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace Core.Entities
+﻿namespace Domain.Entities
 {
     public enum BookOrderState
     {

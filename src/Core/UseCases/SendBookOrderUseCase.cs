@@ -1,9 +1,9 @@
 ﻿using System;
 using AmbientContext.LogService.Serilog;
-using Core.Ports.Notification;
-using Core.Ports.Persistence;
+using Domain.Ports.Notification;
+using Domain.Ports.Persistence;
 
-namespace Core.UseCases
+namespace Domain.UseCases
 {
     public class SendBookOrderUseCase
     {

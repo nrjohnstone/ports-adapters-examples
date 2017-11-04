@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Linq;
 using Adapter.Persistence.MySql.Repositories;
-using Core.Entities;
-using Core.ValueObjects;
+using Domain.Entities;
+using Domain.ValueObjects;
 using FluentAssertions;
 using Xunit;
 

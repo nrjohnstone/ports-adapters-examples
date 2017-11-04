@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Text;
-using Core.Entities;
-using Core.Ports.Notification;
+using Domain.Entities;
+using Domain.Ports.Notification;
 using Newtonsoft.Json;
 using RabbitMQ.Client;
 using RabbitMQ.Client.Framing;

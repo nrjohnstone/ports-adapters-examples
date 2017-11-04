@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using Core.UseCases;
-using Core.ValueObjects;
+using Domain.UseCases;
+using Domain.ValueObjects;
 
 namespace Adapter.Trigger.Test
 {

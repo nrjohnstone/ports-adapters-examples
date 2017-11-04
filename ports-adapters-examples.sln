@@ -1,11 +1,11 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.26730.15
+VisualStudioVersion = 15.0.27004.2006
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Adapter.Trigger.Test", "src\Adapter.Trigger.Test\Adapter.Trigger.Test.csproj", "{408F72C9-ED46-4B95-A1AA-9BA45D5681EE}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Core", "src\Core\Core.csproj", "{97E5E8EB-26D7-49D9-A412-3DF4F5716643}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Domain", "src\Core\Domain.csproj", "{97E5E8EB-26D7-49D9-A412-3DF4F5716643}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Host.Console", "src\Host.Console\Host.Console.csproj", "{E7562808-6D94-4C58-902E-71CDFA832567}"
 EndProject

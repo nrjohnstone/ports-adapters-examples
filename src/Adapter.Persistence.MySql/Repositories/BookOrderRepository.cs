@@ -2,8 +2,8 @@
 using System.Collections.Generic;
 using System.Data;
 using Adapter.Persistence.MySql.Repositories.Actions;
-using Core.Entities;
-using Core.Ports.Persistence;
+using Domain.Entities;
+using Domain.Ports.Persistence;
 using MySql.Data.MySqlClient;
 
 namespace Adapter.Persistence.MySql.Repositories

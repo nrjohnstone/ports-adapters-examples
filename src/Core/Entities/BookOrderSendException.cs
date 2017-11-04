@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Runtime.Serialization;
 
-namespace Core.Entities
+namespace Domain.Entities
 {
     public class BookOrderSendException : Exception
     {

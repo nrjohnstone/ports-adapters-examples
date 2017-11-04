@@ -2,8 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using AmbientContext.LogService.Serilog;
-using Core.Entities;
-using Core.Ports.Persistence;
+using Domain.Entities;
+using Domain.Ports.Persistence;
 
 namespace Adapter.Persistence.Test
 {

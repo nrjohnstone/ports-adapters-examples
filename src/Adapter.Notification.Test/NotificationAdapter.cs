@@ -1,4 +1,4 @@
-﻿using Core.Ports.Notification;
+﻿using Domain.Ports.Notification;
 using SimpleInjector;
 
 namespace Adapter.Notification.Test

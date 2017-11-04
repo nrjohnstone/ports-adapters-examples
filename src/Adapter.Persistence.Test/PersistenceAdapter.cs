@@ -1,4 +1,4 @@
-﻿using Core.Ports.Persistence;
+﻿using Domain.Ports.Persistence;
 using SimpleInjector;
 
 namespace Adapter.Persistence.Test

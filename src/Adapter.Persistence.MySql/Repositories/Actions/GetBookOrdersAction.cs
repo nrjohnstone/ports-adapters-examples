@@ -2,8 +2,8 @@ using System;
 using System.Collections.Generic;
 using System.Data;
 using Adapter.Persistence.MySql.Repositories.Dtos;
-using Core.Entities;
 using Dapper;
+using Domain.Entities;
 
 namespace Adapter.Persistence.MySql.Repositories.Actions
 {

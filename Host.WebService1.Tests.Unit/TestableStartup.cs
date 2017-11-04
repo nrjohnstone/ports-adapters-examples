@@ -1,5 +1,5 @@
-﻿using Core.Ports.Notification;
-using Core.Ports.Persistence;
+﻿using Domain.Ports.Notification;
+using Domain.Ports.Persistence;
 using NSubstitute;
 
 namespace Host.WebService.Client1.Tests.Unit

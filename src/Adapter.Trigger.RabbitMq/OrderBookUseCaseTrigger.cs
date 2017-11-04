@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Text;
 using AmbientContext.LogService.Serilog;
-using Core.UseCases;
-using Core.ValueObjects;
+using Domain.UseCases;
+using Domain.ValueObjects;
 using Newtonsoft.Json;
 using RabbitMQ.Client;
 using RabbitMQ.Client.Events;

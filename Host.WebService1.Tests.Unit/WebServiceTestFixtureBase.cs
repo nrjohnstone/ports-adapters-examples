@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Net.Http;
-using Core.Ports.Notification;
-using Core.Ports.Persistence;
+using Domain.Ports.Notification;
+using Domain.Ports.Persistence;
 using Microsoft.Owin.Testing;
 
 namespace Host.WebService.Client1.Tests.Unit

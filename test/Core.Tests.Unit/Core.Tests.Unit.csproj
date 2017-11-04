@@ -88,9 +88,9 @@
       <Project>{1649AA20-899F-4050-B99A-C408A4AA39FE}</Project>
       <Name>Adapter.Persistence.Test</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\src\Core\Core.csproj">
+    <ProjectReference Include="..\..\src\Core\Domain.csproj">
       <Project>{97E5E8EB-26D7-49D9-A412-3DF4F5716643}</Project>
-      <Name>Core</Name>
+      <Name>Domain</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets" Condition="Exists('$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets')" />

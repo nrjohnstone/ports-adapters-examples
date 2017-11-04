@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using Core.Entities;
+using Domain.Entities;
 
-namespace Core.Ports.Persistence
+namespace Domain.Ports.Persistence
 {
     public interface IBookOrderRepository
     {

@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Core.Entities
+namespace Domain.Entities
 {
     public class OrderLine
     {

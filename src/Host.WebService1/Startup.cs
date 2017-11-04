@@ -1,7 +1,7 @@
 ﻿using System.Web.Http;
 using Adapter.Notification.Email;
 using Adapter.Persistence.MySql;
-using Core.UseCases;
+using Domain.UseCases;
 using Host.WebService.Client1.BookOrders;
 using Owin;
 using SimpleInjector;

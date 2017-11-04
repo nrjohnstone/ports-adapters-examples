@@ -1,6 +1,6 @@
 ﻿using System.Data;
-using Core.Entities;
 using Dapper;
+using Domain.Entities;
 
 namespace Adapter.Persistence.MySql.Repositories.Actions
 {

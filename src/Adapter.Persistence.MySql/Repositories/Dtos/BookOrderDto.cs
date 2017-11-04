@@ -1,5 +1,5 @@
 using System;
-using Core.Entities;
+using Domain.Entities;
 
 namespace Adapter.Persistence.MySql.Repositories.Dtos
 {

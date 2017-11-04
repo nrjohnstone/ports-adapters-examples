@@ -1,6 +1,6 @@
-﻿using Core.Entities;
+﻿using Domain.Entities;
 
-namespace Core.Ports.Notification
+namespace Domain.Ports.Notification
 {
     public interface IBookSupplierGateway
     {

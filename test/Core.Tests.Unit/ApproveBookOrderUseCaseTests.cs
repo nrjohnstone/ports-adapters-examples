@@ -1,9 +1,9 @@
 ﻿using System;
 using Adapter.Persistence.Test;
-using Core.Entities;
-using Core.Ports.Persistence;
 using Core.Tests.Unit.Helpers;
-using Core.UseCases;
+using Domain.Entities;
+using Domain.Ports.Persistence;
+using Domain.UseCases;
 using FluentAssertions;
 using Xunit;
 

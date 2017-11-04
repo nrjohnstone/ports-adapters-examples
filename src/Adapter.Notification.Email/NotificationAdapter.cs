@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Core.Ports.Notification;
+using Domain.Ports.Notification;
 using SimpleInjector;
 
 namespace Adapter.Notification.Email

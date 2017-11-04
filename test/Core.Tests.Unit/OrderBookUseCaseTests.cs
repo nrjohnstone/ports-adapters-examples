@@ -1,11 +1,11 @@
 ﻿using System;
 using System.Linq;
 using Adapter.Persistence.Test;
-using Core.Entities;
-using Core.Ports.Persistence;
 using Core.Tests.Unit.Helpers;
-using Core.UseCases;
-using Core.ValueObjects;
+using Domain.Entities;
+using Domain.Ports.Persistence;
+using Domain.UseCases;
+using Domain.ValueObjects;
 using FluentAssertions;
 using Xunit;
 

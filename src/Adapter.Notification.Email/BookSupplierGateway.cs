@@ -2,8 +2,8 @@
 using System.Net.Mail;
 using System.Text;
 using AmbientContext.LogService.Serilog;
-using Core.Entities;
-using Core.Ports.Notification;
+using Domain.Entities;
+using Domain.Ports.Notification;
 
 namespace Adapter.Notification.Email
 {

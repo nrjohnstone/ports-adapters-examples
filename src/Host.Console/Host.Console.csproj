@@ -100,9 +100,9 @@
       <Project>{408f72c9-ed46-4b95-a1aa-9ba45d5681ee}</Project>
       <Name>Adapter.Trigger.Test</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Core\Core.csproj">
+    <ProjectReference Include="..\Core\Domain.csproj">
       <Project>{97e5e8eb-26d7-49d9-a412-3df4f5716643}</Project>
-      <Name>Core</Name>
+      <Name>Domain</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

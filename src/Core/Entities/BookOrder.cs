@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using Core.ValueObjects;
+using Domain.ValueObjects;
 
-namespace Core.Entities
+namespace Domain.Entities
 {
     public class BookOrder
     {

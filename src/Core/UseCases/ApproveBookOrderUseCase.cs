@@ -1,9 +1,9 @@
 ﻿using System;
 using AmbientContext.LogService.Serilog;
-using Core.Entities;
-using Core.Ports.Persistence;
+using Domain.Entities;
+using Domain.Ports.Persistence;
 
-namespace Core.UseCases
+namespace Domain.UseCases
 {
     public class ApproveBookOrderUseCase
     {

@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Core.ValueObjects
+namespace Domain.ValueObjects
 {
     public class BookTitleOrder
     {
