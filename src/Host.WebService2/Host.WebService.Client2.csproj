@@ -45,8 +45,8 @@
     <Reference Include="Microsoft.Web.Infrastructure, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\..\packages\Microsoft.Web.Infrastructure.1.0.0.0\lib\net40\Microsoft.Web.Infrastructure.dll</HintPath>
     </Reference>
-    <Reference Include="Newtonsoft.Json, Version=7.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\Newtonsoft.Json.7.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
+    <Reference Include="Newtonsoft.Json, Version=10.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Newtonsoft.Json.10.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="Owin, Version=1.0.0.0, Culture=neutral, PublicKeyToken=f0ebd12fd5e55cc5, processorArchitecture=MSIL">
       <HintPath>..\..\packages\Owin.1.0\lib\net40\Owin.dll</HintPath>
@@ -106,6 +106,10 @@
     <ProjectReference Include="..\Adapter.Persistence.MySql\Adapter.Persistence.MySql.csproj">
       <Project>{b4f64e5c-a80a-4e48-a307-6ed26233c394}</Project>
       <Name>Adapter.Persistence.MySql</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Adapter.Trigger.RabbitMq\Adapter.Trigger.RabbitMq.csproj">
+      <Project>{9874dc72-7d4e-4f04-b9d1-6aa175f58224}</Project>
+      <Name>Adapter.Trigger.RabbitMq</Name>
     </ProjectReference>
     <ProjectReference Include="..\Core\Domain.csproj">
       <Project>{97E5E8EB-26D7-49D9-A412-3DF4F5716643}</Project>

@@ -9,10 +9,12 @@ namespace Host.WebService.Client2
         {
             string baseAddress = "http://localhost:10009/";
 
-            using (WebApp.Start<Startup>(url: baseAddress))
-            {                
-                Console.WriteLine("Hit enter to exit");                
+            Startup startup = new Startup();
+            using (WebApp.Start(baseAddress, startup.Configuration))
+            {
+                Console.WriteLine("Hit enter to exit");
                 Console.ReadLine();
+                startup.Shutdown();
             }
         }
     }

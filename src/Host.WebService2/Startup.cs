@@ -1,5 +1,7 @@
-﻿using System.Web.Http;
+﻿using System;
+using System.Web.Http;
 using Adapter.Persistence.MySql;
+using Adapter.Trigger.RabbitMq;
 using Domain.UseCases;
 using Host.WebService.Client2.BookOrders;
 using Owin;
@@ -12,6 +14,10 @@ namespace Host.WebService.Client2
     public class Startup
     {
         protected Container Container;
+        private Action _triggerAdapterShutdown = () => { };
+        private Action _notificationAdapterShutdown = () => { };
+
+        private TriggerAdapter _triggerAdapter;
 
         public Startup()
         {
@@ -24,8 +30,11 @@ namespace Host.WebService.Client2
 
             RegisterPersistenceAdapter();
             RegisterNotificationAdapter();
+            RegisterTriggerAdapter();
             RegisterControllers();
             RegisterHostAdapter();
+
+            AttachUseCasesToTriggers();
 
             config.DependencyResolver = new SimpleInjectorWebApiDependencyResolver(Container);
 
@@ -38,6 +47,19 @@ namespace Host.WebService.Client2
             config.EnsureInitialized();
             
             appBuilder.UseWebApi(config);
+        }
+
+        private void AttachUseCasesToTriggers()
+        {
+            // Wire upstream ports into adapter
+            _triggerAdapter.Handle(Container.GetInstance<OrderBookUseCase>());
+        }
+
+        private void RegisterTriggerAdapter()
+        {
+            _triggerAdapter = new Adapter.Trigger.RabbitMq.TriggerAdapter();
+            _triggerAdapter.Initialize();
+            _triggerAdapterShutdown = () => { _triggerAdapter.Shutdown(); };
         }
 
         private void RegisterControllers()
@@ -64,6 +86,8 @@ namespace Host.WebService.Client2
             var notificationAdapter = new Adapter.Notification.RabbitMq.NotificationAdapter();
             notificationAdapter.Initialize();
             notificationAdapter.Register(Container);
+            _notificationAdapterShutdown = () => { notificationAdapter.Shutdown(); };
+
         }
 
         protected virtual void RegisterPersistenceAdapter()
@@ -79,6 +103,13 @@ namespace Host.WebService.Client2
 
             persistenceAdapter.Initialize();
             persistenceAdapter.Register(Container);
+        }
+
+        public void Shutdown()
+        {
+            _notificationAdapterShutdown();
+            _triggerAdapterShutdown();
+            Container?.Dispose();
         }
     }
 }
