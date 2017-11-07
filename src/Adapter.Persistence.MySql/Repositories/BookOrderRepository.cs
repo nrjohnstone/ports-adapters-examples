@@ -8,7 +8,7 @@ using MySql.Data.MySqlClient;
 
 namespace Adapter.Persistence.MySql.Repositories
 {
-    public class BookOrderRepository : IBookOrderRepository
+    internal class BookOrderRepository : IBookOrderRepository
     {
         private readonly string _connectionString;
 

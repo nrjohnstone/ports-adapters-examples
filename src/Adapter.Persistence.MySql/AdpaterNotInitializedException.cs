@@ -3,7 +3,7 @@ using System.Runtime.Serialization;
 
 namespace Adapter.Persistence.MySql
 {
-    internal class AdpaterNotInitializedException : Exception
+    public class AdpaterNotInitializedException : Exception
     {
         public AdpaterNotInitializedException()
         {
