@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using Domain.Entities;
 using Domain.Ports.Persistence;
+using MyCouch;
 
 namespace Adapter.Persistence.CouchDb.Repositories
 {
@@ -9,11 +10,16 @@ namespace Adapter.Persistence.CouchDb.Repositories
     {
         public BookOrder Get(Guid id)
         {
-            throw new NotImplementedException();
+            BookOrder retrieved;
+            using (var store = new MyCouchStore("http://localhost:5984", "mydb"))
+            {
+                retrieved = store.GetByIdAsync<BookOrder>(id.ToString()).Result;
+            }
+            return retrieved;
         }
 
         public void Store(BookOrder bookOrder)
-        {
+        {            
             throw new NotImplementedException();
         }
 

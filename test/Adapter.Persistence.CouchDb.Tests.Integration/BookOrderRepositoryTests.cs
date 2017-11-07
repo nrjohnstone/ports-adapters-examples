@@ -23,5 +23,14 @@ namespace Adapter.Persistence.CouchDb.Tests.Integration
             sut.Should().NotBeNull();
         }
 
+        [Fact]
+        public void Get_WhenOrderDoesNotExist_ShouldReturnNull()
+        {
+            var sut = CreateSut();
+
+            var bookOrder = sut.Get(Guid.Parse("D5153312-1BFF-4529-99DA-A189BB050F48"));
+
+            bookOrder.Should().BeNull();
+        }
     }
 }
