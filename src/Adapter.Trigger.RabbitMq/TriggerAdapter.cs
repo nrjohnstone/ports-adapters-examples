@@ -27,7 +27,7 @@ namespace Adapter.Trigger.RabbitMq
         {
             using (var channel = _connection.CreateModel())
             {
-                channel.QueueBind(BookRequestQueueName, BookOrderExchangeName, "bookrequest");
+                channel.QueueBind(BookRequestQueueName, BookOrderExchangeName, BookRequestQueueName);
             }
         }
 
