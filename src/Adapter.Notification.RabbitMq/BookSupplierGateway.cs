@@ -23,7 +23,7 @@ namespace Adapter.Notification.RabbitMq
             using (var channel = _connection.CreateModel())
             {
                 byte[] body = Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(bookOrder));
-                channel.BasicPublish("supplierbookorder", String.Empty, null, body);
+                channel.BasicPublish(RabbitMqConstants.SupplierExchangeName, String.Empty, null, body);
             }
         }
     }

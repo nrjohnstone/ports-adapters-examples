@@ -45,7 +45,7 @@ namespace Adapter.Notification.RabbitMq
         {
             using (var channel = _connection.CreateModel())
             {
-                channel.ExchangeDeclare("supplierbookorder", ExchangeType.Topic,
+                channel.ExchangeDeclare(RabbitMqConstants.SupplierExchangeName, ExchangeType.Topic,
                     durable: false, autoDelete: true);
             }
         }
