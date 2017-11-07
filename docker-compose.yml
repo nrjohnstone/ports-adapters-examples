@@ -31,3 +31,6 @@ services:
     image: couchdb:1.6.1
     ports:
       - "5984:5984"
+    environment:
+      - COUCHDB_USER=admin
+      - COUCHDB_PASSWORD=123
