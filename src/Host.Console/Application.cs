@@ -134,6 +134,7 @@ namespace Host.Console
         {
             IBookOrderRepository bookOrderRepository = Container.GetInstance<IBookOrderRepository>();
             SendBookOrderUseCase sendBookOrderUseCase = Container.GetInstance<SendBookOrderUseCase>();
+            Random rand = new Random();
 
             while (!_shutdown)
             {
@@ -144,7 +145,7 @@ namespace Host.Console
                     sendBookOrderUseCase.Execute(bookOrderToSend.Id);
                 }
 
-                Thread.Sleep(1000);
+                Thread.Sleep(rand.Next(1000, 10000));
             }
         }
 
@@ -152,6 +153,7 @@ namespace Host.Console
         {
             IBookOrderRepository bookOrderRepository = Container.GetInstance<IBookOrderRepository>();
             ApproveBookOrderUseCase approveBookOrderUseCase = Container.GetInstance<ApproveBookOrderUseCase>();
+            Random rand = new Random();
 
             while (!_shutdown)
             {
@@ -162,7 +164,7 @@ namespace Host.Console
                     approveBookOrderUseCase.Execute(bookOrderToApprove.Id);
                 }
 
-                Thread.Sleep(1000);
+                Thread.Sleep(rand.Next(1000, 10000));
             }
         }
 

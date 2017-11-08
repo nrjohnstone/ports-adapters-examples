@@ -7,7 +7,7 @@ namespace Adapter.Trigger.Test
 {
     public class TriggerAdapter
     {
-        private OrderBookUseCaseTrigger _orderBookUseCaseTrigger;
+        private OrderBookUseCaseRandomTrigger _orderBookUseCaseTrigger;
         private bool _initialized;
 
         public void Initialize()
@@ -26,9 +26,9 @@ namespace Adapter.Trigger.Test
                 new BookTitleOrder(title: "Dirk Gently", supplier: "Acme Inc", price: 10.99M, quantity: 2)
             };
             
-            _orderBookUseCaseTrigger = new OrderBookUseCaseTrigger(orderBookUseCase);
+            _orderBookUseCaseTrigger = new OrderBookUseCaseRandomTrigger(orderBookUseCase);
 
-            _orderBookUseCaseTrigger.SetTestData(testData);
+            //_orderBookUseCaseTrigger.SetTestData(testData);
             _orderBookUseCaseTrigger.Start();
         }
 
