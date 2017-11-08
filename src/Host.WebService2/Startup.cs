@@ -97,6 +97,7 @@ namespace Host.WebService.Client2
             Container.Register<ApproveBookOrderUseCase>();
             Container.Register<SendBookOrderUseCase>();
             Container.Register<GetBookOrdersUseCase>();
+            Container.Register<DeleteBookOrdersUseCase>();
         }
 
         private void AttachUseCasesToTriggers()

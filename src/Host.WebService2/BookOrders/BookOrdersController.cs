@@ -12,20 +12,24 @@ namespace Host.WebService.Client2.BookOrders
         private readonly ApproveBookOrderUseCase _approveBookOrderUseCase;
         private readonly SendBookOrderUseCase _sendBookOrderUseCase;
         private readonly GetBookOrdersUseCase _getBookOrdersUseCase;
+        private readonly DeleteBookOrdersUseCase _deleteBookOrdersUseCase;
 
         public BookOrdersController(OrderBookUseCase orderBookUseCase,
             ApproveBookOrderUseCase approveBookOrderUseCase,
             SendBookOrderUseCase sendBookOrderUseCase,
-            GetBookOrdersUseCase getBookOrdersUseCase)
+            GetBookOrdersUseCase getBookOrdersUseCase,
+            DeleteBookOrdersUseCase deleteBookOrdersUseCase)
         {
             if (orderBookUseCase == null) throw new ArgumentNullException(nameof(orderBookUseCase));
             if (approveBookOrderUseCase == null) throw new ArgumentNullException(nameof(approveBookOrderUseCase));
             if (sendBookOrderUseCase == null) throw new ArgumentNullException(nameof(sendBookOrderUseCase));
             if (getBookOrdersUseCase == null) throw new ArgumentNullException(nameof(getBookOrdersUseCase));
+            if (deleteBookOrdersUseCase == null) throw new ArgumentNullException(nameof(deleteBookOrdersUseCase));
             _orderBookUseCase = orderBookUseCase;
             _approveBookOrderUseCase = approveBookOrderUseCase;
             _sendBookOrderUseCase = sendBookOrderUseCase;
             _getBookOrdersUseCase = getBookOrdersUseCase;
+            _deleteBookOrdersUseCase = deleteBookOrdersUseCase;
         }
 
         [HttpGet]
@@ -85,6 +89,21 @@ namespace Host.WebService.Client2.BookOrders
             }
                         
             return Ok(bookOrdersResponse);
+        }
+
+        [HttpDelete]
+        [Route("bookOrders")]
+        public IHttpActionResult DeleteBookOrders()
+        {
+            try
+            {
+                _deleteBookOrdersUseCase.Execute();
+            }
+            catch (Exception)
+            {
+                return InternalServerError();
+            }
+            return Ok();
         }
 
         [HttpPost]

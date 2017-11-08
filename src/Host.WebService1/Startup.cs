@@ -58,6 +58,7 @@ namespace Host.WebService.Client1
             Container.Register<ApproveBookOrderUseCase>();
             Container.Register<SendBookOrderUseCase>();
             Container.Register<GetBookOrdersUseCase>();
+            Container.Register<DeleteBookOrdersUseCase>();
         }
 
         protected virtual void RegisterNotificationAdapter()
