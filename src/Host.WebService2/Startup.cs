@@ -41,7 +41,7 @@ namespace Host.WebService.Client2
             config.MapHttpAttributeRoutes();
             config.Routes.IgnoreRoute("IgnoreAxdFiles", "{resource}.axd/{*pathInfo}");
 
-            config.EnableSwagger(c => c.SingleApiVersion("v1", "BookOrders"))
+            config.EnableSwagger(c => c.SingleApiVersion("v1", "BookOrders Client 2"))
                 .EnableSwaggerUi();
 
             config.EnsureInitialized();
