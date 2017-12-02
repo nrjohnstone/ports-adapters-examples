@@ -14,6 +14,7 @@ using Xunit;
 
 namespace Adapter.Persistence.CouchDb.Tests.Integration
 {
+
     public class BookOrderRepositoryTests
     {
         private readonly string _databaseName;
@@ -278,6 +279,15 @@ namespace Adapter.Persistence.CouchDb.Tests.Integration
             results.Count.Should().Be(3);
             results.ShouldBeEquivalentTo(
                 new [] { bookOrder1, bookOrder2, bookOrder3});
+        }
+
+        [Fact]
+        public void Get_WhenNoBookOrdersInDatabase_ShouldReturnEmptyList()
+        {
+            var sut = CreateSut();
+            var results = sut.Get();
+
+            results.Should().BeEmpty();
         }
 
         [Fact]
