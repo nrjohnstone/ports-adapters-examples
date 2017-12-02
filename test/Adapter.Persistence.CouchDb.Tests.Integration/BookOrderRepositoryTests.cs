@@ -223,6 +223,31 @@ namespace Adapter.Persistence.CouchDb.Tests.Integration
         }
 
         [Fact]
+        public void GetBySupplierAndState_WhenNoMatchesForSupplier_ShouldReturnEmptyList()
+        {
+            var sut = CreateSut();
+            var results = sut.GetBySupplier("Foo", BookOrderState.New).ToList();
+
+            results.Should().BeEmpty();
+        }
+
+        [Fact]
+        public void GetBySupplierAndState_WhenNoMatchesForState_ShouldReturnEmptyList()
+        {
+            var sut = CreateSut();
+            var bookOrder1 = new BookOrder("Foo", Guid.NewGuid(), BookOrderState.Sent,
+                new List<OrderLine>()
+                {
+                    new OrderLine("Line1Book", 100M, 2, Guid.NewGuid())
+                });
+            sut.Store(bookOrder1);
+
+            var results = sut.GetBySupplier("Foo", BookOrderState.New).ToList();
+            
+            results.Should().BeEmpty();
+        }
+
+        [Fact]
         public void Get_ShouldReturnAllBookOrders()
         {
             var sut = CreateSut();

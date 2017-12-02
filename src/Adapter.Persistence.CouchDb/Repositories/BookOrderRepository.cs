@@ -114,6 +114,9 @@ namespace Adapter.Persistence.CouchDb.Repositories
                 ViewQueryResponse<string> docIdsBySupplier =
                     client.Views.QueryAsync<string>(request).Result;
                 
+                if (docIdsBySupplier.IsEmpty)
+                    return Enumerable.Empty<BookOrder>();
+
                 QueryViewRequest request2 = new QueryViewRequest(
                     "bookorders", "bystate");
                 request2.Configure(parameters => parameters
@@ -122,6 +125,9 @@ namespace Adapter.Persistence.CouchDb.Repositories
 
                 ViewQueryResponse<string> docIdsByState =
                     client.Views.QueryAsync<string>(request2).Result;
+
+                if (docIdsByState.IsEmpty)
+                    return Enumerable.Empty<BookOrder>();
 
                 var docIds = docIdsBySupplier.Rows.Select(x => x.Id)
                     .Intersect(docIdsByState.Rows.Select(x => x.Id));
@@ -133,6 +139,9 @@ namespace Adapter.Persistence.CouchDb.Repositories
 
                 var results =
                     client.Views.QueryAsync<string>(request3).Result;
+
+                if (results.IsEmpty)
+                    return Enumerable.Empty<BookOrder>();
 
                 foreach (var resultsRow in results.Rows)
                 {
