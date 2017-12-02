@@ -125,7 +125,6 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Constants.cs" />
     <Compile Include="PersistenceAdapter.cs" />
     <Compile Include="PersistenceAdapterSettings.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

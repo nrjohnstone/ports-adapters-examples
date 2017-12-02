@@ -1,6 +1,6 @@
-﻿namespace Adapter.Persistence.CouchDb
+﻿namespace Adapter.Persistence.CouchDb.Tests.Integration
 {
-    public class Constants
+    internal class Constants
     {
         public const string DatabaseName = "bookorders-db";
         public const string DatabaseUser = "admin";
