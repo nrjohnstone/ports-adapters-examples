@@ -42,6 +42,9 @@
     <Reference Include="Newtonsoft.Json, Version=10.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\..\packages\Newtonsoft.Json.10.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
+    <Reference Include="SimpleInjector, Version=4.0.8.0, Culture=neutral, PublicKeyToken=984cb50dea722e99, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\SimpleInjector.4.0.8\lib\net45\SimpleInjector.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.AppContext, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <HintPath>..\..\packages\System.AppContext.4.3.0\lib\net46\System.AppContext.dll</HintPath>
@@ -122,11 +125,17 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Constants.cs" />
+    <Compile Include="PersistenceAdapter.cs" />
+    <Compile Include="PersistenceAdapterSettings.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repositories\BookOrderMapper.cs" />
     <Compile Include="Repositories\BookOrderRepository.cs" />
+    <Compile Include="CouchDbSettings.cs" />
     <Compile Include="Repositories\Dtos\BookOrderDto.cs" />
     <Compile Include="Repositories\Dtos\OrderLineDto.cs" />
+    <Compile Include="Views\BookOrderViews.cs" />
+    <Compile Include="Views\ViewManager.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Core\Domain.csproj">

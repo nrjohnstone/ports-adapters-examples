@@ -3,8 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using Adapter.Persistence.CouchDb.Repositories;
+using Adapter.Persistence.CouchDb.Views;
 using Domain.Entities;
 using FluentAssertions;
 using MyCouch;
@@ -14,19 +16,29 @@ namespace Adapter.Persistence.CouchDb.Tests.Integration
 {
     public class BookOrderRepositoryTests
     {
+        private readonly string _databaseName;
+
         public BookOrderRepositoryTests()
         {
+            var randomDatabaseSuffix = Guid.NewGuid().ToString();
+            _databaseName = $"it-{randomDatabaseSuffix}";
             CreateDatabaseIfNotExists();
+            CrewViews();
         }
 
-        private static void CreateDatabaseIfNotExists()
+        private void CrewViews()
+        {
+            new ViewManager(Constants.DatabaseUri, _databaseName).CreateViews();
+        }
+
+        private void CreateDatabaseIfNotExists()
         {
             using (var couchDb = new MyCouchServerClient("http://admin:123@localhost:5984"))
             {
-                if (couchDb.Databases.GetAsync("mydb").Result.StatusCode == HttpStatusCode.OK)
+                if (couchDb.Databases.GetAsync(_databaseName).Result.StatusCode == HttpStatusCode.OK)
                     return;
 
-                var response = couchDb.Databases.PutAsync("mydb");
+                var response = couchDb.Databases.PutAsync(_databaseName);
 
                 response.Result.StatusCode.Should().Be(HttpStatusCode.Created);
             }
@@ -34,7 +46,9 @@ namespace Adapter.Persistence.CouchDb.Tests.Integration
 
         private BookOrderRepository CreateSut()
         {
-            return new BookOrderRepository();
+            CouchDbSettings settings = new CouchDbSettings(
+                Constants.DatabaseUri, _databaseName);
+            return new BookOrderRepository(settings);
         }
         
         [Fact]
@@ -103,6 +117,176 @@ namespace Adapter.Persistence.CouchDb.Tests.Integration
             storedBookOrder.OrderLines.ShouldBeEquivalentTo(bookOrder.OrderLines);
             storedBookOrder.State.Should().Be(BookOrderState.Approved);
             storedBookOrder.Supplier.Should().Be(bookOrder.Supplier);
+        }
+
+        [Theory]
+        [InlineData("Foo")]
+        [InlineData("Baz")]
+        public void GetBySupplier_WhenBookOrdersForAllSuppliersExist_ShouldOnlyReturnBookOrdersForSupplier(string supplierToFilterBy)
+        {
+            var sut = CreateSut();
+
+            Guid bookOrderId = Guid.NewGuid();
+            IEnumerable<OrderLine> orderLines = new List<OrderLine>()
+            {
+                new OrderLine("Line1Book", 100M, 2, Guid.NewGuid()) };
+
+            var bookOrder = new BookOrder(supplierToFilterBy, bookOrderId, BookOrderState.New,
+                orderLines);
+            sut.Store(bookOrder);
+
+            var results = sut.GetBySupplier(supplierToFilterBy).ToList();
+
+            results.Should().NotBeNull();
+            results.Select(x => x.Supplier).Should().OnlyContain(y => y == supplierToFilterBy);
+        }
+
+        [Fact]
+        public void GetBySupplier_ShouldIgnorePartialMatches()
+        {
+            var sut = CreateSut();
+
+            var bookOrder1 = new BookOrder("Foo1", Guid.NewGuid(), BookOrderState.New,
+                new List<OrderLine>()
+                {
+                    new OrderLine("Line1Book", 100M, 2, Guid.NewGuid())
+                });
+            var bookOrder2 = new BookOrder("Foo", Guid.NewGuid(), BookOrderState.New,
+                new List<OrderLine>()
+                {
+                    new OrderLine("Line1Book", 200M, 3, Guid.NewGuid())
+                });
+
+            sut.Store(bookOrder1);
+            sut.Store(bookOrder2);
+
+            var results = sut.GetBySupplier("Foo").ToList();
+            
+            results.Select(x => x.Supplier).Should().OnlyContain(y => y == "Foo");
+        }
+
+        [Fact]
+        public void GetByState_ShouldOnlyReturnMatchesForState()
+        {
+            var sut = CreateSut();
+
+            var bookOrder1 = new BookOrder("Foo", Guid.NewGuid(), BookOrderState.Sent,
+                new List<OrderLine>()
+                {
+                    new OrderLine("Line1Book", 100M, 2, Guid.NewGuid())
+                });
+            var bookOrder2 = new BookOrder("Foo", Guid.NewGuid(), BookOrderState.New,
+                new List<OrderLine>()
+                {
+                    new OrderLine("Line1Book", 200M, 3, Guid.NewGuid())
+                });
+
+            sut.Store(bookOrder1);
+            sut.Store(bookOrder2);
+
+            var results = sut.GetByState(BookOrderState.Sent).ToList();
+
+            results.Should().NotBeNull();
+            results.Select(x => x.State).Should().OnlyContain(orderstate => orderstate == BookOrderState.Sent);
+        }
+
+        [Fact]
+        public void GetBySupplierAndState_ShouldOnlyReturnExactMatches()
+        {
+            var sut = CreateSut();
+
+            var bookOrder1 = new BookOrder("Foo", Guid.NewGuid(), BookOrderState.Sent,
+                new List<OrderLine>()
+                {
+                    new OrderLine("Line1Book", 100M, 2, Guid.NewGuid())
+                });
+            var bookOrder2 = new BookOrder("Foo", Guid.NewGuid(), BookOrderState.New,
+                new List<OrderLine>()
+                {
+                    new OrderLine("Line1Book", 200M, 3, Guid.NewGuid())
+                });
+            var bookOrder3 = new BookOrder("Baz", Guid.NewGuid(), BookOrderState.New,
+                new List<OrderLine>()
+                {
+                    new OrderLine("Line1Book", 200M, 3, Guid.NewGuid())
+                });
+
+            sut.Store(bookOrder1);
+            sut.Store(bookOrder2);
+            sut.Store(bookOrder3);
+
+            var results = sut.GetBySupplier("Foo", BookOrderState.New).ToList();
+
+            results.Should().NotBeNull();
+            results.Select(x => x.State).Should().OnlyContain(orderstate => orderstate == BookOrderState.New);
+            results.Select(x => x.Supplier).Should().OnlyContain(supplier => supplier == "Foo");
+        }
+
+        [Fact]
+        public void Get_ShouldReturnAllBookOrders()
+        {
+            var sut = CreateSut();
+
+            var bookOrder1 = new BookOrder("Foo", Guid.NewGuid(), BookOrderState.Sent,
+                new List<OrderLine>()
+                {
+                    new OrderLine("Line1Book", 100M, 2, Guid.NewGuid())
+                });
+            var bookOrder2 = new BookOrder("Foo", Guid.NewGuid(), BookOrderState.New,
+                new List<OrderLine>()
+                {
+                    new OrderLine("Line1Book", 200M, 3, Guid.NewGuid())
+                });
+            var bookOrder3 = new BookOrder("Baz", Guid.NewGuid(), BookOrderState.New,
+                new List<OrderLine>()
+                {
+                    new OrderLine("Line1Book", 200M, 3, Guid.NewGuid())
+                });
+
+            sut.Store(bookOrder1);
+            sut.Store(bookOrder2);
+            sut.Store(bookOrder3);
+
+            var results = sut.Get().ToList();
+
+            results.Should().NotBeNull();
+            results.Count.Should().Be(3);
+            results.ShouldBeEquivalentTo(
+                new [] { bookOrder1, bookOrder2, bookOrder3});
+        }
+
+        [Fact]
+        public void Delete_ShouldRemoveAllBookOrders()
+        {
+            var sut = CreateSut();
+
+            var bookOrder1 = new BookOrder("Foo", Guid.NewGuid(), BookOrderState.Sent,
+                new List<OrderLine>()
+                {
+                    new OrderLine("Line1Book", 100M, 2, Guid.NewGuid())
+                });
+            var bookOrder2 = new BookOrder("Foo", Guid.NewGuid(), BookOrderState.New,
+                new List<OrderLine>()
+                {
+                    new OrderLine("Line1Book", 200M, 3, Guid.NewGuid())
+                });
+            var bookOrder3 = new BookOrder("Baz", Guid.NewGuid(), BookOrderState.New,
+                new List<OrderLine>()
+                {
+                    new OrderLine("Line1Book", 200M, 3, Guid.NewGuid())
+                });
+
+            sut.Store(bookOrder1);
+            sut.Store(bookOrder2);
+            sut.Store(bookOrder3);
+
+            // act
+            sut.Delete();
+            
+            // assert
+            var bookOrders = sut.Get();
+
+            bookOrders.Should().BeEmpty();
         }
     }
 }

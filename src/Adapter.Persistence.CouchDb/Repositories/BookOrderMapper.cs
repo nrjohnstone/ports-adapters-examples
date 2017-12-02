@@ -17,7 +17,7 @@ namespace Adapter.Persistence.CouchDb.Repositories
                     orderLineDto.Id));
             }
 
-            BookOrder bookOrder = new BookOrder(retrieved.Supplier, Guid.Parse(retrieved.Id),
+            BookOrder bookOrder = new BookOrder(retrieved.Supplier, Guid.Parse(retrieved._id),
                 retrieved.State, orderLines);
 
             return bookOrder;
@@ -35,7 +35,7 @@ namespace Adapter.Persistence.CouchDb.Repositories
             BookOrderDto bookOrderDto = new BookOrderDto(
                 bookOrder.Supplier, bookOrder.Id.ToString(), bookOrder.State, orderLineDtos);
 
-            bookOrderDto.Rev = rev;
+            bookOrderDto._rev = rev;
             return bookOrderDto;
         }
     }

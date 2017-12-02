@@ -1,22 +1,34 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Net;
 using Adapter.Persistence.CouchDb.Repositories.Dtos;
+using Adapter.Persistence.CouchDb.Views;
 using Domain.Entities;
 using Domain.Ports.Persistence;
 using MyCouch;
+using MyCouch.Requests;
+using MyCouch.Responses;
 using Newtonsoft.Json;
 
 namespace Adapter.Persistence.CouchDb.Repositories
 {
     public class BookOrderRepository : IBookOrderRepository
     {
-        string _httpLocalhost = "http://admin:123@localhost:5984";
+        private readonly string _databaseUri;
+        private readonly string _databaseName;
+
+        public BookOrderRepository(CouchDbSettings settings)
+        {
+            _databaseUri = settings.DatabaseUri;
+            _databaseName = settings.DatabaseName;
+        }
 
         public BookOrder Get(Guid id)
         {
             BookOrderDto retrieved;
             
-            using (var store = new MyCouchStore(_httpLocalhost, "mydb"))
+            using (var store = new MyCouchStore(_databaseUri, _databaseName))
             {
                 var doc = store.GetByIdAsync(id.ToString()).Result;
 
@@ -31,9 +43,7 @@ namespace Adapter.Persistence.CouchDb.Repositories
 
         public void Store(BookOrder bookOrder)
         {
-            var id = bookOrder.Id.ToString();
-
-            using (var store = new MyCouchStore(_httpLocalhost, "mydb"))
+            using (var store = new MyCouchStore(_databaseUri, _databaseName))
             {
                 // HACK: Concurrency support, lets just get the latest rev
                 // Don't do this in production environments !! Implement concurrency properly all the way
@@ -41,15 +51,15 @@ namespace Adapter.Persistence.CouchDb.Repositories
                 string rev = GetRev(store, bookOrder.Id);
                 
                 BookOrderDto bookOrderDto = BookOrderMapper.MapTo(bookOrder, rev);
-                var doc = JsonConvert.SerializeObject(bookOrderDto);
                 
                 if (rev == null)
                 {
-                    store.StoreAsync(id, doc).Wait();
+                    store.StoreAsync(bookOrderDto).Wait();
                 }
                 else
                 {
-                    store.StoreAsync(id, rev, doc).Wait();
+                    bookOrderDto._rev = rev;
+                    store.StoreAsync(bookOrderDto).Wait();
                 }                    
             }
         }
@@ -62,34 +72,146 @@ namespace Adapter.Persistence.CouchDb.Repositories
                 return null;
 
             var retrieved = store.GetByIdAsync<BookOrderDto>(id.ToString()).Result;
-
-            //var retrieved = JsonConvert.DeserializeObject<BookOrderDto>(doc);
-            return retrieved.Rev;
+            return retrieved._rev;
         }
 
         public IEnumerable<BookOrder> GetBySupplier(string supplier)
         {
-            throw new NotImplementedException();
+            List<BookOrder> bookOrders = new List<BookOrder>();
+            using (var client = new MyCouchClient(_databaseUri, _databaseName))
+            {
+                QueryViewRequest request = new QueryViewRequest(
+                    "bookorders", "bysupplier");
+                request.Configure(parameters => parameters
+                    .Key(supplier)
+                    .IncludeDocs(true));
+
+                ViewQueryResponse<string> results =
+                    client.Views.QueryAsync<string>(request).Result;
+
+                foreach (var resultsRow in results.Rows)
+                {
+                    BookOrderDto dto = JsonConvert.DeserializeObject<BookOrderDto>(
+                        resultsRow.IncludedDoc);
+                    bookOrders.Add(BookOrderMapper.MapFrom(dto));
+                }
+
+            }
+            return bookOrders;
         }
 
         public IEnumerable<BookOrder> GetBySupplier(string supplier, BookOrderState state)
         {
-            throw new NotImplementedException();
+            List<BookOrder> bookOrders = new List<BookOrder>();
+            using (var client = new MyCouchClient(_databaseUri, _databaseName))
+            {
+                QueryViewRequest request = new QueryViewRequest(
+                    "bookorders", "bysupplier");
+                request.Configure(parameters => parameters
+                    .Key(supplier)
+                    .IncludeDocs(false));
+
+                ViewQueryResponse<string> docIdsBySupplier =
+                    client.Views.QueryAsync<string>(request).Result;
+                
+                QueryViewRequest request2 = new QueryViewRequest(
+                    "bookorders", "bystate");
+                request2.Configure(parameters => parameters
+                    .Key(state)
+                    .IncludeDocs(false));
+
+                ViewQueryResponse<string> docIdsByState =
+                    client.Views.QueryAsync<string>(request2).Result;
+
+                var docIds = docIdsBySupplier.Rows.Select(x => x.Id)
+                    .Intersect(docIdsByState.Rows.Select(x => x.Id));
+
+                var request3 = new QueryViewRequest("_all_docs");
+                request3.Configure(parameters => parameters
+                    .Keys(docIds.ToArray())
+                    .IncludeDocs(true));
+
+                var results =
+                    client.Views.QueryAsync<string>(request3).Result;
+
+                foreach (var resultsRow in results.Rows)
+                {
+                    BookOrderDto dto = JsonConvert.DeserializeObject<BookOrderDto>(
+                        resultsRow.IncludedDoc);
+                    bookOrders.Add(BookOrderMapper.MapFrom(dto));
+                }
+            }
+            return bookOrders;
         }
 
         public IEnumerable<BookOrder> GetByState(BookOrderState state)
         {
-            throw new NotImplementedException();
+            List<BookOrder> bookOrders = new List<BookOrder>();
+            using (var client = new MyCouchClient(_databaseUri, _databaseName))
+            {
+                QueryViewRequest request = new QueryViewRequest(
+                    "bookorders", "bystate");
+                request.Configure(parameters => parameters
+                    .Key(state)
+                    .IncludeDocs(true));
+
+                ViewQueryResponse<string> results =
+                    client.Views.QueryAsync<string>(request).Result;
+
+                foreach (var resultsRow in results.Rows)
+                {
+                    BookOrderDto dto = JsonConvert.DeserializeObject<BookOrderDto>(
+                        resultsRow.IncludedDoc);
+                    bookOrders.Add(BookOrderMapper.MapFrom(dto));
+                }
+            }
+            return bookOrders;
         }
 
         public IEnumerable<BookOrder> Get()
         {
-            throw new NotImplementedException();
+            List<BookOrder> bookOrders = new List<BookOrder>();
+            using (var client = new MyCouchClient(_databaseUri, _databaseName))
+            {
+                QueryViewRequest request = new QueryViewRequest(
+                    "bookorders", "allOrders");
+                request.Configure(parameters => parameters.IncludeDocs(true));
+
+                ViewQueryResponse<string> results =
+                    client.Views.QueryAsync<string>(request).Result;
+
+                foreach (var resultsRow in results.Rows)
+                {
+                    BookOrderDto dto = JsonConvert.DeserializeObject<BookOrderDto>(
+                        resultsRow.IncludedDoc);
+                    bookOrders.Add(BookOrderMapper.MapFrom(dto));
+                }
+            }
+            return bookOrders;
         }
 
         public void Delete()
         {
-            throw new NotImplementedException();
+            using (var client = new MyCouchClient(_databaseUri, _databaseName))
+            {
+                QueryViewRequest request = new QueryViewRequest(
+                    "bookorders", "allOrders");
+                request.Configure(parameters => parameters.IncludeDocs(true));
+
+                ViewQueryResponse<string> results =
+                    client.Views.QueryAsync<string>(request).Result;
+
+                var bulkRequest = new BulkRequest() { AllOrNothing = false };
+                foreach (var resultsRow in results.Rows)
+                {
+                    BookOrderDto dto = JsonConvert.DeserializeObject<BookOrderDto>(
+                        resultsRow.IncludedDoc);
+                    bulkRequest.Delete(dto._id, dto._rev);
+                    Console.WriteLine($"Delete request for id:{dto._id}");
+                }
+
+                client.Documents.BulkAsync(bulkRequest).Wait();
+            }
         }
     }
 }

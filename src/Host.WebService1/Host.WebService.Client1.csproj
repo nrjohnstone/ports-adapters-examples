@@ -70,6 +70,7 @@
       <HintPath>..\..\packages\Swashbuckle.Core.5.6.0\lib\net40\Swashbuckle.Core.dll</HintPath>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.ComponentModel.Composition" />
     <Reference Include="System.Core" />
     <Reference Include="System.Net.Http.Formatting, Version=5.2.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\..\packages\Microsoft.AspNet.WebApi.Client.5.2.3\lib\net45\System.Net.Http.Formatting.dll</HintPath>
@@ -111,6 +112,10 @@
     <ProjectReference Include="..\Adapter.Notification.Email\Adapter.Notification.Email.csproj">
       <Project>{bf17c870-a263-4d73-a1c2-be17c642f0bf}</Project>
       <Name>Adapter.Notification.Email</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Adapter.Persistence.CouchDb\Adapter.Persistence.CouchDb.csproj">
+      <Project>{f9b62c54-9131-4606-8e44-6118d576fee4}</Project>
+      <Name>Adapter.Persistence.CouchDb</Name>
     </ProjectReference>
     <ProjectReference Include="..\Adapter.Persistence.MySql\Adapter.Persistence.MySql.csproj">
       <Project>{b4f64e5c-a80a-4e48-a307-6ed26233c394}</Project>
