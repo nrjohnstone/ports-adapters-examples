@@ -19,16 +19,8 @@ namespace Adapter.Trigger.Test
         {
             if (!_initialized)
                 throw new InvalidOperationException("Adapter must be initialized prior to use");
-
-            IEnumerable<BookTitleOrder> testData = new[] {
-                new BookTitleOrder(title: "The Light Fantastic", supplier: "Acme Inc",  price: 15M, quantity: 1),
-                new BookTitleOrder(title: "The Blind Watchmaker", supplier: "Winston Publishing",  price: 24.99M, quantity: 10),
-                new BookTitleOrder(title: "Dirk Gently", supplier: "Acme Inc", price: 10.99M, quantity: 2)
-            };
             
             _orderBookUseCaseTrigger = new OrderBookUseCaseRandomTrigger(orderBookUseCase);
-
-            //_orderBookUseCaseTrigger.SetTestData(testData);
             _orderBookUseCaseTrigger.Start();
         }
 

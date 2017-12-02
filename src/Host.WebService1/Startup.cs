@@ -72,6 +72,14 @@ namespace Host.WebService.Client1
 
         protected virtual void RegisterPersistenceAdapter()
         {
+            // TODO NJ: move to new host
+            RegisterCouchDbPersistenceAdapter();
+            // MySql adapter is the correct one for this Host
+            //RegisterMySqlPersistenceAdapter();
+        }
+
+        private void RegisterMySqlPersistenceAdapter()
+        {
             var persistenceAdapter = new Adapter.Persistence.MySql.PersistenceAdapter(
                 new PersistenceAdapterSettings()
                 {
@@ -81,6 +89,16 @@ namespace Host.WebService.Client1
                                        "database=bookorders"
                 });
 
+            persistenceAdapter.Initialize();
+            persistenceAdapter.Register(Container);
+        }
+
+        protected virtual void RegisterCouchDbPersistenceAdapter()
+        {
+            var persistenceAdapter = new Adapter.Persistence.CouchDb.PersistenceAdapter(
+                new Adapter.Persistence.CouchDb.PersistenceAdapterSettings(
+                    "http://admin:123@localhost:5984", "bookorders"));
+           
             persistenceAdapter.Initialize();
             persistenceAdapter.Register(Container);
         }
