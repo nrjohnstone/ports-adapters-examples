@@ -62,6 +62,7 @@
     <Compile Include="UseCases\ApproveBookOrderUseCase.cs" />
     <Compile Include="UseCases\DeleteBookOrdersUseCase.cs" />
     <Compile Include="UseCases\GetBookOrdersUseCase.cs" />
+    <Compile Include="UseCases\GetNewBookOrdersUseCase.cs" />
     <Compile Include="UseCases\OrderBookUseCase.cs" />
     <Compile Include="UseCases\SendBookOrderUseCase.cs" />
     <Compile Include="ValueObjects\BookTitleOrder.cs" />
