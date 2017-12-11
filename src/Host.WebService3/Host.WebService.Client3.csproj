@@ -121,9 +121,9 @@
       <Project>{f9b62c54-9131-4606-8e44-6118d576fee4}</Project>
       <Name>Adapter.Persistence.CouchDb</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Adapter.Trigger.RabbitMq\Adapter.Trigger.RabbitMq.csproj">
-      <Project>{9874dc72-7d4e-4f04-b9d1-6aa175f58224}</Project>
-      <Name>Adapter.Trigger.RabbitMq</Name>
+    <ProjectReference Include="..\Adapter.Trigger.Csv\Adapter.Trigger.Csv.csproj">
+      <Project>{2FAC930D-F9AC-45BB-9C48-1EFE46BA8278}</Project>
+      <Name>Adapter.Trigger.Csv</Name>
     </ProjectReference>
     <ProjectReference Include="..\Core\Domain.csproj">
       <Project>{97E5E8EB-26D7-49D9-A412-3DF4F5716643}</Project>

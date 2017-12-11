@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Web.Http;
-using Adapter.Trigger.RabbitMq;
+using Adapter.Trigger.Csv;
 using Domain.UseCases;
 using Host.WebService.Client3.BookOrders;
 using Owin;
@@ -14,7 +14,9 @@ namespace Host.WebService.Client3
     {
         protected Container Container;        
         private Action _notificationAdapterShutdown = () => { };
-        
+        private Action _triggerAdapterShutdown = () => { };
+        private TriggerAdapter _triggerAdapter;
+
         public Startup()
         {
             Container = new Container();            
@@ -26,9 +28,11 @@ namespace Host.WebService.Client3
 
             RegisterPersistenceAdapter();
             RegisterNotificationAdapter();
+            RegisterTriggerAdapter();
             RegisterControllers();
             RegisterHostAdapter();
-            
+
+            AttachUseCasesToTriggers();
             config.DependencyResolver = new SimpleInjectorWebApiDependencyResolver(Container);
 
             config.MapHttpAttributeRoutes();
@@ -40,6 +44,18 @@ namespace Host.WebService.Client3
             config.EnsureInitialized();
             
             appBuilder.UseWebApi(config);
+        }
+
+        private void RegisterTriggerAdapter()
+        {
+            _triggerAdapter = new TriggerAdapter();
+            _triggerAdapter.Initialize();
+            _triggerAdapterShutdown = () => { _triggerAdapter.Shutdown(); };
+        }
+
+        private void AttachUseCasesToTriggers()
+        {
+            _triggerAdapter.Handle(Container.GetInstance<OrderBookUseCase>());
         }
 
         protected virtual void RegisterPersistenceAdapter()
@@ -84,6 +100,7 @@ namespace Host.WebService.Client3
         public void Shutdown()
         {
             _notificationAdapterShutdown();
+            _triggerAdapterShutdown();
             Container?.Dispose();
         }
     }
