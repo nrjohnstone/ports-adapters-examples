@@ -29,7 +29,6 @@ namespace Host.WebService.Client3
 
             RegisterPersistenceAdapter();
             RegisterNotificationAdapter();
-            RegisterTriggerAdapter();
             RegisterControllers();
             RegisterHostAdapter();
 
@@ -66,14 +65,7 @@ namespace Host.WebService.Client3
             _notificationAdapterShutdown = () => { notificationAdapter.Shutdown(); };
 
         }
-
-        private void RegisterTriggerAdapter()
-        {
-            _triggerAdapter = new Adapter.Trigger.RabbitMq.TriggerAdapter();
-            _triggerAdapter.Initialize();
-            _triggerAdapterShutdown = () => { _triggerAdapter.Shutdown(); };
-        }
-
+        
         private void RegisterControllers()
         {
             Container.Register<BookOrdersController>();
