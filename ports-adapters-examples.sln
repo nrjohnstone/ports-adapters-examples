@@ -33,8 +33,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Adapter.Notification.Email"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Host.WebService.Client1", "src\Host.WebService1\Host.WebService.Client1.csproj", "{11455D71-79B1-4F03-8568-734A50B946A8}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Host.WebService.Client1.Tests.Unit", "Host.WebService1.Tests.Unit\Host.WebService.Client1.Tests.Unit.csproj", "{8CAB6AE1-0317-4D8F-AFE2-92B1684E34E5}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Host.WebService.Client2", "src\Host.WebService2\Host.WebService.Client2.csproj", "{941768B7-F35F-4F0F-A4CC-E5BE60083D68}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Adapter.Persistence.CouchDb", "src\Adapter.Persistence.CouchDb\Adapter.Persistence.CouchDb.csproj", "{F9B62C54-9131-4606-8E44-6118D576FEE4}"
@@ -42,6 +40,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Adapter.Persistence.CouchDb.Tests.Integration", "test\Adapter.Persistence.CouchDb.Tests.Integration\Adapter.Persistence.CouchDb.Tests.Integration.csproj", "{2DB22EFF-48A7-4D49-9EC1-D8C2AAB1AEEF}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Host.WebService.Client3", "src\Host.WebService3\Host.WebService.Client3.csproj", "{941768B7-F35F-4F0F-A4CC-E5BE61183D68}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Host.WebService.Client1.Tests.Unit", "test\Host.WebService1.Tests.Unit\Host.WebService.Client1.Tests.Unit.csproj", "{8CAB6AE1-0317-4D8F-AFE2-92B1684E34E5}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -97,10 +97,6 @@ Global
 		{11455D71-79B1-4F03-8568-734A50B946A8}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{11455D71-79B1-4F03-8568-734A50B946A8}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{11455D71-79B1-4F03-8568-734A50B946A8}.Release|Any CPU.Build.0 = Release|Any CPU
-		{8CAB6AE1-0317-4D8F-AFE2-92B1684E34E5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{8CAB6AE1-0317-4D8F-AFE2-92B1684E34E5}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{8CAB6AE1-0317-4D8F-AFE2-92B1684E34E5}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{8CAB6AE1-0317-4D8F-AFE2-92B1684E34E5}.Release|Any CPU.Build.0 = Release|Any CPU
 		{941768B7-F35F-4F0F-A4CC-E5BE60083D68}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{941768B7-F35F-4F0F-A4CC-E5BE60083D68}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{941768B7-F35F-4F0F-A4CC-E5BE60083D68}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -117,6 +113,10 @@ Global
 		{941768B7-F35F-4F0F-A4CC-E5BE61183D68}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{941768B7-F35F-4F0F-A4CC-E5BE61183D68}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{941768B7-F35F-4F0F-A4CC-E5BE61183D68}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8CAB6AE1-0317-4D8F-AFE2-92B1684E34E5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8CAB6AE1-0317-4D8F-AFE2-92B1684E34E5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8CAB6AE1-0317-4D8F-AFE2-92B1684E34E5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8CAB6AE1-0317-4D8F-AFE2-92B1684E34E5}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -133,11 +133,11 @@ Global
 		{F939005A-4433-475D-BCEA-41671DE4D8C8} = {E188439D-1F1D-4EBA-B0DE-A7074E348190}
 		{BF17C870-A263-4D73-A1C2-BE17C642F0BF} = {E188439D-1F1D-4EBA-B0DE-A7074E348190}
 		{11455D71-79B1-4F03-8568-734A50B946A8} = {291979A6-2D81-4532-945E-47F00C7DEC70}
-		{8CAB6AE1-0317-4D8F-AFE2-92B1684E34E5} = {9234AD06-323F-461D-AC33-43C22EFF20B7}
 		{941768B7-F35F-4F0F-A4CC-E5BE60083D68} = {291979A6-2D81-4532-945E-47F00C7DEC70}
 		{F9B62C54-9131-4606-8E44-6118D576FEE4} = {E188439D-1F1D-4EBA-B0DE-A7074E348190}
 		{2DB22EFF-48A7-4D49-9EC1-D8C2AAB1AEEF} = {9234AD06-323F-461D-AC33-43C22EFF20B7}
 		{941768B7-F35F-4F0F-A4CC-E5BE61183D68} = {291979A6-2D81-4532-945E-47F00C7DEC70}
+		{8CAB6AE1-0317-4D8F-AFE2-92B1684E34E5} = {9234AD06-323F-461D-AC33-43C22EFF20B7}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {EC0DDD5A-EE19-4A43-AC53-2C779638CE26}
