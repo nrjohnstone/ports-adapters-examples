@@ -16,7 +16,7 @@ Please do not take this code and copy and paste it into a production solution wi
 * logging
 * metrics
 
-and all the other things that should be in anyones MVP before the put an application into production. 
+and all the other things that should be in anyones MVP before the put an application into production.
 This code strives to keep itself focused on how the inside of an application, the core business logic, can be seperated from the outside concerns of databases, message buses and email severs etc... and as such, the above points are either ignored or glossed over very quickly.
 
 ### The One Best Way ###
@@ -39,6 +39,7 @@ Multiple clients want to run the book ordering service and each has a slightly d
 * wants to use a REST endpoint to allow their client applications to approve book title orders
 * wants to use a REST endpoint to allow their client applications to send book title orders
 * wants to use email to notify their book wholesaler of their orders when sending
+* wants to store their state in a MySql relational database
 
 ### Client 2 ###
 
@@ -46,5 +47,12 @@ Multiple clients want to run the book ordering service and each has a slightly d
 * wants to use a REST endpoint to allow their client applications to approve book title orders
 * wants to use a REST endpoint to allow their client applications to send book title orders
 * wants to use a message queue (RabbitMq) to notify their book wholesaler of their orders when sending
+* wants to store their state in a MySql relational database
 
-* Both clients want to store their state in a MySql database
+### Client 3 ###
+
+* wants to use a REST endpoint to allow their client applications to submit book title orders
+* wants to use a REST endpoint to allow their client applications to approve book title orders
+* wants to use a REST endpoint to allow their client applications to send book title orders
+* wants to use a message queue (RabbitMq) to notify their book wholesaler of their orders when sending
+* wants to store their state in a CouchDb document database
