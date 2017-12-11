@@ -12,12 +12,9 @@ namespace Host.WebService.Client3
 {
     public class Startup
     {
-        protected Container Container;
-        private Action _triggerAdapterShutdown = () => { };
+        protected Container Container;        
         private Action _notificationAdapterShutdown = () => { };
-
-        private TriggerAdapter _triggerAdapter;
-
+        
         public Startup()
         {
             Container = new Container();            
@@ -31,9 +28,7 @@ namespace Host.WebService.Client3
             RegisterNotificationAdapter();
             RegisterControllers();
             RegisterHostAdapter();
-
-            AttachUseCasesToTriggers();
-
+            
             config.DependencyResolver = new SimpleInjectorWebApiDependencyResolver(Container);
 
             config.MapHttpAttributeRoutes();
@@ -86,16 +81,9 @@ namespace Host.WebService.Client3
             Container.Register<DeleteBookOrdersUseCase>();
         }
 
-        private void AttachUseCasesToTriggers()
-        {
-            // Wire upstream ports into adapter
-            _triggerAdapter.Handle(Container.GetInstance<OrderBookUseCase>());
-        }
-
         public void Shutdown()
         {
             _notificationAdapterShutdown();
-            _triggerAdapterShutdown();
             Container?.Dispose();
         }
     }
