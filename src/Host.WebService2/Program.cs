@@ -1,5 +1,6 @@
 ﻿using System;
 using Microsoft.Owin.Hosting;
+using Serilog;
 
 namespace Host.WebService.Client2
 {
@@ -7,6 +8,7 @@ namespace Host.WebService.Client2
     {
         static void Main(string[] args)
         {
+            ConfigureSerilog();
             string baseAddress = "http://localhost:10009/";
 
             Startup startup = new Startup();
@@ -16,6 +18,14 @@ namespace Host.WebService.Client2
                 Console.ReadLine();
                 startup.Shutdown();
             }
+        }
+
+        private static void ConfigureSerilog()
+        {
+            Log.Logger = new LoggerConfiguration()
+                .WriteTo.ColoredConsole()
+                .MinimumLevel.Debug()
+                .CreateLogger();
         }
     }
 }
