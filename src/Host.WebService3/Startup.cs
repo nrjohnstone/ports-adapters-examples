@@ -25,7 +25,7 @@ namespace Host.WebService.Client3
         public void Configuration(IAppBuilder appBuilder)
         {
             HttpConfiguration config = new HttpConfiguration();
-
+            
             RegisterPersistenceAdapter();
             RegisterNotificationAdapter();
             RegisterTriggerAdapter();
