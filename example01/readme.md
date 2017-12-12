@@ -1,5 +1,7 @@
 # Hexagonal Architecture (aka Ports and Adapters) #
 
+## Example 01 ##
+
 Transitioning from thinking about Software Architecture in the traditional N-Tier sense to patterns such as Clean Architecture, Onion Architecture and Hexagonal Architecture can be a bit of a mental hurdle.
 
 I've been using Hexagonal Architecture as my go to pattern for implementations in the .NET space since around 2015, and one of the things I wished I had available to me back then was a simple reference that demonstrates the concepts clearly.
@@ -31,6 +33,9 @@ The example uses a book order service as the domain, and the use cases that are 
 * Allow users to approve a book order
 * Allow users to send a book order to a book wholesaler for purchase and shipping
 
+The work flow consists of book title orders being submitted, at some point a book order is approved and then the book order is sent
+to the supplier.
+
 Multiple clients want to run the book ordering service and each has a slightly different configuration
 
 ### Client 1 ###
@@ -51,7 +56,7 @@ Multiple clients want to run the book ordering service and each has a slightly d
 
 ### Client 3 ###
 
-* wants to use a REST endpoint to allow their client applications to submit book title orders
+* wants to poll a folder at regular intervals for a delimted file matching an expression and use the content to submit book title orders
 * wants to use a REST endpoint to allow their client applications to approve book title orders
 * wants to use a REST endpoint to allow their client applications to send book title orders
 * wants to use a message queue (RabbitMq) to notify their book wholesaler of their orders when sending
