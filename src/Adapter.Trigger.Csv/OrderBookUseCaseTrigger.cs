@@ -14,55 +14,61 @@ namespace Adapter.Trigger.Csv
         private readonly ManualResetEvent _shutdownEvent = new ManualResetEvent(false);
         private bool _shutdown;
 
-        private const string BookOrderFileMask = "BookOrders*.csv";
+        protected const string BookOrderFileMask = "BookOrders*.csv";
         public string BookOrderFileFolder { get; }
 
 
         public OrderBookUseCaseTrigger(OrderBookUseCase orderBookUseCase)
         {
             _orderBookUseCase = orderBookUseCase;
-            _threadPoll = new Thread(PollForNewCsv);
+            _threadPoll = new Thread(PollLoopForCsv);
             BookOrderFileFolder = Path.GetTempPath();
         }
 
-        private void PollForNewCsv()
+        private void PollLoopForCsv()
         {
             while (!_shutdown)
             {
-                IEnumerable<string> filePaths = GetFilesMatchingBookOrderFileMask();
+                CheckAndProcessCsvFiles();
+                _shutdownEvent.WaitOne(millisecondsTimeout: 2000);
+            }
+        }
 
-                foreach (string filePath in filePaths)
+        protected void CheckAndProcessCsvFiles()
+        {            
+            IEnumerable<string> filePaths = GetFilesMatchingBookOrderFileMask();
+
+            foreach (string filePath in filePaths)
+            {
+                if (FileExists(filePath))
                 {
-                    if (FileExists(filePath))
+                    List<BookTitleOrder> bookOrders = new List<BookTitleOrder>();
+
+                    using (Stream stream = GetFileStream(filePath))
                     {
-                        Stream stream = GetFileStream(filePath);
                         var reader = new StreamReader(stream);
                         var engine = new DelimitedFileEngine<BookTitleOrderModel>();
                         BookTitleOrderModel[] records = engine.ReadStream(reader);
-
-                        List<BookTitleOrder> bookOrders = new List<BookTitleOrder>();
-
+                        
                         foreach (var record in records)
                         {
                             bookOrders.Add(new BookTitleOrder(
                                 record.Title, record.Supplier, record.Price, record.Quantity));
                         }
-
-                        // NOTE: Don't do this in production. There is no attempt here do even do this 
-                        // in a transactional manner, and you should mark the file as processed once all 
-                        // orders are placed correctly rather than delete it, and have some kind of support
-                        // for resuming at the last processed line if a fault occurs
-                        DeleteFile(filePath);
-
-                        foreach (BookTitleOrder bookOrder in bookOrders)
-                        {
-                            _orderBookUseCase.Execute(bookOrder);
-                        }
                     }
-                }                
 
-                _shutdownEvent.WaitOne(millisecondsTimeout: 2000);
-            }
+                    // NOTE: Don't do this in production. There is no attempt here do even do this 
+                    // in a transactional manner, and you should mark the file as processed once all 
+                    // orders are placed correctly rather than delete it, and have some kind of support
+                    // for resuming at the last processed line if a fault occurs
+                    DeleteFile(filePath);
+
+                    foreach (BookTitleOrder bookOrder in bookOrders)
+                    {
+                        _orderBookUseCase.Execute(bookOrder);
+                    }
+                }
+            }                            
         }
 
         public void Start()
@@ -76,12 +82,13 @@ namespace Adapter.Trigger.Csv
             _shutdownEvent.Set();
         }
 
+        #region Test Seams
         protected virtual void DeleteFile(string filePath)
         {
             File.Delete(filePath);
         }
 
-        protected virtual FileStream GetFileStream(string file)
+        protected virtual Stream GetFileStream(string file)
         {
             var stream = new FileStream(file, FileMode.Open);
             return stream;
@@ -96,6 +103,6 @@ namespace Adapter.Trigger.Csv
         {
             return Directory.EnumerateFiles(BookOrderFileFolder, BookOrderFileMask);
         }
-
+        #endregion
     }
 }
