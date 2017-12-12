@@ -29,14 +29,16 @@ namespace Adapter.Trigger.Csv
         {
             while (!_shutdown)
             {
-                var files = Directory.EnumerateFiles(BookOrderFileFolder, BookOrderFileMask);
+                IEnumerable<string> filePaths = GetFilesMatchingBookOrderFileMask();
 
-                foreach (var file in files)
+                foreach (string filePath in filePaths)
                 {
-                    if (File.Exists(file))
+                    if (FileExists(filePath))
                     {
+                        Stream stream = GetFileStream(filePath);
+                        var reader = new StreamReader(stream);
                         var engine = new DelimitedFileEngine<BookTitleOrderModel>();
-                        var records = engine.ReadFile(file);
+                        BookTitleOrderModel[] records = engine.ReadStream(reader);
 
                         List<BookTitleOrder> bookOrders = new List<BookTitleOrder>();
 
@@ -50,9 +52,9 @@ namespace Adapter.Trigger.Csv
                         // in a transactional manner, and you should mark the file as processed once all 
                         // orders are placed correctly rather than delete it, and have some kind of support
                         // for resuming at the last processed line if a fault occurs
-                        File.Delete(file);
+                        DeleteFile(filePath);
 
-                        foreach (var bookOrder in bookOrders)
+                        foreach (BookTitleOrder bookOrder in bookOrders)
                         {
                             _orderBookUseCase.Execute(bookOrder);
                         }
@@ -73,5 +75,27 @@ namespace Adapter.Trigger.Csv
             _shutdown = true;
             _shutdownEvent.Set();
         }
+
+        protected virtual void DeleteFile(string filePath)
+        {
+            File.Delete(filePath);
+        }
+
+        protected virtual FileStream GetFileStream(string file)
+        {
+            var stream = new FileStream(file, FileMode.Open);
+            return stream;
+        }
+
+        protected virtual bool FileExists(string file)
+        {
+            return File.Exists(file);
+        }
+
+        protected virtual IEnumerable<string> GetFilesMatchingBookOrderFileMask()
+        {
+            return Directory.EnumerateFiles(BookOrderFileFolder, BookOrderFileMask);
+        }
+
     }
 }
