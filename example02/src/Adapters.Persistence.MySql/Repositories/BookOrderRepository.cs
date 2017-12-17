@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Data;
 using Adapters.Persistence.MySql.Repositories.Actions;
+using Dapper;
 using Domain.Entities;
 using Domain.Events;
 using Microsoft.CSharp.RuntimeBinder;
@@ -79,6 +80,12 @@ namespace Adapters.Persistence.MySql.Repositories
             action.Execute(ev.OrderId, ev.OrderLineId, ev.Title, ev.Price, ev.Quantity);
         }
 
+        private void Handle(BookOrderLineEditedEvent ev, IDbConnection connection)
+        {
+            var action = new EditBookOrderLineAction(connection);
+            action.Execute(ev.OrderId, ev.OrderLineId, ev.Title, ev.Price, ev.Quantity);
+        }
+
         public BookOrder Get(Guid orderId)
         {
             using (var connection = CreateConnection())
@@ -93,6 +100,32 @@ namespace Adapters.Persistence.MySql.Repositories
 
                 return bookOrder;
             }            
+        }
+    }
+
+    internal class EditBookOrderLineAction
+    {
+        private readonly IDbConnection _connection;
+
+        public EditBookOrderLineAction(IDbConnection connection)
+        {
+            _connection = connection;
+        }
+
+        public void Execute(Guid orderId, Guid orderLineId, string title, decimal price, int quantity)
+        {
+            _connection.Execute(
+                sql: "update book_order_lines " +
+                     "set title = ?Title, " +
+                     "price = ?Price, " +
+                     "quantity = ?Quantity " +
+                     "where order_line_id = ?OrderLineId", param: new
+                {
+                    OrderLineId = orderLineId,
+                    Title = title,
+                    Price = price,
+                    Quantity =quantity
+                });
         }
     }
 }

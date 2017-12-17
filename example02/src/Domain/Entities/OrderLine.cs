@@ -6,7 +6,7 @@ namespace Domain.Entities
     {
         public Guid Id { get; }
         public string Title { get; }
-        public decimal Price { get; }
+        public decimal Price { get; private set; }
         public int Quantity { get; }
 
         public OrderLine(string title, decimal price, int quantity, Guid id)
@@ -19,6 +19,11 @@ namespace Domain.Entities
             Price = price;
             Quantity = quantity;
             Id = id;
+        }
+
+        public void UpdatePrice(decimal price)
+        {
+            Price = price;
         }
     }
 }

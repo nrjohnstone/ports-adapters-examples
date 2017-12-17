@@ -61,5 +61,17 @@ namespace Domain.Entities
         public Guid Id { get; }
         public BookOrderState State { get; private set; }
 
+        public void UpdateOrderLinePrice(Guid orderLineId, decimal price)
+        {
+            var orderLine = OrderLines.FirstOrDefault(x => x.Id == orderLineId);
+
+            if (orderLine == null)
+                throw new InvalidOperationException("OrderLine does not exist");
+
+            orderLine.UpdatePrice(price);
+
+            AddEvent(new BookOrderLineEditedEvent(orderLine.Title, orderLine.Price,
+                orderLine.Quantity, orderLine.Id, Id));
+        }
     }
 }
