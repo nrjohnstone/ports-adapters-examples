@@ -1,7 +1,6 @@
 ﻿using System;
-using Domain.Events;
 
-namespace Domain.Entities
+namespace Domain.Events
 {
     public class BookOrderLineRemovedEvent : IEvent
     {

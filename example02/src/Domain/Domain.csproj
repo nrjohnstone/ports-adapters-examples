@@ -53,9 +53,9 @@
     <Compile Include="Entities\AddBookRequestException.cs" />
     <Compile Include="Entities\AggregateBase.cs" />
     <Compile Include="Entities\BookOrder.cs" />
-    <Compile Include="Entities\BookOrderLineCreatedEvent.cs" />
-    <Compile Include="Entities\BookOrderLineEditedEvent.cs" />
-    <Compile Include="Entities\BookOrderLineRemovedEvent.cs" />
+    <Compile Include="Events\BookOrderLineCreatedEvent.cs" />
+    <Compile Include="Events\BookOrderLineEditedEvent.cs" />
+    <Compile Include="Events\BookOrderLineRemovedEvent.cs" />
     <Compile Include="Entities\BookOrderState.cs" />
     <Compile Include="Entities\OrderLine.cs" />
     <Compile Include="Events\IEvent.cs" />
