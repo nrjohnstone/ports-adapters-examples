@@ -74,5 +74,29 @@ namespace Adapters.Persistence.MySql.Tests
 
             bookOrder.OrderLines.First(x => x.Id == orderLine.Id).Price.Should().Be(20.5M);
         }
+
+        [Fact]
+        public void CanStoreAndRetrieve_ANewBookOrder_WithRemovedLine()
+        {
+            var sut = CreateSut();
+            var orderId = Guid.NewGuid();
+            var order = BookOrder.CreateNew("SomeSupplier", orderId);
+            order.AddBookRequest(new BookTitleOrder("Title1", "SomeSupplier", 10.5M, 5));
+            order.AddBookRequest(new BookTitleOrder("Title2", "SomeSupplier", 20.5M, 7));
+
+            var orderLineToRemove = order.OrderLines.First(x => x.Title.Equals("Title2"));
+            order.RemoveOrderLine(orderLineToRemove.Id);
+
+            sut.Store(order);
+
+            var bookOrder = sut.Get(orderId);
+
+            bookOrder.Supplier.Should().Be("SomeSupplier");
+            bookOrder.Id.Should().Be(orderId);
+            bookOrder.State.Should().Be(BookOrderState.New);
+            bookOrder.OrderLines.Count.Should().Be(1);
+            bookOrder.OrderLines.Should().ContainSingle(
+                x => x.Title.Equals("Title1") && x.Price == 10.5M && x.Quantity == 5);
+        }
     }
 }

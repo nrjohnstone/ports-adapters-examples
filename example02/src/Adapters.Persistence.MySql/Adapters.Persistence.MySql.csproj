@@ -65,7 +65,9 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repositories\Dtos\BookOrderLineDto.cs" />
     <Compile Include="Repositories\Actions\GetBookOrderLinesAction.cs" />
+    <Compile Include="Repositories\Actions\EditBookOrderLineAction.cs" />
     <Compile Include="Repositories\OrderLineFactory.cs" />
+    <Compile Include="Repositories\Actions\RemoveBookOrderLineAction.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Domain\Domain.csproj">

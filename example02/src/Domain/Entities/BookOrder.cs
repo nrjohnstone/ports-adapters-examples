@@ -73,5 +73,16 @@ namespace Domain.Entities
             AddEvent(new BookOrderLineEditedEvent(orderLine.Title, orderLine.Price,
                 orderLine.Quantity, orderLine.Id, Id));
         }
+
+        public void RemoveOrderLine(Guid orderLineId)
+        {
+            var orderLine = OrderLines.FirstOrDefault(x => x.Id == orderLineId);
+
+            if (orderLine == null)
+                throw new InvalidOperationException("OrderLine does not exist");
+
+            _orderLines.Remove(orderLine);
+            AddEvent(new BookOrderLineRemovedEvent(orderLine.Id, Id));
+        }
     }
 }
