@@ -1,4 +1,5 @@
-﻿using System.Data;
+﻿using System;
+using System.Data;
 using Dapper;
 
 namespace Adapters.Persistence.MySql.Repositories.Actions
@@ -12,11 +13,11 @@ namespace Adapters.Persistence.MySql.Repositories.Actions
             _connection = connection;
         }
 
-        public void Execute(string orderId, string supplier)
+        public void Execute(Guid orderId, string supplier)
         {
             var parameters = new DynamicParameters();
 
-            parameters.Add("OrderId", orderId);
+            parameters.Add("OrderId", orderId.ToString());
             parameters.Add("Supplier", supplier);
             parameters.Add("State", "New");
 

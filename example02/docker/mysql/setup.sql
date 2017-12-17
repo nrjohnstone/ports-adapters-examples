@@ -3,3 +3,10 @@ create table book_orders (
     supplier VARCHAR(60) NOT NULL,
     state VARCHAR(60) NOT NULL);  
 
+create table book_order_lines ( 
+    order_line_id CHAR(36) NOT NULL PRIMARY KEY,
+    order_id CHAR(36) NOT NULL,
+    title VARCHAR(60) NOT NULL,
+    price DECIMAL(10,2) NOT NULL,
+    quantity INT NOT NULL
+);

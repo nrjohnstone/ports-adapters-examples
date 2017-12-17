@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Data;
 using Adapters.Persistence.MySql.Repositories.Actions;
 using Domain.Entities;
@@ -69,16 +70,28 @@ namespace Adapters.Persistence.MySql.Repositories
         private void Handle(BookOrderCreatedEvent ev, IDbConnection connection)
         {
             var action = new CreateBookOrderAction(connection);
-            action.Execute(ev.Id.ToString(), ev.Supplier);
+            action.Execute(ev.Id, ev.Supplier);
+        }
+
+        private void Handle(BookOrderLineCreatedEvent ev, IDbConnection connection)
+        {
+            var action = new CreateBookOrderLineAction(connection);
+            action.Execute(ev.OrderId, ev.OrderLineId, ev.Title, ev.Price, ev.Quantity);
         }
 
         public BookOrder Get(Guid orderId)
         {
             using (var connection = CreateConnection())
             {
-                var action = new GetBookOrderAction(connection);
-                var dto = action.Execute(orderId);
-                return BookOrder.CreateExisting(dto.Supplier, dto.State, dto.Order_Id);
+                var bookOrderDto = new GetBookOrderAction(connection).Execute(orderId);
+                var bookOrderLineDtos = new GetBookOrderLinesAction(connection).Execute(bookOrderDto.Order_Id);
+
+                List<OrderLine> lines = OrderLineFactory.CreateFrom(bookOrderLineDtos);
+                
+                var bookOrder = BookOrder.CreateExisting(
+                    bookOrderDto.Supplier, bookOrderDto.State, bookOrderDto.Order_Id, lines);
+
+                return bookOrder;
             }            
         }
     }
