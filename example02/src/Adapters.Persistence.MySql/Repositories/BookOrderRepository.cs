@@ -4,12 +4,13 @@ using System.Data;
 using Adapters.Persistence.MySql.Repositories.Actions;
 using Domain.Entities;
 using Domain.Events;
+using Domain.Ports.Persistence;
 using Microsoft.CSharp.RuntimeBinder;
 using MySql.Data.MySqlClient;
 
 namespace Adapters.Persistence.MySql.Repositories
 {
-    public class BookOrderRepository
+    public class BookOrderRepository : IBookOrderRepository
     {
         private readonly string _connectionString;
 
