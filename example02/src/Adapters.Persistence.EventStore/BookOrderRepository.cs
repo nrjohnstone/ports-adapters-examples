@@ -5,6 +5,7 @@ using System.Text;
 using Domain.Entities;
 using Domain.Events;
 using Domain.Ports.Persistence;
+using Domain.ValueObjects;
 using EventStore.ClientAPI;
 using Microsoft.CSharp.RuntimeBinder;
 using Newtonsoft.Json;
@@ -45,8 +46,7 @@ namespace Adapters.Persistence.EventStore
                 long nextSliceStart = StreamPosition.Start;
                 do
                 {                    
-                    currentSlice =
-                        connection.ReadStreamEventsForwardAsync(
+                    currentSlice = connection.ReadStreamEventsForwardAsync(
                             $"{StreamBaseName}-{orderId}", nextSliceStart,
                                 200, false).Result;
 
@@ -60,6 +60,16 @@ namespace Adapters.Persistence.EventStore
                             BookOrderCreatedEvent ev = JsonConvert.DeserializeObject< BookOrderCreatedEvent>(st);
                             bookOrder = BookOrder.CreateExisting(ev.Supplier, BookOrderState.New, ev.Id, 
                                 new List<OrderLine>());
+                        }
+                        else if (currentSliceEvent.Event.EventType.Equals(BookOrderLineCreatedEvent.EventType))
+                        {
+                            var st = Encoding.ASCII.GetString(currentSliceEvent.Event.Data);
+                            BookOrderLineCreatedEvent ev = 
+                                JsonConvert.DeserializeObject<BookOrderLineCreatedEvent>(st);
+
+                            bookOrder.AddBookRequest(
+                                new BookTitleOrder(
+                                    ev.Title, bookOrder.Supplier, ev.Price, ev.Quantity));
                         }
                     }
                     
