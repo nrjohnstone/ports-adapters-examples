@@ -9,6 +9,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Adapters.Persistence.MySql"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Adapters.Persistence.MySql.Tests", "test\Adapters.Persistence.MySql.Tests\Adapters.Persistence.MySql.Tests.csproj", "{872536E3-344F-4300-AE89-B78A016057FF}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Adapters.Persistence.EventStore", "src\Adapters.Persistence.EventStore\Adapters.Persistence.EventStore.csproj", "{00A377CE-C97E-4C5A-8B2E-F5425A5B30FF}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Adapters.Persistence.EventStore.Tests", "test\Adapters.Persistence.EventStore.Tests\Adapters.Persistence.EventStore.Tests.csproj", "{7069C9B8-DEB5-403D-B492-9A5799ECFC0A}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +31,14 @@ Global
 		{872536E3-344F-4300-AE89-B78A016057FF}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{872536E3-344F-4300-AE89-B78A016057FF}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{872536E3-344F-4300-AE89-B78A016057FF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{00A377CE-C97E-4C5A-8B2E-F5425A5B30FF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{00A377CE-C97E-4C5A-8B2E-F5425A5B30FF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{00A377CE-C97E-4C5A-8B2E-F5425A5B30FF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{00A377CE-C97E-4C5A-8B2E-F5425A5B30FF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7069C9B8-DEB5-403D-B492-9A5799ECFC0A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7069C9B8-DEB5-403D-B492-9A5799ECFC0A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7069C9B8-DEB5-403D-B492-9A5799ECFC0A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7069C9B8-DEB5-403D-B492-9A5799ECFC0A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
