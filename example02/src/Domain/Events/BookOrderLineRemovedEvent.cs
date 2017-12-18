@@ -12,5 +12,8 @@ namespace Domain.Events
             OrderLineId = orderLineId;
             OrderId = orderId;
         }
+        
+        public string GetEventType() => EventType;
+        public static string EventType => "BookOrderLineMoved";
     }
 }

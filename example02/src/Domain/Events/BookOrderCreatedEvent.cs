@@ -13,5 +13,8 @@ namespace Domain.Events
             Supplier = supplier;
             Id = id;
         }
+
+        public string GetEventType() => EventType;      
+        public static string EventType => "BookOrderCreated";
     }
 }

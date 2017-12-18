@@ -25,7 +25,11 @@ namespace Adapters.Persistence.EventStore
 
                 foreach (var ev in events)
                 {
-                    HandleEvent(ev, connection);
+                    string eventType = ev.GetEventType();
+                    var eventData = GetEventDataFor(ev, eventType);
+
+                    connection.AppendToStreamAsync($"{StreamBaseName}-{bookOrder.Id}",
+                        ExpectedVersion.Any, eventData).Wait();
                 }
             }
         }
@@ -50,7 +54,7 @@ namespace Adapters.Persistence.EventStore
 
                     foreach (var currentSliceEvent in currentSlice.Events)
                     {
-                        if (currentSliceEvent.Event.EventType.Equals("bookOrderCreated"))
+                        if (currentSliceEvent.Event.EventType.Equals(BookOrderCreatedEvent.EventType))
                         {
                             var st = Encoding.ASCII.GetString(currentSliceEvent.Event.Data);
                             BookOrderCreatedEvent ev = JsonConvert.DeserializeObject< BookOrderCreatedEvent>(st);
@@ -64,57 +68,30 @@ namespace Adapters.Persistence.EventStore
 
             return bookOrder;
         }
+        
+        //private void Handle(BookOrderLineCreatedEvent ev, IEventStoreConnection connection)
+        //{
+        //    var myEvent = GetEventDataFor(ev, "bookOrderLineCreated");
 
-        private void HandleEvent(IEvent ev, IEventStoreConnection connection)
-        {
-            try
-            {
-                InvokeHandlerUnsafe(ev, connection);
-            }
-            catch (RuntimeBinderException)
-            {
-                throw
-                    new MissingMethodException("No event handler " +
-                                               $"found for event {ev.GetType()}.");
-            }
-        }
+        //    connection.AppendToStreamAsync($"{StreamBaseName}-{ev.OrderId}",
+        //        ExpectedVersion.Any, myEvent).Wait();
+        //}
 
-        private void InvokeHandlerUnsafe(IEvent ev, IEventStoreConnection connection)
-        {
-            this.Handle((dynamic)ev, connection);
-        }
+        //private void Handle(BookOrderLineEditedEvent ev, IEventStoreConnection connection)
+        //{
+        //    var myEvent = GetEventDataFor(ev, "bookOrderLineEdited");
 
-        private void Handle(BookOrderCreatedEvent ev, IEventStoreConnection connection)
-        {           
-            var myEvent = GetEventDataFor(ev, "bookOrderCreated");
+        //    connection.AppendToStreamAsync($"{StreamBaseName}-{ev.OrderId}",
+        //        ExpectedVersion.Any, myEvent).Wait();
+        //}
 
-            connection.AppendToStreamAsync($"{StreamBaseName}-{ev.Id}",
-                ExpectedVersion.Any, myEvent).Wait();            
-        }
+        //private void Handle(BookOrderLineRemovedEvent ev, IEventStoreConnection connection)
+        //{
+        //    var myEvent = GetEventDataFor(ev, "bookOrderLineRemoved");
 
-        private void Handle(BookOrderLineCreatedEvent ev, IEventStoreConnection connection)
-        {
-            var myEvent = GetEventDataFor(ev, "bookOrderLineCreated");
-
-            connection.AppendToStreamAsync($"{StreamBaseName}-{ev.OrderId}",
-                ExpectedVersion.Any, myEvent).Wait();
-        }
-
-        private void Handle(BookOrderLineEditedEvent ev, IEventStoreConnection connection)
-        {
-            var myEvent = GetEventDataFor(ev, "bookOrderLineEdited");
-
-            connection.AppendToStreamAsync($"{StreamBaseName}-{ev.OrderId}",
-                ExpectedVersion.Any, myEvent).Wait();
-        }
-
-        private void Handle(BookOrderLineRemovedEvent ev, IEventStoreConnection connection)
-        {
-            var myEvent = GetEventDataFor(ev, "bookOrderLineRemoved");
-
-            connection.AppendToStreamAsync($"{StreamBaseName}-{ev.OrderId}",
-                ExpectedVersion.Any, myEvent).Wait();
-        }
+        //    connection.AppendToStreamAsync($"{StreamBaseName}-{ev.OrderId}",
+        //        ExpectedVersion.Any, myEvent).Wait();
+        //}
 
         public EventData GetEventDataFor<T>(T item, string eventType)
         {
