@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using Domain.Entities;
 using Domain.ValueObjects;
 using FluentAssertions;
@@ -76,7 +77,29 @@ namespace Adapters.Persistence.EventStore.Tests
                 x => x.Title.Equals("Title1") && x.Price == 99M && x.Quantity == 5);
             bookOrder.OrderLines.Should().ContainSingle(
                 x => x.Title.Equals("Title2") && x.Price == 20.5M && x.Quantity == 7);
+        }
 
+        [Fact]
+        public void WhenLineIsRemoved_ShouldStoreChanges()
+        {
+            var sut = CreateSut();
+            var orderId = Guid.NewGuid();
+            var order = BookOrder.CreateNew("SomeSupplier", orderId);
+            order.AddBookRequest(new BookTitleOrder("Title1", "SomeSupplier", 10.5M, 5));
+            order.AddBookRequest(new BookTitleOrder("Title2", "SomeSupplier", 20.5M, 7));
+
+            sut.Store(order);
+            
+            Guid orderLineId = order.OrderLines.Single(x => x.Title.Equals("Title1")).Id;
+
+            order.RemoveOrderLine(orderLineId);
+
+            sut.Store(order);
+
+            var bookOrder = sut.Get(orderId);
+
+            bookOrder.OrderLines.Count.Should().Be(1);
+            bookOrder.OrderLines.Should().NotContain(x => x.Title.Equals("Title1"));            
         }
     }
 }

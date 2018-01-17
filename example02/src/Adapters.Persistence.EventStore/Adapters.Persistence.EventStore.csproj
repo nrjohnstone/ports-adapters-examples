@@ -52,6 +52,7 @@
     <Compile Include="EventHandlers\BookOrderLinePriceEditedEventHandler.cs" />
     <Compile Include="BookOrderRepository.cs" />
     <Compile Include="BookOrderResult.cs" />
+    <Compile Include="EventHandlers\BookOrderLineRemovedEventHandler.cs" />
     <Compile Include="EventHandlers\IBookOrderEventHandler.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

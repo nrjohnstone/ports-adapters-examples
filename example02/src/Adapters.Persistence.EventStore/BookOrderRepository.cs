@@ -43,6 +43,7 @@ namespace Adapters.Persistence.EventStore
                 bookOrderEventHandlers.Add(new BookOrderCreatedEventHandler());
                 bookOrderEventHandlers.Add(new BookOrderLineCreatedEventHandler());
                 bookOrderEventHandlers.Add(new BookOrderLinePriceEditedEventHandler());
+                bookOrderEventHandlers.Add(new BookOrderLineRemovedEventHandler());
                 StreamEventsSlice currentSlice;
                 long nextSliceStart = StreamPosition.Start;
                 do
@@ -53,13 +54,13 @@ namespace Adapters.Persistence.EventStore
 
                     nextSliceStart = currentSlice.NextEventNumber;
 
-                    foreach (var currentSliceEvent in currentSlice.Events)
+                    foreach (var resolvedEvent in currentSlice.Events)
                     {
                         foreach (var handler in bookOrderEventHandlers)
                         {
-                            if (handler.CanHandle(currentSliceEvent.Event))
+                            if (handler.CanHandle(resolvedEvent.Event))
                             {
-                                handler.Handle(currentSliceEvent.Event, result);
+                                handler.Handle(resolvedEvent.Event, result);
                                 break;
                             }
                         }
