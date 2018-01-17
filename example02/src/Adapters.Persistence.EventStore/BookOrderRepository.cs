@@ -20,17 +20,30 @@ namespace Adapters.Persistence.EventStore
             {
                 connection.ConnectAsync().Wait();
 
-                var events = bookOrder.DequeueAllEvents();
+                var latestEvent = connection.ReadStreamEventsBackwardAsync(GetStreamName(bookOrder.Id),
+                    0, 1, false).Result;
 
-                foreach (var ev in events)
+                using (var transaction = connection.StartTransactionAsync(GetStreamName(bookOrder.Id), 
+                    latestEvent.LastEventNumber).Result)
                 {
-                    string eventType = ev.GetEventType();
-                    var eventData = GetEventDataFor(ev, eventType);
+                    var events = bookOrder.DequeueAllEvents();
 
-                    connection.AppendToStreamAsync($"{StreamBaseName}-{bookOrder.Id}",
-                        ExpectedVersion.Any, eventData).Wait();
+                    foreach (var ev in events)
+                    {
+                        string eventType = ev.GetEventType();
+                        var eventData = GetEventDataFor(ev, eventType);
+
+                        transaction.WriteAsync(eventData).Wait();
+                    }
+
+                    transaction.CommitAsync().Wait();
                 }
             }
+        }
+
+        private static string GetStreamName(Guid orderId)
+        {
+            return $"{StreamBaseName}-{orderId}";
         }
 
         public BookOrder Get(Guid orderId)
@@ -48,7 +61,7 @@ namespace Adapters.Persistence.EventStore
                 do
                 {
                     currentSlice = connection.ReadStreamEventsForwardAsync(
-                        $"{StreamBaseName}-{orderId}", nextSliceStart,
+                        GetStreamName(orderId), nextSliceStart,
                         200, false).Result;
 
                     nextSliceStart = currentSlice.NextEventNumber;
