@@ -2,8 +2,8 @@
 using System.Collections.Generic;
 using System.Net;
 using System.Text;
+using Adapters.Persistence.EventStore.EventHandlers;
 using Domain.Entities;
-using Domain.Events;
 using Domain.Ports.Persistence;
 using EventStore.ClientAPI;
 using Newtonsoft.Json;
@@ -35,62 +35,48 @@ namespace Adapters.Persistence.EventStore
 
         public BookOrder Get(Guid orderId)
         {
-            BookOrder bookOrder = null;
+            BookOrderResult result = new BookOrderResult();
             using (var connection = EventStoreConnection.Create(new IPEndPoint(IPAddress.Loopback, 1113)))
             {
                 connection.ConnectAsync().Wait();
-
+                List<IBookOrderEventHandler> bookOrderEventHandlers = new List<IBookOrderEventHandler>();
+                bookOrderEventHandlers.Add(new BookOrderCreatedEventHandler());
+                bookOrderEventHandlers.Add(new BookOrderLineCreatedEventHandler());
+                bookOrderEventHandlers.Add(new BookOrderLinePriceEditedEventHandler());
                 StreamEventsSlice currentSlice;
                 long nextSliceStart = StreamPosition.Start;
                 do
-                {                    
+                {
                     currentSlice = connection.ReadStreamEventsForwardAsync(
-                            $"{StreamBaseName}-{orderId}", nextSliceStart,
-                                200, false).Result;
+                        $"{StreamBaseName}-{orderId}", nextSliceStart,
+                        200, false).Result;
 
                     nextSliceStart = currentSlice.NextEventNumber;
 
                     foreach (var currentSliceEvent in currentSlice.Events)
                     {
-                        if (currentSliceEvent.Event.EventType.Equals(BookOrderCreatedEvent.EventType))
+                        foreach (var handler in bookOrderEventHandlers)
                         {
-                            var st = Encoding.ASCII.GetString(currentSliceEvent.Event.Data);
-                            BookOrderCreatedEvent ev = JsonConvert.DeserializeObject< BookOrderCreatedEvent>(st);
-                            bookOrder = BookOrder.CreateExisting(ev.Supplier, BookOrderState.New, ev.Id, 
-                                new List<OrderLine>());
-                        }
-                        else if (currentSliceEvent.Event.EventType.Equals(BookOrderLineCreatedEvent.EventType))
-                        {
-                            var st = Encoding.ASCII.GetString(currentSliceEvent.Event.Data);
-                            BookOrderLineCreatedEvent ev = 
-                                JsonConvert.DeserializeObject<BookOrderLineCreatedEvent>(st);
-
-                            OrderLine ol = new OrderLine(
-                                ev.Title, ev.Price, ev.Quantity, ev.OrderLineId);
-                            bookOrder.CreateExistingOrderLine(ol);
-                        }
-                        else if (currentSliceEvent.Event.EventType.Equals(BookOrderLinePriceEditedEvent.EventType))
-                        {
-                            var st = Encoding.ASCII.GetString(currentSliceEvent.Event.Data);
-                            BookOrderLinePriceEditedEvent ev = 
-                                JsonConvert.DeserializeObject<BookOrderLinePriceEditedEvent>(st);
-
-                            bookOrder.UpdateOrderLinePrice(ev.OrderLineId, ev.Price);
+                            if (handler.CanHandle(currentSliceEvent.Event))
+                            {
+                                handler.Handle(currentSliceEvent.Event, result);
+                                break;
+                            }
                         }
                     }
-                    
+
                 } while (!currentSlice.IsEndOfStream);
             }
 
-            return bookOrder;
+            return result.BookOrder;
         }
-        
+
         public EventData GetEventDataFor<T>(T item, string eventType)
         {
             var eventId = Guid.NewGuid();
-            var eventDataFor = new EventData(eventId, eventType, 
-                isJson: true, 
-                data: GetSerializedBytes(item), 
+            var eventDataFor = new EventData(eventId, eventType,
+                isJson: true,
+                data: GetSerializedBytes(item),
                 metadata: GetSerializedBytes(new { }));
 
             return eventDataFor;
@@ -100,5 +86,7 @@ namespace Adapters.Persistence.EventStore
         {
             return Encoding.ASCII.GetBytes(JsonConvert.SerializeObject(input));
         }
+
+
     }
 }

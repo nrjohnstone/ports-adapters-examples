@@ -46,7 +46,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="EventHandlers\BookOrderCreatedEventHandler.cs" />
+    <Compile Include="EventHandlers\BookOrderLineCreatedEventHandler.cs" />
+    <Compile Include="EventHandlers\BookOrderLinePriceEditedEventHandler.cs" />
     <Compile Include="BookOrderRepository.cs" />
+    <Compile Include="BookOrderResult.cs" />
+    <Compile Include="EventHandlers\IBookOrderEventHandler.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -58,5 +63,6 @@
       <Name>Domain</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
