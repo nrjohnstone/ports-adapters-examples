@@ -46,6 +46,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BookOrderFactory.cs" />
     <Compile Include="EventHandlers\BookOrderCreatedEventHandler.cs" />
     <Compile Include="EventHandlers\BookOrderEventHandler.cs" />
     <Compile Include="EventHandlers\BookOrderLineCreatedEventHandler.cs" />

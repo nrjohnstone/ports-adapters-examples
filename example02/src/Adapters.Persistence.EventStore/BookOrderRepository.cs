@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Net;
 using System.Text;
-using Adapters.Persistence.EventStore.EventHandlers;
 using Domain.Entities;
 using Domain.Ports.Persistence;
 using EventStore.ClientAPI;
@@ -35,18 +35,16 @@ namespace Adapters.Persistence.EventStore
 
         public BookOrder Get(Guid orderId)
         {
+            BookOrderFactory factory = new BookOrderFactory();
+
             BookOrderResult result = new BookOrderResult();
             using (var connection = EventStoreConnection.Create(new IPEndPoint(IPAddress.Loopback, 1113)))
             {
                 connection.ConnectAsync().Wait();
-                List<IBookOrderEventHandler> bookOrderEventHandlers = new List<IBookOrderEventHandler>();
-                bookOrderEventHandlers.Add(new BookOrderCreatedEventHandler());
-                bookOrderEventHandlers.Add(new BookOrderLineCreatedEventHandler());
-                bookOrderEventHandlers.Add(new BookOrderLinePriceEditedEventHandler());
-                bookOrderEventHandlers.Add(new BookOrderLineRemovedEventHandler());
+                
                 StreamEventsSlice currentSlice;
                 long nextSliceStart = StreamPosition.Start;
-                List<ResolvedEvent> resolvedEvents = new List<ResolvedEvent>();
+                List<RecordedEvent> recordedEvents = new List<RecordedEvent>();
                 do
                 {
                     currentSlice = connection.ReadStreamEventsForwardAsync(
@@ -55,20 +53,10 @@ namespace Adapters.Persistence.EventStore
 
                     nextSliceStart = currentSlice.NextEventNumber;
 
-                    resolvedEvents.AddRange(currentSlice.Events);                    
+                    recordedEvents.AddRange(currentSlice.Events.Select(e => e.Event));                    
                 } while (!currentSlice.IsEndOfStream);
 
-                foreach (var resolvedEvent in resolvedEvents)
-                {
-                    foreach (var handler in bookOrderEventHandlers)
-                    {
-                        if (handler.CanHandle(resolvedEvent.Event))
-                        {
-                            handler.Handle(resolvedEvent.Event, result);
-                            break;
-                        }
-                    }
-                }
+                result.BookOrder = factory.Create(recordedEvents);
             }
 
             return result.BookOrder;
