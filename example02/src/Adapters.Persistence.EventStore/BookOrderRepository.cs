@@ -86,7 +86,5 @@ namespace Adapters.Persistence.EventStore
         {
             return Encoding.ASCII.GetBytes(JsonConvert.SerializeObject(input));
         }
-
-
     }
 }

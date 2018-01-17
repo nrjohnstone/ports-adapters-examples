@@ -47,6 +47,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="EventHandlers\BookOrderCreatedEventHandler.cs" />
+    <Compile Include="EventHandlers\BookOrderEventHandler.cs" />
     <Compile Include="EventHandlers\BookOrderLineCreatedEventHandler.cs" />
     <Compile Include="EventHandlers\BookOrderLinePriceEditedEventHandler.cs" />
     <Compile Include="BookOrderRepository.cs" />

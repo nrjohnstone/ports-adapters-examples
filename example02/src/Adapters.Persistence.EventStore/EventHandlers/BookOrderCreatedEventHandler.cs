@@ -1,26 +1,15 @@
 ﻿using System.Collections.Generic;
-using System.Text;
 using Domain.Entities;
 using Domain.Events;
-using EventStore.ClientAPI;
-using Newtonsoft.Json;
 
 namespace Adapters.Persistence.EventStore.EventHandlers
 {
-    public class BookOrderCreatedEventHandler : IBookOrderEventHandler
+    public class BookOrderCreatedEventHandler : BookOrderEventHandler<BookOrderCreatedEvent>
     {
-        public bool CanHandle(RecordedEvent ev)
-        {
-            if (ev.EventType.Equals(BookOrderCreatedEvent.EventType))
-                return true;
+        public override string EventType => BookOrderCreatedEvent.EventType;
 
-            return false;
-        }
-
-        public void Handle(RecordedEvent recordedEvent, BookOrderResult result)
+        protected override void DoHandle(BookOrderCreatedEvent ev, BookOrderResult result)
         {
-            var st = Encoding.ASCII.GetString(recordedEvent.Data);
-            BookOrderCreatedEvent ev = JsonConvert.DeserializeObject<BookOrderCreatedEvent>(st);
             result.BookOrder = BookOrder.CreateExisting(ev.Supplier, BookOrderState.New, ev.Id,
                 new List<OrderLine>());
         }

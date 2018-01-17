@@ -6,24 +6,14 @@ using Newtonsoft.Json;
 
 namespace Adapters.Persistence.EventStore.EventHandlers
 {
-    public class BookOrderLineCreatedEventHandler : IBookOrderEventHandler
+    public class BookOrderLineCreatedEventHandler : BookOrderEventHandler<BookOrderLineCreatedEvent>
     {
-        public bool CanHandle(RecordedEvent ev)
+        public override string EventType => BookOrderLineCreatedEvent.EventType;
+
+        protected override void DoHandle(BookOrderLineCreatedEvent ev, BookOrderResult result)
         {
-            if (ev.EventType.Equals(BookOrderLineCreatedEvent.EventType))
-                return true;
-
-            return false;
-        }
-
-        public void Handle(RecordedEvent recordedEvent, BookOrderResult result)
-        {
-            var st = Encoding.ASCII.GetString(recordedEvent.Data);
-            BookOrderLineCreatedEvent ev =
-                JsonConvert.DeserializeObject<BookOrderLineCreatedEvent>(st);
-
-            OrderLine ol = new OrderLine(
-                ev.Title, ev.Price, ev.Quantity, ev.OrderLineId);
+            OrderLine ol = new OrderLine(ev.Title, ev.Price, 
+                ev.Quantity, ev.OrderLineId);
             result.BookOrder.CreateExistingOrderLine(ol);
         }
     }
