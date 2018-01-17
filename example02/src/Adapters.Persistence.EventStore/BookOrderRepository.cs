@@ -46,6 +46,7 @@ namespace Adapters.Persistence.EventStore
                 bookOrderEventHandlers.Add(new BookOrderLineRemovedEventHandler());
                 StreamEventsSlice currentSlice;
                 long nextSliceStart = StreamPosition.Start;
+                List<ResolvedEvent> resolvedEvents = new List<ResolvedEvent>();
                 do
                 {
                     currentSlice = connection.ReadStreamEventsForwardAsync(
@@ -54,19 +55,20 @@ namespace Adapters.Persistence.EventStore
 
                     nextSliceStart = currentSlice.NextEventNumber;
 
-                    foreach (var resolvedEvent in currentSlice.Events)
+                    resolvedEvents.AddRange(currentSlice.Events);                    
+                } while (!currentSlice.IsEndOfStream);
+
+                foreach (var resolvedEvent in resolvedEvents)
+                {
+                    foreach (var handler in bookOrderEventHandlers)
                     {
-                        foreach (var handler in bookOrderEventHandlers)
+                        if (handler.CanHandle(resolvedEvent.Event))
                         {
-                            if (handler.CanHandle(resolvedEvent.Event))
-                            {
-                                handler.Handle(resolvedEvent.Event, result);
-                                break;
-                            }
+                            handler.Handle(resolvedEvent.Event, result);
+                            break;
                         }
                     }
-
-                } while (!currentSlice.IsEndOfStream);
+                }
             }
 
             return result.BookOrder;
