@@ -80,10 +80,10 @@ namespace Adapters.Persistence.MySql.Repositories
             action.Execute(ev.OrderId, ev.OrderLineId, ev.Title, ev.Price, ev.Quantity);
         }
 
-        private void Handle(BookOrderLineEditedEvent ev, IDbConnection connection)
+        private void Handle(BookOrderLinePriceEditedEvent ev, IDbConnection connection)
         {
-            var action = new EditBookOrderLineAction(connection);
-            action.Execute(ev.OrderId, ev.OrderLineId, ev.Title, ev.Price, ev.Quantity);
+            var action = new EditBookOrderLinePriceAction(connection);
+            action.Execute(ev.OrderId, ev.OrderLineId, ev.Price);
         }
 
         private void Handle(BookOrderLineRemovedEvent ev, IDbConnection connection)

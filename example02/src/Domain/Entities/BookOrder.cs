@@ -70,8 +70,7 @@ namespace Domain.Entities
 
             orderLine.UpdatePrice(price);
 
-            AddEvent(new BookOrderLineEditedEvent(orderLine.Title, orderLine.Price,
-                orderLine.Quantity, orderLine.Id, Id));
+            AddEvent(new BookOrderLinePriceEditedEvent(Id, orderLine.Id, orderLine.Price));
         }
 
         public void RemoveOrderLine(Guid orderLineId)
@@ -83,6 +82,11 @@ namespace Domain.Entities
 
             _orderLines.Remove(orderLine);
             AddEvent(new BookOrderLineRemovedEvent(orderLine.Id, Id));
+        }
+
+        public void CreateExistingOrderLine(OrderLine ol)
+        {
+            _orderLines.Add(ol);
         }
     }
 }

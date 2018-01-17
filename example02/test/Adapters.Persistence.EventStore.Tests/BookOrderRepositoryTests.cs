@@ -14,7 +14,7 @@ namespace Adapters.Persistence.EventStore.Tests
         }
 
         [Fact]
-        public void Should()
+        public void CanStoreAndRetrieve_ANewBookOrder_WithNoLines()
         {
             var sut = CreateSut();
 
@@ -49,6 +49,34 @@ namespace Adapters.Persistence.EventStore.Tests
                 x => x.Title.Equals("Title1") && x.Price == 10.5M && x.Quantity == 5);
             bookOrder.OrderLines.Should().ContainSingle(
                 x => x.Title.Equals("Title2") && x.Price == 20.5M && x.Quantity == 7);
+        }
+
+        [Fact]
+        public void WhenLineIsModified_ShouldStoreChanges()
+        {
+            var sut = CreateSut();
+            var orderId = Guid.NewGuid();
+            var order = BookOrder.CreateNew("SomeSupplier", orderId);
+            order.AddBookRequest(new BookTitleOrder("Title1", "SomeSupplier", 10.5M, 5));
+            order.AddBookRequest(new BookTitleOrder("Title2", "SomeSupplier", 20.5M, 7));
+
+            sut.Store(order);
+
+            var orderLineToUpdate = order.OrderLines[0];
+            order.UpdateOrderLinePrice(orderLineToUpdate.Id, 99M);
+            sut.Store(order);
+
+            var bookOrder = sut.Get(orderId);
+
+            bookOrder.Supplier.Should().Be("SomeSupplier");
+            bookOrder.Id.Should().Be(orderId);
+            bookOrder.State.Should().Be(BookOrderState.New);
+            bookOrder.OrderLines.Count.Should().Be(2);
+            bookOrder.OrderLines.Should().ContainSingle(
+                x => x.Title.Equals("Title1") && x.Price == 99M && x.Quantity == 5);
+            bookOrder.OrderLines.Should().ContainSingle(
+                x => x.Title.Equals("Title2") && x.Price == 20.5M && x.Quantity == 7);
+
         }
     }
 }

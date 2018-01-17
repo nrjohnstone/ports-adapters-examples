@@ -54,7 +54,7 @@
     <Compile Include="Entities\AggregateBase.cs" />
     <Compile Include="Entities\BookOrder.cs" />
     <Compile Include="Events\BookOrderLineCreatedEvent.cs" />
-    <Compile Include="Events\BookOrderLineEditedEvent.cs" />
+    <Compile Include="Events\BookOrderLinePriceEditedEvent.cs" />
     <Compile Include="Events\BookOrderLineRemovedEvent.cs" />
     <Compile Include="Entities\BookOrderState.cs" />
     <Compile Include="Entities\OrderLine.cs" />

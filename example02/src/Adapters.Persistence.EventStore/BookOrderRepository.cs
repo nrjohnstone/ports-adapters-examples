@@ -5,9 +5,7 @@ using System.Text;
 using Domain.Entities;
 using Domain.Events;
 using Domain.Ports.Persistence;
-using Domain.ValueObjects;
 using EventStore.ClientAPI;
-using Microsoft.CSharp.RuntimeBinder;
 using Newtonsoft.Json;
 
 namespace Adapters.Persistence.EventStore
@@ -67,9 +65,17 @@ namespace Adapters.Persistence.EventStore
                             BookOrderLineCreatedEvent ev = 
                                 JsonConvert.DeserializeObject<BookOrderLineCreatedEvent>(st);
 
-                            bookOrder.AddBookRequest(
-                                new BookTitleOrder(
-                                    ev.Title, bookOrder.Supplier, ev.Price, ev.Quantity));
+                            OrderLine ol = new OrderLine(
+                                ev.Title, ev.Price, ev.Quantity, ev.OrderLineId);
+                            bookOrder.CreateExistingOrderLine(ol);
+                        }
+                        else if (currentSliceEvent.Event.EventType.Equals(BookOrderLinePriceEditedEvent.EventType))
+                        {
+                            var st = Encoding.ASCII.GetString(currentSliceEvent.Event.Data);
+                            BookOrderLinePriceEditedEvent ev = 
+                                JsonConvert.DeserializeObject<BookOrderLinePriceEditedEvent>(st);
+
+                            bookOrder.UpdateOrderLinePrice(ev.OrderLineId, ev.Price);
                         }
                     }
                     
@@ -79,30 +85,6 @@ namespace Adapters.Persistence.EventStore
             return bookOrder;
         }
         
-        //private void Handle(BookOrderLineCreatedEvent ev, IEventStoreConnection connection)
-        //{
-        //    var myEvent = GetEventDataFor(ev, "bookOrderLineCreated");
-
-        //    connection.AppendToStreamAsync($"{StreamBaseName}-{ev.OrderId}",
-        //        ExpectedVersion.Any, myEvent).Wait();
-        //}
-
-        //private void Handle(BookOrderLineEditedEvent ev, IEventStoreConnection connection)
-        //{
-        //    var myEvent = GetEventDataFor(ev, "bookOrderLineEdited");
-
-        //    connection.AppendToStreamAsync($"{StreamBaseName}-{ev.OrderId}",
-        //        ExpectedVersion.Any, myEvent).Wait();
-        //}
-
-        //private void Handle(BookOrderLineRemovedEvent ev, IEventStoreConnection connection)
-        //{
-        //    var myEvent = GetEventDataFor(ev, "bookOrderLineRemoved");
-
-        //    connection.AppendToStreamAsync($"{StreamBaseName}-{ev.OrderId}",
-        //        ExpectedVersion.Any, myEvent).Wait();
-        //}
-
         public EventData GetEventDataFor<T>(T item, string eventType)
         {
             var eventId = Guid.NewGuid();
