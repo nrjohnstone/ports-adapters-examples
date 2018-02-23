@@ -25,5 +25,7 @@ namespace Domain.ValueObjects
         public string Title { get; }
         public decimal Price { get; }
         public int Quantity { get; }
+
+
     }
 }

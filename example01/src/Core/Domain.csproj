@@ -53,18 +53,24 @@
     <Compile Include="Entities\AddBookRequestException.cs" />
     <Compile Include="Entities\BookOrder.cs" />
     <Compile Include="Entities\BookOrderApproveException.cs" />
+    <Compile Include="Entities\BookOrderLineConflict.cs" />
     <Compile Include="Entities\BookOrderSendException.cs" />
     <Compile Include="Entities\BookOrderState.cs" />
+    <Compile Include="Entities\ConflictType.cs" />
     <Compile Include="Entities\OrderLine.cs" />
     <Compile Include="Ports\Notification\IBookSupplierGateway.cs" />
+    <Compile Include="Ports\Persistence\IBookOrderLineConflictRepository.cs" />
     <Compile Include="Ports\Persistence\IBookOrderRepository.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="UseCases\ApproveBookOrderUseCase.cs" />
     <Compile Include="UseCases\DeleteBookOrdersUseCase.cs" />
-    <Compile Include="UseCases\GetBookOrdersUseCase.cs" />
-    <Compile Include="UseCases\GetNewBookOrdersUseCase.cs" />
+    <Compile Include="UseCases\GetAllBookOrdersUseCase.cs" />
+    <Compile Include="UseCases\GetAllNewBookOrdersUseCase.cs" />
     <Compile Include="UseCases\OrderBookUseCase.cs" />
     <Compile Include="UseCases\SendBookOrderUseCase.cs" />
+    <Compile Include="UseCases\SupplierBookOrderUpdateUseCase.cs" />
+    <Compile Include="ValueObjects\SupplierBookOrderLineUpdateRequest.cs" />
+    <Compile Include="ValueObjects\SupplierBookOrderUpdateRequest.cs" />
     <Compile Include="ValueObjects\BookTitleOrder.cs" />
   </ItemGroup>
   <ItemGroup>

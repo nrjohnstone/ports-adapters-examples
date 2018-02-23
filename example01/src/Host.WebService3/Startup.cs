@@ -93,7 +93,7 @@ namespace Host.WebService.Client3
             Container.Register<OrderBookUseCase>();
             Container.Register<ApproveBookOrderUseCase>();
             Container.Register<SendBookOrderUseCase>();
-            Container.Register<GetBookOrdersUseCase>();
+            Container.Register<GetAllBookOrdersUseCase>();
             Container.Register<DeleteBookOrdersUseCase>();
         }
 

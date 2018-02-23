@@ -30,10 +30,16 @@ namespace Core.Tests.Unit.Helpers
             _supplier = supplier;
             return this;
         }
-        
-        public BookTitleOrder ForTitle(string title)
+
+        public BookTitleOrderBuilder ForTitle(string title)
         {
             _title = title;
+            return this;
+        }
+
+        public BookTitleOrderBuilder WithPrice(decimal price)
+        {
+            _price = price;
             return this;
         }
     }

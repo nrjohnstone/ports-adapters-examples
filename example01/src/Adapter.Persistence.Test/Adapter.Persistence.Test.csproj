@@ -54,6 +54,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AdpaterNotInitializedException.cs" />
+    <Compile Include="BookOrderLineConflictRepository.cs" />
     <Compile Include="BookOrderRepository.cs" />
     <Compile Include="PersistenceAdapter.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

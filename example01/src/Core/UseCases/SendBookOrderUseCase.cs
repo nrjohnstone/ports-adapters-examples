@@ -32,6 +32,5 @@ namespace Domain.UseCases
             _bookSupplierGateway.Send(bookOrder);
             _bookOrderRepository.Store(bookOrder);
         }
-
     }
 }

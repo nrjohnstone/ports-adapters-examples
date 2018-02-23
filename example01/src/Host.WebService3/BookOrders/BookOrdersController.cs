@@ -11,24 +11,24 @@ namespace Host.WebService.Client3.BookOrders
         private readonly OrderBookUseCase _orderBookUseCase;
         private readonly ApproveBookOrderUseCase _approveBookOrderUseCase;
         private readonly SendBookOrderUseCase _sendBookOrderUseCase;
-        private readonly GetBookOrdersUseCase _getBookOrdersUseCase;
+        private readonly GetAllBookOrdersUseCase _getAllBookOrdersUseCase;
         private readonly DeleteBookOrdersUseCase _deleteBookOrdersUseCase;
 
         public BookOrdersController(OrderBookUseCase orderBookUseCase,
             ApproveBookOrderUseCase approveBookOrderUseCase,
             SendBookOrderUseCase sendBookOrderUseCase,
-            GetBookOrdersUseCase getBookOrdersUseCase,
+            GetAllBookOrdersUseCase getAllBookOrdersUseCase,
             DeleteBookOrdersUseCase deleteBookOrdersUseCase)
         {
             if (orderBookUseCase == null) throw new ArgumentNullException(nameof(orderBookUseCase));
             if (approveBookOrderUseCase == null) throw new ArgumentNullException(nameof(approveBookOrderUseCase));
             if (sendBookOrderUseCase == null) throw new ArgumentNullException(nameof(sendBookOrderUseCase));
-            if (getBookOrdersUseCase == null) throw new ArgumentNullException(nameof(getBookOrdersUseCase));
+            if (getAllBookOrdersUseCase == null) throw new ArgumentNullException(nameof(getAllBookOrdersUseCase));
             if (deleteBookOrdersUseCase == null) throw new ArgumentNullException(nameof(deleteBookOrdersUseCase));
             _orderBookUseCase = orderBookUseCase;
             _approveBookOrderUseCase = approveBookOrderUseCase;
             _sendBookOrderUseCase = sendBookOrderUseCase;
-            _getBookOrdersUseCase = getBookOrdersUseCase;
+            _getAllBookOrdersUseCase = getAllBookOrdersUseCase;
             _deleteBookOrdersUseCase = deleteBookOrdersUseCase;
         }
 
@@ -59,7 +59,7 @@ namespace Host.WebService.Client3.BookOrders
         [Route("bookOrders")]
         public IHttpActionResult GetBookOrders()
         {
-            var bookOrders = _getBookOrdersUseCase.Execute();
+            var bookOrders = _getAllBookOrdersUseCase.Execute();
 
             IList<BookOrderResponse> bookOrdersResponse = new List<BookOrderResponse>();
 

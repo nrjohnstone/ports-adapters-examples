@@ -76,6 +76,7 @@
     <Compile Include="OrderBookUseCaseTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SendBookOrderUseCaseTests.cs" />
+    <Compile Include="SupplierBookOrderUpdateUseCaseTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
