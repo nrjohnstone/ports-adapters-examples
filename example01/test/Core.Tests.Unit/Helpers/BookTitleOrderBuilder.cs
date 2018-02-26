@@ -42,5 +42,11 @@ namespace Core.Tests.Unit.Helpers
             _price = price;
             return this;
         }
+
+        public BookTitleOrderBuilder WithQuantity(int quantity)
+        {
+            _quantity = quantity;
+            return this;
+        }
     }
 }

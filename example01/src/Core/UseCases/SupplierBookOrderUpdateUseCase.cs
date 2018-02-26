@@ -47,6 +47,9 @@ namespace Domain.UseCases
 
                 if (bookOrderLine.Price != lineUpdate.Price)
                     conflicts.Add(BookOrderLineConflict.CreateNew(bookOrder.Id, ConflictType.Price));
+
+                if (bookOrderLine.Quantity != lineUpdate.Quantity)
+                    conflicts.Add(BookOrderLineConflict.CreateNew(bookOrder.Id, ConflictType.Quantity));
             }
 
             return conflicts;

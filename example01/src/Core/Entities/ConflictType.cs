@@ -3,5 +3,6 @@
     public enum ConflictType
     {
         Price = 1,
+        Quantity = 2
     }
 }

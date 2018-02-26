@@ -46,6 +46,7 @@ namespace Core.Tests.Unit
                 a.BookTitleOrder
                     .ForSupplier("SupplierBar")
                     .ForTitle("The Hobbit")
+                    .WithQuantity(1)
                     .WithPrice(10.50M)
             );
 
@@ -57,13 +58,50 @@ namespace Core.Tests.Unit
                 {
                     new SupplierBookOrderLineUpdateRequest(
                         bookOrder.OrderLines[0].Id,
-                        1000)
+                        price: 12.50M, quantity: 1)
                 }));
 
             List<BookOrderLineConflict> conflicts =
                 _bookOrderLineConflictRepository.GetForBookOrder(bookOrder.Id).ToList();
             conflicts.Count().Should().Be(1);
             conflicts[0].ConflictType.Should().Be(ConflictType.Price);
+        }
+
+        [Fact]
+        public void WhenSupplierRequestsDifferentQuantity_ShouldCreateBookOrderLineConflict()
+        {
+            var sut = CreateSut();
+
+            BookOrder bookOrder = new BookOrder(
+                "SupplierBar",
+                Guid.NewGuid(),
+                BookOrderState.New);
+
+            bookOrder.AddBookRequest(
+                a.BookTitleOrder
+                    .ForSupplier("SupplierBar")
+                    .ForTitle("The Hobbit")
+                    .WithPrice(20)
+                    .WithQuantity(10)
+            );
+
+            _bookOrderRepository.Store(bookOrder);
+
+            var supplierBookOrderUpdateRequest = new SupplierBookOrderUpdateRequest(
+                bookOrder.Id,
+                new List<SupplierBookOrderLineUpdateRequest>()
+                {
+                    new SupplierBookOrderLineUpdateRequest(
+                        bookOrder.OrderLines[0].Id,
+                        price: 20, quantity: 9)
+                });
+
+            sut.Execute(supplierBookOrderUpdateRequest);
+
+            List<BookOrderLineConflict> conflicts =
+                _bookOrderLineConflictRepository.GetForBookOrder(bookOrder.Id).ToList();
+            conflicts.Count().Should().Be(1);
+            conflicts[0].ConflictType.Should().Be(ConflictType.Quantity);
         }
     }
 }
