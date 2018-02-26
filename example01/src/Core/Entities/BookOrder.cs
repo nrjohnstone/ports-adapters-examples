@@ -31,6 +31,16 @@ namespace Domain.Entities
             OrderLines.AddRange(orderLines);
         }
 
+        public static BookOrder CreateNew(string supplier, Guid id, BookOrderState state)
+        {
+            return new BookOrder(supplier, id, state, new List<OrderLine>());
+        }
+
+        public static BookOrder CreateExisting(string supplier, Guid id, BookOrderState state,
+            IEnumerable<OrderLine> orderLines)
+        {
+            return new BookOrder(supplier, id, state, orderLines);
+        }
 
         public void AddBookRequest(BookTitleRequest bookTitleRequest)
         {
