@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using Domain.Entities;
 using Fluency;
 
@@ -9,6 +10,7 @@ namespace Core.Tests.Unit.Helpers
         private string _supplier = "BookSupplier";
         private Guid _id = Guid.NewGuid();
         private BookOrderState _state = BookOrderState.New;
+        private IEnumerable<OrderLine> _orderLines = new List<OrderLine>();
 
         public BookOrderBuilder()
         {
@@ -22,11 +24,16 @@ namespace Core.Tests.Unit.Helpers
 
         protected override BookOrder GetNewInstance()
         {
-            return new BookOrder(_supplier, _id, _state);
+            if (_state == BookOrderState.New)
+                return BookOrder.CreateNew(_supplier, _id);
+            else
+            {
+                return BookOrder.CreateExisting(_supplier, _id, _state, _orderLines);
+            }
         }
 
         public BookOrderBuilder InState(BookOrderState bookOrderState)
-        {            
+        {
             _state = bookOrderState;
             return this;
         }

@@ -31,9 +31,9 @@ namespace Domain.Entities
             OrderLines.AddRange(orderLines);
         }
 
-        public static BookOrder CreateNew(string supplier, Guid id, BookOrderState state)
+        public static BookOrder CreateNew(string supplier, Guid id)
         {
-            return new BookOrder(supplier, id, state, new List<OrderLine>());
+            return new BookOrder(supplier, id, BookOrderState.New, new List<OrderLine>());
         }
 
         public static BookOrder CreateExisting(string supplier, Guid id, BookOrderState state,

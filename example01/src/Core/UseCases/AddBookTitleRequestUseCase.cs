@@ -30,8 +30,8 @@ namespace Domain.UseCases
 
             if (bookOrder == null)
             {
-                bookOrder = new BookOrder(
-                    bookTitleRequest.Supplier, Guid.NewGuid(), BookOrderState.New);
+                bookOrder = BookOrder.CreateNew(
+                    bookTitleRequest.Supplier, Guid.NewGuid());
             }
 
             bookOrder.AddBookRequest(bookTitleRequest);
