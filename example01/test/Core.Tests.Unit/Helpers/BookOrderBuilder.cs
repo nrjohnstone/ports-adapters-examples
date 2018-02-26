@@ -9,7 +9,7 @@ namespace Core.Tests.Unit.Helpers
     {
         private string _supplier = "BookSupplier";
         private Guid _id = Guid.NewGuid();
-        private BookOrderState _state = BookOrderState.New;
+        private Nullable<BookOrderState> _state = null;
         private IEnumerable<OrderLine> _orderLines = new List<OrderLine>();
 
         public BookOrderBuilder()
@@ -24,12 +24,17 @@ namespace Core.Tests.Unit.Helpers
 
         protected override BookOrder GetNewInstance()
         {
-            if (_state == BookOrderState.New)
+            // Default BookOrder is a new one
+            if (_state == null || _state == BookOrderState.New)
                 return BookOrder.CreateNew(_supplier, _id);
-            else
-            {
-                return BookOrder.CreateExisting(_supplier, _id, _state, _orderLines);
-            }
+
+            return BookOrder.CreateExisting(_supplier, _id, _state.Value, _orderLines);
+        }
+
+        public BookOrderBuilder ThatIsNew()
+        {
+            _state = BookOrderState.New;
+            return this;
         }
 
         public BookOrderBuilder InState(BookOrderState bookOrderState)
