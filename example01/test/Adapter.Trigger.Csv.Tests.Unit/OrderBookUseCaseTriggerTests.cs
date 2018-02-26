@@ -21,7 +21,7 @@ namespace Adapter.Trigger.Csv.Tests.Unit
 
             public readonly List<string> DeletedFiles = new List<string>();
 
-            public OrderBookUseCaseTriggerTestDouble(OrderBookUseCase orderBookUseCase) : base(orderBookUseCase)
+            public OrderBookUseCaseTriggerTestDouble(AddBookTitleRequestUseCase addBookTitleRequestUseCase) : base(addBookTitleRequestUseCase)
             {
             }
 
@@ -84,7 +84,7 @@ namespace Adapter.Trigger.Csv.Tests.Unit
         private OrderBookUseCaseTriggerTestDouble CreateSut()
         {
             return new OrderBookUseCaseTriggerTestDouble(
-                new OrderBookUseCase(
+                new AddBookTitleRequestUseCase(
                     _bookOrderRepository));
         }
 

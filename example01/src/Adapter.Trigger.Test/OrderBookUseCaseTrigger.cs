@@ -8,15 +8,15 @@ namespace Adapter.Trigger.Test
 {
     public class OrderBookUseCaseTrigger
     {
-        private readonly OrderBookUseCase _orderBookUseCase;
+        private readonly AddBookTitleRequestUseCase _addBookTitleRequestUseCase;
         private Thread _producerThread;
         private bool _shutdown;
         private Queue<BookTitleRequest> _testBookRequests;
 
-        public OrderBookUseCaseTrigger(OrderBookUseCase orderBookUseCase)
+        public OrderBookUseCaseTrigger(AddBookTitleRequestUseCase addBookTitleRequestUseCase)
         {
-            if (orderBookUseCase == null) throw new ArgumentNullException(nameof(orderBookUseCase));
-            _orderBookUseCase = orderBookUseCase;
+            if (addBookTitleRequestUseCase == null) throw new ArgumentNullException(nameof(addBookTitleRequestUseCase));
+            _addBookTitleRequestUseCase = addBookTitleRequestUseCase;
             _testBookRequests = new Queue<BookTitleRequest>();
         }
 
@@ -36,7 +36,7 @@ namespace Adapter.Trigger.Test
             while (!_shutdown && _testBookRequests.Count > 0)
             {
                 BookTitleRequest bookTitleRequest = _testBookRequests.Dequeue();
-                _orderBookUseCase.Execute(bookTitleRequest);
+                _addBookTitleRequestUseCase.Execute(bookTitleRequest);
                 Thread.Sleep(5000);
             }
         }

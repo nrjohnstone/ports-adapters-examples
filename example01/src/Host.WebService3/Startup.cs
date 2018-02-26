@@ -55,7 +55,7 @@ namespace Host.WebService.Client3
 
         private void AttachUseCasesToTriggers()
         {
-            _triggerAdapter.Handle(Container.GetInstance<OrderBookUseCase>());
+            _triggerAdapter.Handle(Container.GetInstance<AddBookTitleRequestUseCase>());
         }
 
         protected virtual void RegisterPersistenceAdapter()
@@ -90,7 +90,7 @@ namespace Host.WebService.Client3
         /// </summary>
         private void RegisterHostAdapter()
         {
-            Container.Register<OrderBookUseCase>();
+            Container.Register<AddBookTitleRequestUseCase>();
             Container.Register<ApproveBookOrderUseCase>();
             Container.Register<SendBookOrderUseCase>();
             Container.Register<GetAllBookOrdersUseCase>();

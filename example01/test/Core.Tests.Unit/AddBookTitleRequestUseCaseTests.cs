@@ -11,11 +11,11 @@ using Xunit;
 
 namespace Core.Tests.Unit
 {
-    public class OrderBookUseCaseTests
+    public class AddBookTitleRequestUseCaseTests
     {
         private readonly IBookOrderRepository _bookOrderRepository;
 
-        public OrderBookUseCaseTests()
+        public AddBookTitleRequestUseCaseTests()
         {
             _bookOrderRepository = new BookOrderRepository();
         }
@@ -25,10 +25,10 @@ namespace Core.Tests.Unit
         {
             var sut = CreateSut();
 
-            BookTitleRequest bookTitleRequest = 
+            BookTitleRequest bookTitleRequest =
                 a.BookTitleOrder
                 .ForSupplier("SupplierFoo");
-            
+
             // act
             sut.Execute(bookTitleRequest);
 
@@ -112,7 +112,7 @@ namespace Core.Tests.Unit
         private BookOrder StoreBookOrderWithOrderLineForSupplier(string supplier)
         {
             BookOrder bookOrder = new BookOrder(
-                "SupplierBar", 
+                "SupplierBar",
                 Guid.NewGuid(),
                 BookOrderState.New);
 
@@ -126,10 +126,9 @@ namespace Core.Tests.Unit
             return bookOrder;
         }
 
-
-        private OrderBookUseCase CreateSut()
+        private AddBookTitleRequestUseCase CreateSut()
         {
-            return new OrderBookUseCase(
+            return new AddBookTitleRequestUseCase(
                 _bookOrderRepository);
         }
 
@@ -165,8 +164,6 @@ namespace Core.Tests.Unit
                 x => x.Title == bookTitleRequest.Title &&
                      x.Price == bookTitleRequest.Price &&
                      x.Quantity == bookTitleRequest.Quantity);
-
         }
-
     }
 }

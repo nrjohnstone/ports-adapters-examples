@@ -93,7 +93,7 @@ namespace Host.WebService.Client2
         /// </summary>
         private void RegisterHostAdapter()
         {
-            Container.Register<OrderBookUseCase>();
+            Container.Register<AddBookTitleRequestUseCase>();
             Container.Register<ApproveBookOrderUseCase>();
             Container.Register<SendBookOrderUseCase>();
             Container.Register<GetAllBookOrdersUseCase>();
@@ -103,7 +103,7 @@ namespace Host.WebService.Client2
         private void AttachUseCasesToTriggers()
         {
             // Wire upstream ports into adapter
-            _triggerAdapter.Handle(Container.GetInstance<OrderBookUseCase>());
+            _triggerAdapter.Handle(Container.GetInstance<AddBookTitleRequestUseCase>());
         }
 
         public void Shutdown()

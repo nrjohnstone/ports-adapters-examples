@@ -8,12 +8,12 @@ using Domain.ValueObjects;
 
 namespace Domain.UseCases
 {
-    public class OrderBookUseCase
+    public class AddBookTitleRequestUseCase
     {
         public AmbientLogService Logger = new AmbientLogService();
         private readonly IBookOrderRepository _bookOrderRepository;
 
-        public OrderBookUseCase(IBookOrderRepository bookOrderRepository)
+        public AddBookTitleRequestUseCase(IBookOrderRepository bookOrderRepository)
         {
             if (bookOrderRepository == null)
                 throw new ArgumentNullException(nameof(bookOrderRepository));
@@ -22,7 +22,7 @@ namespace Domain.UseCases
 
         public Guid Execute(BookTitleRequest bookTitleRequest)
         {
-            Logger.Information("Execute OrderBookUseCase for Title: {Title}", bookTitleRequest.Title);
+            Logger.Information($"Execute {nameof(AddBookTitleRequestUseCase)} for Title: {{Title}}", bookTitleRequest.Title);
 
             IEnumerable<BookOrder> bookOrders = _bookOrderRepository.GetBySupplier(
                 bookTitleRequest.Supplier, BookOrderState.New);

@@ -54,7 +54,7 @@ namespace Host.WebService.Client1
         /// </summary>
         private void RegisterHostAdapter()
         {
-            Container.Register<OrderBookUseCase>();
+            Container.Register<AddBookTitleRequestUseCase>();
             Container.Register<ApproveBookOrderUseCase>();
             Container.Register<SendBookOrderUseCase>();
             Container.Register<GetAllBookOrdersUseCase>();

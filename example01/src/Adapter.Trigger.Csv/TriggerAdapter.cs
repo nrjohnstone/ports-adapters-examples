@@ -18,12 +18,12 @@ namespace Adapter.Trigger.Csv
             _initialized = true;
         }
 
-        public void Handle(OrderBookUseCase orderBookUseCase)
+        public void Handle(AddBookTitleRequestUseCase addBookTitleRequestUseCase)
         {
             if (!_initialized)
                 throw new InvalidOperationException("Adapter must be initialized prior to use");
 
-            _orderBookUseCaseTrigger = new OrderBookUseCaseTrigger(orderBookUseCase);
+            _orderBookUseCaseTrigger = new OrderBookUseCaseTrigger(addBookTitleRequestUseCase);
             _orderBookUseCaseTrigger.Start();
         }
 

@@ -9,7 +9,7 @@ namespace Adapter.Trigger.Csv
 {
     internal class OrderBookUseCaseTrigger
     {
-        private readonly OrderBookUseCase _orderBookUseCase;
+        private readonly AddBookTitleRequestUseCase _addBookTitleRequestUseCase;
         private readonly Thread _threadPoll;
         private readonly ManualResetEvent _shutdownEvent = new ManualResetEvent(false);
         private bool _shutdown;
@@ -18,9 +18,9 @@ namespace Adapter.Trigger.Csv
         public string BookOrderFileFolder { get; }
 
 
-        public OrderBookUseCaseTrigger(OrderBookUseCase orderBookUseCase)
+        public OrderBookUseCaseTrigger(AddBookTitleRequestUseCase addBookTitleRequestUseCase)
         {
-            _orderBookUseCase = orderBookUseCase;
+            _addBookTitleRequestUseCase = addBookTitleRequestUseCase;
             _threadPoll = new Thread(PollLoopForCsv);
             BookOrderFileFolder = Path.GetTempPath();
         }
@@ -65,7 +65,7 @@ namespace Adapter.Trigger.Csv
 
                     foreach (BookTitleRequest bookOrder in bookOrders)
                     {
-                        _orderBookUseCase.Execute(bookOrder);
+                        _addBookTitleRequestUseCase.Execute(bookOrder);
                     }
                 }
             }                            
