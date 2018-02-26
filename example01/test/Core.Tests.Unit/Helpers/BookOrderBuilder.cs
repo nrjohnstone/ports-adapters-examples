@@ -28,18 +28,31 @@ namespace Core.Tests.Unit.Helpers
             if (_state == null || _state == BookOrderState.New)
                 return BookOrder.CreateNew(_supplier, _id);
 
+            if (_state == BookOrderState.Approved)
+            {
+                var bookOrder = BookOrder.CreateNew(_supplier, _id);
+                bookOrder.Approve();
+                return bookOrder;
+            }
+
             return BookOrder.CreateExisting(_supplier, _id, _state.Value, _orderLines);
         }
 
         public BookOrderBuilder ThatIsNew()
         {
+            if (_state != null)
+                throw new InvalidOperationException("The state of a book order should only be specified once");
+
             _state = BookOrderState.New;
             return this;
         }
 
-        public BookOrderBuilder InState(BookOrderState bookOrderState)
+        public BookOrderBuilder ThatIsApproved()
         {
-            _state = bookOrderState;
+            if (_state != null)
+                throw new InvalidOperationException("The state of a book order should only be specified once");
+
+            _state = BookOrderState.Approved;
             return this;
         }
     }

@@ -27,7 +27,7 @@ namespace Core.Tests.Unit
         public void NewBookOrder_ShouldBeApproved()
         {
             var sut = CreateSut();
-            BookOrder bookOrder = a.BookOrder.InState(BookOrderState.New);
+            BookOrder bookOrder = a.BookOrder.ThatIsNew();
             _bookOrderRepository.Store(bookOrder);
 
             sut.Execute(bookOrder.Id);
@@ -43,7 +43,7 @@ namespace Core.Tests.Unit
         {
             var sut = CreateSut();
 
-            BookOrder bookOrder = a.BookOrder.InState(state);
+            BookOrder bookOrder = a.BookOrder.ThatIsApproved();
             _bookOrderRepository.Store(bookOrder);
 
             Action sendBookOrderThatIsAlreadySent = () => sut.Execute(bookOrder.Id);

@@ -31,7 +31,7 @@ namespace Core.Tests.Unit
         public void ApprovedBookOrder_ShouldBeSentToSupplierGateway()
         {
             var sut = CreateSut();
-            BookOrder bookOrder = a.BookOrder.InState(BookOrderState.Approved);
+            BookOrder bookOrder = a.BookOrder.ThatIsApproved();
 
             _bookOrderRepository.Store(bookOrder);
 
@@ -46,7 +46,7 @@ namespace Core.Tests.Unit
         public void SendingABookOrder_WhenStateIsNotApproved_ShouldThrowDomainException(BookOrderState state)
         {
             var sut = CreateSut();
-            BookOrder bookOrder = a.BookOrder.InState(state);
+            BookOrder bookOrder = a.BookOrder;
             _bookOrderRepository.Store(bookOrder);
 
             Action sendBookOrderThatIsAlreadySent = () => sut.Execute(bookOrder.Id);
