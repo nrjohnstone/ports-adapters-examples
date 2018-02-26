@@ -20,22 +20,22 @@ namespace Domain.UseCases
             _bookOrderRepository = bookOrderRepository;
         }
 
-        public Guid Execute(BookTitleOrder bookTitleOrder)
+        public Guid Execute(BookTitleRequest bookTitleRequest)
         {
-            Logger.Information("Execute OrderBookUseCase for Title: {Title}", bookTitleOrder.Title);
+            Logger.Information("Execute OrderBookUseCase for Title: {Title}", bookTitleRequest.Title);
 
             IEnumerable<BookOrder> bookOrders = _bookOrderRepository.GetBySupplier(
-                bookTitleOrder.Supplier, BookOrderState.New);
+                bookTitleRequest.Supplier, BookOrderState.New);
             var bookOrder = bookOrders.FirstOrDefault();
 
             if (bookOrder == null)
             {
                 bookOrder = new BookOrder(
-                    bookTitleOrder.Supplier, Guid.NewGuid(), BookOrderState.New);
+                    bookTitleRequest.Supplier, Guid.NewGuid(), BookOrderState.New);
             }
-           
-            bookOrder.AddBookRequest(bookTitleOrder);
-            
+
+            bookOrder.AddBookRequest(bookTitleRequest);
+
             _bookOrderRepository.Store(bookOrder);
 
             return bookOrder.Id;

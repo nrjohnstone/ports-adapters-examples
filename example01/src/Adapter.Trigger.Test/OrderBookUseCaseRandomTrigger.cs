@@ -38,11 +38,11 @@ namespace Adapter.Trigger.Test
                     Decimal price = rand.Next(1, 100);
                     int quantity = rand.Next(1, 10);
 
-                    BookTitleOrder bookTitleOrder = new BookTitleOrder(
+                    BookTitleRequest bookTitleRequest = new BookTitleRequest(
                         $"Title{Guid.NewGuid().ToString()}",
                         supplier,
                         price, quantity);
-                    _orderBookUseCase.Execute(bookTitleOrder);
+                    _orderBookUseCase.Execute(bookTitleRequest);
                 }
                 
                 Thread.Sleep(5000);

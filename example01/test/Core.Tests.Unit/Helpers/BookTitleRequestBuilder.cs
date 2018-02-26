@@ -3,47 +3,47 @@ using Fluency;
 
 namespace Core.Tests.Unit.Helpers
 {
-    public class BookTitleOrderBuilder : FluentBuilder<BookTitleOrder>
+    public class BookTitleRequestBuilder : FluentBuilder<BookTitleRequest>
     {
         private string _title = "BookTitle";
         private string _supplier = "BookSupplier";
         private decimal _price = 10.5M;
         private int _quantity = 1;
 
-        public BookTitleOrderBuilder()
+        public BookTitleRequestBuilder()
         {
             IgnoreAllProperties();
         }
 
-        public static implicit operator BookTitleOrder(BookTitleOrderBuilder builder)
+        public static implicit operator BookTitleRequest(BookTitleRequestBuilder builder)
         {
             return builder.build();
         }
 
-        protected override BookTitleOrder GetNewInstance()
+        protected override BookTitleRequest GetNewInstance()
         {
-            return new BookTitleOrder(_title, _supplier, _price, _quantity);
+            return new BookTitleRequest(_title, _supplier, _price, _quantity);
         }
 
-        public BookTitleOrderBuilder ForSupplier(string supplier)
+        public BookTitleRequestBuilder ForSupplier(string supplier)
         {
             _supplier = supplier;
             return this;
         }
 
-        public BookTitleOrderBuilder ForTitle(string title)
+        public BookTitleRequestBuilder ForTitle(string title)
         {
             _title = title;
             return this;
         }
 
-        public BookTitleOrderBuilder WithPrice(decimal price)
+        public BookTitleRequestBuilder WithPrice(decimal price)
         {
             _price = price;
             return this;
         }
 
-        public BookTitleOrderBuilder WithQuantity(int quantity)
+        public BookTitleRequestBuilder WithQuantity(int quantity)
         {
             _quantity = quantity;
             return this;

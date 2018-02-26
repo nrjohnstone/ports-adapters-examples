@@ -16,7 +16,7 @@ namespace Domain.Entities
             State = state;
 
             OrderLines = new List<OrderLine>();
-        }     
+        }
 
         public BookOrder(string supplier, Guid id, BookOrderState state, IEnumerable<OrderLine> orderLines)
         {
@@ -32,13 +32,13 @@ namespace Domain.Entities
         }
 
 
-        public void AddBookRequest(BookTitleOrder bookTitleOrder)
+        public void AddBookRequest(BookTitleRequest bookTitleRequest)
         {
             if (State != BookOrderState.New)
                 throw new AddBookRequestException();
 
-            OrderLine orderLine = new OrderLine(bookTitleOrder.Title,
-                bookTitleOrder.Price, bookTitleOrder.Quantity, Guid.NewGuid());
+            OrderLine orderLine = new OrderLine(bookTitleRequest.Title,
+                bookTitleRequest.Price, bookTitleRequest.Quantity, Guid.NewGuid());
 
             OrderLines.Add(orderLine);
         }

@@ -71,7 +71,7 @@
     <Compile Include="UseCases\SupplierBookOrderUpdateUseCase.cs" />
     <Compile Include="ValueObjects\SupplierBookOrderLineUpdateRequest.cs" />
     <Compile Include="ValueObjects\SupplierBookOrderUpdateRequest.cs" />
-    <Compile Include="ValueObjects\BookTitleOrder.cs" />
+    <Compile Include="ValueObjects\BookTitleRequest.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

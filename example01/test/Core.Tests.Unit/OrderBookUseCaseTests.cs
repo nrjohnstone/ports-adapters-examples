@@ -25,15 +25,15 @@ namespace Core.Tests.Unit
         {
             var sut = CreateSut();
 
-            BookTitleOrder bookTitleOrder = 
+            BookTitleRequest bookTitleRequest = 
                 a.BookTitleOrder
                 .ForSupplier("SupplierFoo");
             
             // act
-            sut.Execute(bookTitleOrder);
+            sut.Execute(bookTitleRequest);
 
             // assert
-            var storedOrders = _bookOrderRepository.GetBySupplier(bookTitleOrder.Supplier).ToList();
+            var storedOrders = _bookOrderRepository.GetBySupplier(bookTitleRequest.Supplier).ToList();
 
             storedOrders.Count.Should().Be(1);
 
@@ -41,9 +41,9 @@ namespace Core.Tests.Unit
             storedOrder.Supplier.Should().Be("SupplierFoo");
             storedOrder.State.Should().Be(BookOrderState.New);
             storedOrder.OrderLines.Should().Contain(
-                x => x.Title == bookTitleOrder.Title &&
-                     x.Price == bookTitleOrder.Price &&
-                     x.Quantity == bookTitleOrder.Quantity);
+                x => x.Title == bookTitleRequest.Title &&
+                     x.Price == bookTitleRequest.Price &&
+                     x.Quantity == bookTitleRequest.Quantity);
         }
 
         [Fact]
@@ -53,16 +53,16 @@ namespace Core.Tests.Unit
 
             StoreBookOrderWithOrderLineForSupplier("SupplierBar");
 
-            BookTitleOrder bookTitleOrder =
+            BookTitleRequest bookTitleRequest =
                 a.BookTitleOrder
                     .ForSupplier("SupplierBar")
                     .ForTitle("The Color of Magic");
 
             // act
-            sut.Execute(bookTitleOrder);
+            sut.Execute(bookTitleRequest);
 
             // assert
-            var storedOrders = _bookOrderRepository.GetBySupplier(bookTitleOrder.Supplier).ToList();
+            var storedOrders = _bookOrderRepository.GetBySupplier(bookTitleRequest.Supplier).ToList();
 
             storedOrders.Count.Should().Be(1);
 
@@ -71,9 +71,9 @@ namespace Core.Tests.Unit
             storedOrder.Supplier.Should().Be("SupplierBar");
             storedOrder.OrderLines.Count.Should().Be(2);
             storedOrder.OrderLines.Should().Contain(
-                x => x.Title == bookTitleOrder.Title &&
-                     x.Price == bookTitleOrder.Price &&
-                     x.Quantity == bookTitleOrder.Quantity);
+                x => x.Title == bookTitleRequest.Title &&
+                     x.Price == bookTitleRequest.Price &&
+                     x.Quantity == bookTitleRequest.Quantity);
 
         }
 
@@ -84,13 +84,13 @@ namespace Core.Tests.Unit
 
             StoreBookOrderWithOrderLineForSupplier("SupplierBar");
 
-            BookTitleOrder bookTitleOrder =
+            BookTitleRequest bookTitleRequest =
                 a.BookTitleOrder
                     .ForSupplier("SupplierFoo")
                     .ForTitle("The Color of Magic");
 
             // act
-            sut.Execute(bookTitleOrder);
+            sut.Execute(bookTitleRequest);
 
             // assert
             var ordersForSupplierBar = _bookOrderRepository.GetBySupplier("SupplierBar").ToList();
@@ -104,9 +104,9 @@ namespace Core.Tests.Unit
             firstOrderForSupplierFoo.Supplier.Should().Be("SupplierFoo");
             firstOrderForSupplierFoo.OrderLines.Count.Should().Be(1);
             firstOrderForSupplierFoo.OrderLines.Should().Contain(
-                x => x.Title == bookTitleOrder.Title &&
-                     x.Price == bookTitleOrder.Price &&
-                     x.Quantity == bookTitleOrder.Quantity);
+                x => x.Title == bookTitleRequest.Title &&
+                     x.Price == bookTitleRequest.Price &&
+                     x.Quantity == bookTitleRequest.Quantity);
         }
 
         private BookOrder StoreBookOrderWithOrderLineForSupplier(string supplier)
@@ -142,16 +142,16 @@ namespace Core.Tests.Unit
             bookOrder.Approve();
             _bookOrderRepository.Store(bookOrder);
 
-            BookTitleOrder bookTitleOrder =
+            BookTitleRequest bookTitleRequest =
                 a.BookTitleOrder
                     .ForSupplier("SupplierBar")
                     .ForTitle("The Color of Magic");
 
             // act
-            sut.Execute(bookTitleOrder);
+            sut.Execute(bookTitleRequest);
 
             // assert
-            var storedOrders = _bookOrderRepository.GetBySupplier(bookTitleOrder.Supplier).ToList();
+            var storedOrders = _bookOrderRepository.GetBySupplier(bookTitleRequest.Supplier).ToList();
 
             storedOrders.Count.Should().Be(2);
             storedOrders.Select(x => x.Supplier).Should().OnlyContain(supplier => supplier.Equals("SupplierBar"));
@@ -162,9 +162,9 @@ namespace Core.Tests.Unit
             newOrder.Supplier.Should().Be("SupplierBar");
             newOrder.OrderLines.Count.Should().Be(1);
             newOrder.OrderLines.Should().Contain(
-                x => x.Title == bookTitleOrder.Title &&
-                     x.Price == bookTitleOrder.Price &&
-                     x.Quantity == bookTitleOrder.Quantity);
+                x => x.Title == bookTitleRequest.Title &&
+                     x.Price == bookTitleRequest.Price &&
+                     x.Quantity == bookTitleRequest.Quantity);
 
         }
 

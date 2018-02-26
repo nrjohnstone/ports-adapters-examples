@@ -72,7 +72,7 @@
     <Compile Include="ApproveBookOrderUseCaseTests.cs" />
     <Compile Include="Helpers\a.cs" />
     <Compile Include="Helpers\BookOrderBuilder.cs" />
-    <Compile Include="Helpers\BookTitleOrderBuilder.cs" />
+    <Compile Include="Helpers\BookTitleRequestBuilder.cs" />
     <Compile Include="OrderBookUseCaseTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SendBookOrderUseCaseTests.cs" />

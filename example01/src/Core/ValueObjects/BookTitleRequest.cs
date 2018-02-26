@@ -2,9 +2,9 @@
 
 namespace Domain.ValueObjects
 {
-    public class BookTitleOrder
+    public class BookTitleRequest
     {
-        public BookTitleOrder(string title, string supplier, decimal price, int quantity)
+        public BookTitleRequest(string title, string supplier, decimal price, int quantity)
         {
             if (string.IsNullOrWhiteSpace(title))
                 throw new ArgumentException("Value cannot be null or whitespace.", nameof(title));

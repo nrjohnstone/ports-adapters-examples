@@ -40,7 +40,7 @@ namespace Adapter.Trigger.RabbitMq
 
             try
             {
-                var bookRequest = JsonConvert.DeserializeObject<BookTitleOrder>(message);
+                var bookRequest = JsonConvert.DeserializeObject<BookTitleRequest>(message);
                 _orderBookUseCase.Execute(bookRequest);
                 _channel.BasicAck(args.DeliveryTag, false);
             }
