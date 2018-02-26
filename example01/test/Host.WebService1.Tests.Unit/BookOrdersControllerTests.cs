@@ -33,9 +33,9 @@ namespace Host.WebService.Client1.Tests.Unit
                 Price = "25.50",
                 Quantity = 1
             });
-            
+
             result.StatusCode.Should().Be(HttpStatusCode.Created);
-            
+
             MockBookOrderRepository.Received(1).Store(
                 Arg.Is<BookOrder>(
                     x => x.Id != Guid.Empty &&
@@ -49,11 +49,11 @@ namespace Host.WebService.Client1.Tests.Unit
         public void Post_ApproveBookOrder_WhenBookOrderIsNew_ShouldApproveBookOrder()
         {
             Guid bookOrderId = Guid.NewGuid();
-            MockBookOrderRepository.Get(bookOrderId).Returns(new BookOrder(
-                "SupplierFoo", bookOrderId, BookOrderState.New));
+            MockBookOrderRepository.Get(bookOrderId).Returns(BookOrder.CreateNew(
+                "SupplierFoo", bookOrderId));
 
             StartServer();
-            
+
             var result = Client.Post($"bookOrders/{bookOrderId}/approve", null);
 
             result.StatusCode.Should().Be(HttpStatusCode.OK);
@@ -67,8 +67,8 @@ namespace Host.WebService.Client1.Tests.Unit
         public void Post_SendBookOrder_WhenBookOrderIsApproved_ShouldSendBookOrder()
         {
             Guid bookOrderId = Guid.NewGuid();
-            MockBookOrderRepository.Get(bookOrderId).Returns(new BookOrder(
-                "SupplierFoo", bookOrderId, BookOrderState.Approved));
+            MockBookOrderRepository.Get(bookOrderId).Returns(BookOrder.CreateExisting(
+                "SupplierFoo", bookOrderId, BookOrderState.Approved, new List<OrderLine>()));
 
             StartServer();
 
@@ -89,11 +89,12 @@ namespace Host.WebService.Client1.Tests.Unit
         public void Get_ShouldReturnAllBookOrders()
         {
             var bookOrders = new List<BookOrder>();
-            var bookOrder = new BookOrder("Supplier1", Guid.NewGuid(), BookOrderState.New, 
+            var bookOrder = BookOrder.CreateExisting("Supplier1", Guid.NewGuid(), BookOrderState.New,
                 new List<OrderLine>() { new OrderLine("Title1", 10.5M, 1, Guid.NewGuid())});
-            
+
             bookOrders.Add(bookOrder);
-            bookOrders.Add(new BookOrder("Supplier2", Guid.NewGuid(), BookOrderState.Approved));
+            bookOrders.Add(BookOrder.CreateExisting("Supplier2", Guid.NewGuid(), BookOrderState.Approved,
+                new List<OrderLine>()));
 
             MockBookOrderRepository.Get().Returns(bookOrders);
 

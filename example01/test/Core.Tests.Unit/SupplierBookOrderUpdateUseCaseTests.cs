@@ -37,10 +37,9 @@ namespace Core.Tests.Unit
         {
             var sut = CreateSut();
 
-            BookOrder bookOrder = new BookOrder(
+            BookOrder bookOrder = BookOrder.CreateNew(
                 "SupplierBar",
-                Guid.NewGuid(),
-                BookOrderState.New);
+                Guid.NewGuid());
 
             bookOrder.AddBookRequest(
                 a.BookTitleOrder
@@ -72,10 +71,9 @@ namespace Core.Tests.Unit
         {
             var sut = CreateSut();
 
-            BookOrder bookOrder = new BookOrder(
+            BookOrder bookOrder = BookOrder.CreateNew(
                 "SupplierBar",
-                Guid.NewGuid(),
-                BookOrderState.New);
+                Guid.NewGuid());
 
             bookOrder.AddBookRequest(
                 a.BookTitleOrder

@@ -9,9 +9,9 @@ namespace Adapter.Persistence.MySql.Repositories.Actions
 {
     internal class GetBookOrdersAction
     {
-        public static IEnumerable<BookOrder> Execute(IDbConnection connection, string supplier = null, 
+        public static IEnumerable<BookOrder> Execute(IDbConnection connection, string supplier = null,
             BookOrderState? state = null)
-        {           
+        {
             DynamicParameters parameters = new DynamicParameters();
             var sqlStatement =
                 "SELECT supplier, order_id, state FROM book_orders ";
@@ -23,7 +23,7 @@ namespace Adapter.Persistence.MySql.Repositories.Actions
                 sqlConditional = EvaluateSqlConditional(sqlConditional);
                 sqlConditional += " supplier = ?supplier";
                 parameters.Add("supplier", supplier);
-            }            
+            }
 
             if (state.HasValue)
             {
@@ -55,7 +55,7 @@ namespace Adapter.Persistence.MySql.Repositories.Actions
                         orderLineDto.Order_Line_Id));
                 }
 
-                bookOrders.Add(new BookOrder(
+                bookOrders.Add(BookOrder.CreateExisting(
                     bookOrderDto.Supplier,
                     bookOrderDto.Order_Id,
                     bookOrderDto.State,

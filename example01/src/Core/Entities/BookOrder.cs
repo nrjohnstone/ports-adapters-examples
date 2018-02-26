@@ -1,34 +1,25 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using Domain.ValueObjects;
 
 namespace Domain.Entities
 {
     public class BookOrder
     {
-        public BookOrder(string supplier, Guid id, BookOrderState state)
+        private BookOrder(string supplier, Guid id, BookOrderState state, IEnumerable<OrderLine> orderLines)
         {
             if (string.IsNullOrWhiteSpace(supplier))
                 throw new ArgumentException("Value cannot be null or whitespace.", nameof(supplier));
+
+            if (orderLines == null)
+                throw new ArgumentNullException(nameof(orderLines));
 
             Supplier = supplier;
             Id = id;
             State = state;
 
-            OrderLines = new List<OrderLine>();
-        }
-
-        public BookOrder(string supplier, Guid id, BookOrderState state, IEnumerable<OrderLine> orderLines)
-        {
-            if (string.IsNullOrWhiteSpace(supplier))
-                throw new ArgumentException("Value cannot be null or whitespace.", nameof(supplier));
-
-            Supplier = supplier;
-            Id = id;
-            State = state;
-
-            OrderLines = new List<OrderLine>();
-            OrderLines.AddRange(orderLines);
+            OrderLines = orderLines.ToList();
         }
 
         public static BookOrder CreateNew(string supplier, Guid id)

@@ -51,7 +51,7 @@ namespace Adapter.Persistence.CouchDb.Tests.Integration
                 Constants.DatabaseUri, _databaseName);
             return new BookOrderRepository(settings);
         }
-        
+
         [Fact]
         public void CanCreateInstance()
         {
@@ -77,7 +77,7 @@ namespace Adapter.Persistence.CouchDb.Tests.Integration
             {
                 new OrderLine("Line1Book", 100M, 2, Guid.NewGuid()) };
 
-            var bookOrder = new BookOrder("AcmeBooks", bookOrderId, BookOrderState.New,
+            var bookOrder = BookOrder.CreateExisting("AcmeBooks", bookOrderId, BookOrderState.New,
                 orderLines);
 
             var sut = CreateSut();
@@ -101,7 +101,7 @@ namespace Adapter.Persistence.CouchDb.Tests.Integration
             {
                 new OrderLine("Line1Book", 100M, 2, Guid.NewGuid()) };
 
-            var bookOrder = new BookOrder("AcmeBooks", bookOrderId, BookOrderState.New,
+            var bookOrder = BookOrder.CreateExisting("AcmeBooks", bookOrderId, BookOrderState.New,
                 orderLines);
 
             var sut = CreateSut();
@@ -132,7 +132,7 @@ namespace Adapter.Persistence.CouchDb.Tests.Integration
             {
                 new OrderLine("Line1Book", 100M, 2, Guid.NewGuid()) };
 
-            var bookOrder = new BookOrder(supplierToFilterBy, bookOrderId, BookOrderState.New,
+            var bookOrder = BookOrder.CreateExisting(supplierToFilterBy, bookOrderId, BookOrderState.New,
                 orderLines);
             sut.Store(bookOrder);
 
@@ -147,12 +147,12 @@ namespace Adapter.Persistence.CouchDb.Tests.Integration
         {
             var sut = CreateSut();
 
-            var bookOrder1 = new BookOrder("Foo1", Guid.NewGuid(), BookOrderState.New,
+            var bookOrder1 = BookOrder.CreateExisting("Foo1", Guid.NewGuid(), BookOrderState.New,
                 new List<OrderLine>()
                 {
                     new OrderLine("Line1Book", 100M, 2, Guid.NewGuid())
                 });
-            var bookOrder2 = new BookOrder("Foo", Guid.NewGuid(), BookOrderState.New,
+            var bookOrder2 = BookOrder.CreateExisting("Foo", Guid.NewGuid(), BookOrderState.New,
                 new List<OrderLine>()
                 {
                     new OrderLine("Line1Book", 200M, 3, Guid.NewGuid())
@@ -162,7 +162,7 @@ namespace Adapter.Persistence.CouchDb.Tests.Integration
             sut.Store(bookOrder2);
 
             var results = sut.GetBySupplier("Foo").ToList();
-            
+
             results.Select(x => x.Supplier).Should().OnlyContain(y => y == "Foo");
         }
 
@@ -171,12 +171,12 @@ namespace Adapter.Persistence.CouchDb.Tests.Integration
         {
             var sut = CreateSut();
 
-            var bookOrder1 = new BookOrder("Foo", Guid.NewGuid(), BookOrderState.Sent,
+            var bookOrder1 = BookOrder.CreateExisting("Foo", Guid.NewGuid(), BookOrderState.Sent,
                 new List<OrderLine>()
                 {
                     new OrderLine("Line1Book", 100M, 2, Guid.NewGuid())
                 });
-            var bookOrder2 = new BookOrder("Foo", Guid.NewGuid(), BookOrderState.New,
+            var bookOrder2 = BookOrder.CreateExisting("Foo", Guid.NewGuid(), BookOrderState.New,
                 new List<OrderLine>()
                 {
                     new OrderLine("Line1Book", 200M, 3, Guid.NewGuid())
@@ -196,17 +196,17 @@ namespace Adapter.Persistence.CouchDb.Tests.Integration
         {
             var sut = CreateSut();
 
-            var bookOrder1 = new BookOrder("Foo", Guid.NewGuid(), BookOrderState.Sent,
+            var bookOrder1 = BookOrder.CreateExisting("Foo", Guid.NewGuid(), BookOrderState.Sent,
                 new List<OrderLine>()
                 {
                     new OrderLine("Line1Book", 100M, 2, Guid.NewGuid())
                 });
-            var bookOrder2 = new BookOrder("Foo", Guid.NewGuid(), BookOrderState.New,
+            var bookOrder2 = BookOrder.CreateExisting("Foo", Guid.NewGuid(), BookOrderState.New,
                 new List<OrderLine>()
                 {
                     new OrderLine("Line1Book", 200M, 3, Guid.NewGuid())
                 });
-            var bookOrder3 = new BookOrder("Baz", Guid.NewGuid(), BookOrderState.New,
+            var bookOrder3 = BookOrder.CreateExisting("Baz", Guid.NewGuid(), BookOrderState.New,
                 new List<OrderLine>()
                 {
                     new OrderLine("Line1Book", 200M, 3, Guid.NewGuid())
@@ -236,7 +236,7 @@ namespace Adapter.Persistence.CouchDb.Tests.Integration
         public void GetBySupplierAndState_WhenNoMatchesForState_ShouldReturnEmptyList()
         {
             var sut = CreateSut();
-            var bookOrder1 = new BookOrder("Foo", Guid.NewGuid(), BookOrderState.Sent,
+            var bookOrder1 = BookOrder.CreateExisting("Foo", Guid.NewGuid(), BookOrderState.Sent,
                 new List<OrderLine>()
                 {
                     new OrderLine("Line1Book", 100M, 2, Guid.NewGuid())
@@ -244,7 +244,7 @@ namespace Adapter.Persistence.CouchDb.Tests.Integration
             sut.Store(bookOrder1);
 
             var results = sut.GetBySupplier("Foo", BookOrderState.New).ToList();
-            
+
             results.Should().BeEmpty();
         }
 
@@ -253,17 +253,17 @@ namespace Adapter.Persistence.CouchDb.Tests.Integration
         {
             var sut = CreateSut();
 
-            var bookOrder1 = new BookOrder("Foo", Guid.NewGuid(), BookOrderState.Sent,
+            var bookOrder1 = BookOrder.CreateExisting("Foo", Guid.NewGuid(), BookOrderState.Sent,
                 new List<OrderLine>()
                 {
                     new OrderLine("Line1Book", 100M, 2, Guid.NewGuid())
                 });
-            var bookOrder2 = new BookOrder("Foo", Guid.NewGuid(), BookOrderState.New,
+            var bookOrder2 = BookOrder.CreateExisting("Foo", Guid.NewGuid(), BookOrderState.New,
                 new List<OrderLine>()
                 {
                     new OrderLine("Line1Book", 200M, 3, Guid.NewGuid())
                 });
-            var bookOrder3 = new BookOrder("Baz", Guid.NewGuid(), BookOrderState.New,
+            var bookOrder3 = BookOrder.CreateExisting("Baz", Guid.NewGuid(), BookOrderState.New,
                 new List<OrderLine>()
                 {
                     new OrderLine("Line1Book", 200M, 3, Guid.NewGuid())
@@ -295,17 +295,17 @@ namespace Adapter.Persistence.CouchDb.Tests.Integration
         {
             var sut = CreateSut();
 
-            var bookOrder1 = new BookOrder("Foo", Guid.NewGuid(), BookOrderState.Sent,
+            var bookOrder1 = BookOrder.CreateExisting("Foo", Guid.NewGuid(), BookOrderState.Sent,
                 new List<OrderLine>()
                 {
                     new OrderLine("Line1Book", 100M, 2, Guid.NewGuid())
                 });
-            var bookOrder2 = new BookOrder("Foo", Guid.NewGuid(), BookOrderState.New,
+            var bookOrder2 = BookOrder.CreateExisting("Foo", Guid.NewGuid(), BookOrderState.New,
                 new List<OrderLine>()
                 {
                     new OrderLine("Line1Book", 200M, 3, Guid.NewGuid())
                 });
-            var bookOrder3 = new BookOrder("Baz", Guid.NewGuid(), BookOrderState.New,
+            var bookOrder3 = BookOrder.CreateExisting("Baz", Guid.NewGuid(), BookOrderState.New,
                 new List<OrderLine>()
                 {
                     new OrderLine("Line1Book", 200M, 3, Guid.NewGuid())
@@ -317,7 +317,7 @@ namespace Adapter.Persistence.CouchDb.Tests.Integration
 
             // act
             sut.Delete();
-            
+
             // assert
             var bookOrders = sut.Get();
 

@@ -111,10 +111,9 @@ namespace Core.Tests.Unit
 
         private BookOrder StoreBookOrderWithOrderLineForSupplier(string supplier)
         {
-            BookOrder bookOrder = new BookOrder(
+            BookOrder bookOrder = BookOrder.CreateNew(
                 "SupplierBar",
-                Guid.NewGuid(),
-                BookOrderState.New);
+                Guid.NewGuid());
 
             bookOrder.AddBookRequest(
                 a.BookTitleOrder

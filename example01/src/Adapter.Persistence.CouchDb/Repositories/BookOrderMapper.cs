@@ -17,7 +17,7 @@ namespace Adapter.Persistence.CouchDb.Repositories
                     orderLineDto.Id));
             }
 
-            BookOrder bookOrder = new BookOrder(retrieved.Supplier, Guid.Parse(retrieved._id),
+            BookOrder bookOrder = BookOrder.CreateExisting(retrieved.Supplier, Guid.Parse(retrieved._id),
                 retrieved.State, orderLines);
 
             return bookOrder;
@@ -29,7 +29,7 @@ namespace Adapter.Persistence.CouchDb.Repositories
             foreach (var orderLine in bookOrder.OrderLines)
             {
                 orderLineDtos.Add(new OrderLineDto(
-                    orderLine.Id, orderLine.Title, orderLine.Price, 
+                    orderLine.Id, orderLine.Title, orderLine.Price,
                     orderLine.Quantity, orderLine.Id));
             }
             BookOrderDto bookOrderDto = new BookOrderDto(

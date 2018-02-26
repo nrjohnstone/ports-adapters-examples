@@ -32,7 +32,7 @@ namespace Adapter.Persistence.MySql.Repositories.Actions
                     orderLineDto.Order_Line_Id));
             }
 
-            return new BookOrder(bookOrderDto.Supplier,
+            return BookOrder.CreateExisting(bookOrderDto.Supplier,
                 bookOrderDto.Order_Id,
                 bookOrderDto.State,
                 orderLines);

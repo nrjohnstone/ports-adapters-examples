@@ -27,7 +27,7 @@ namespace Adapter.Persistence.MySql.Tests.Integration
 
             Guid orderId = Guid.NewGuid();
 
-            var newBookOrder = new BookOrder("Foo", orderId, BookOrderState.New);
+            var newBookOrder = BookOrder.CreateNew("Foo", orderId);
             newBookOrder.AddBookRequest(new BookTitleRequest("Book1","Foo", 10.5M, 2));
             sut.Store(newBookOrder);
 
@@ -44,13 +44,13 @@ namespace Adapter.Persistence.MySql.Tests.Integration
             var supplierFoo = $"Foo{Guid.NewGuid()}";
             var supplierBar = $"Bar{Guid.NewGuid()}";
 
-            var bookOrder1 = new BookOrder(supplierFoo, Guid.NewGuid(), BookOrderState.New);
+            var bookOrder1 = BookOrder.CreateNew(supplierFoo, Guid.NewGuid());
             bookOrder1.AddBookRequest(new BookTitleRequest("Book1", supplierFoo, 10.5M, 2));
 
-            var bookOrder2 = new BookOrder(supplierBar, Guid.NewGuid(), BookOrderState.New);
+            var bookOrder2 = BookOrder.CreateNew(supplierBar, Guid.NewGuid());
             bookOrder2.AddBookRequest(new BookTitleRequest("Book2", supplierBar, 2.5M, 3));
 
-            var bookOrder3 = new BookOrder(supplierFoo, Guid.NewGuid(), BookOrderState.New);
+            var bookOrder3 = BookOrder.CreateNew(supplierFoo, Guid.NewGuid());
             bookOrder3.AddBookRequest(new BookTitleRequest("Book3", supplierFoo, 5.5M, 4));
 
             sut.Store(bookOrder1);
@@ -58,7 +58,7 @@ namespace Adapter.Persistence.MySql.Tests.Integration
             sut.Store(bookOrder3);
 
             var bookOrdersForFoo = sut.GetBySupplier(supplierFoo).ToList();
-            
+
             bookOrdersForFoo.Should().Contain(x => x.Id == bookOrder1.Id);
             bookOrdersForFoo.Should().Contain(x => x.Id == bookOrder3.Id);
 
@@ -83,14 +83,14 @@ namespace Adapter.Persistence.MySql.Tests.Integration
             var supplierFoo = $"Foo{Guid.NewGuid()}";
             var supplierBar = $"Bar{Guid.NewGuid()}";
 
-            var bookOrder1 = new BookOrder(supplierFoo, Guid.NewGuid(), BookOrderState.New);
+            var bookOrder1 = BookOrder.CreateNew(supplierFoo, Guid.NewGuid());
             bookOrder1.AddBookRequest(new BookTitleRequest("Book1", supplierFoo, 10.5M, 2));
 
-            var bookOrder2 = new BookOrder(supplierBar, Guid.NewGuid(), BookOrderState.New);
+            var bookOrder2 = BookOrder.CreateNew(supplierBar, Guid.NewGuid());
             bookOrder2.AddBookRequest(new BookTitleRequest("Book2", supplierBar, 2.5M, 3));
             bookOrder2.Approve();
 
-            var bookOrder3 = new BookOrder(supplierFoo, Guid.NewGuid(), BookOrderState.New);
+            var bookOrder3 = BookOrder.CreateNew(supplierFoo, Guid.NewGuid());
             bookOrder3.AddBookRequest(new BookTitleRequest("Book3", supplierFoo, 5.5M, 4));
             bookOrder3.Approve();
             bookOrder3.Send();
@@ -118,14 +118,14 @@ namespace Adapter.Persistence.MySql.Tests.Integration
             var supplierFoo = $"Foo{Guid.NewGuid()}";
             var supplierBar = $"Bar{Guid.NewGuid()}";
 
-            var bookOrder1 = new BookOrder(supplierFoo, Guid.NewGuid(), BookOrderState.New);
+            var bookOrder1 = BookOrder.CreateNew(supplierFoo, Guid.NewGuid());
             bookOrder1.AddBookRequest(new BookTitleRequest("Book1", supplierFoo, 10.5M, 2));
 
-            var bookOrder2 = new BookOrder(supplierBar, Guid.NewGuid(), BookOrderState.New);
+            var bookOrder2 = BookOrder.CreateNew(supplierBar, Guid.NewGuid());
             bookOrder2.AddBookRequest(new BookTitleRequest("Book2", supplierBar, 2.5M, 3));
             bookOrder2.Approve();
 
-            var bookOrder3 = new BookOrder(supplierFoo, Guid.NewGuid(), BookOrderState.New);
+            var bookOrder3 = BookOrder.CreateNew(supplierFoo, Guid.NewGuid());
             bookOrder3.AddBookRequest(new BookTitleRequest("Book3", supplierFoo, 5.5M, 4));
             bookOrder3.Approve();
             bookOrder3.Send();
@@ -135,7 +135,7 @@ namespace Adapter.Persistence.MySql.Tests.Integration
             sut.Store(bookOrder3);
 
             var bookOrdersForFoo = sut.GetByState(BookOrderState.Sent).ToList();
-            
+
             bookOrdersForFoo.Should().Contain(x => x.Id == bookOrder3.Id);
 
             var storedBookOrder3 = bookOrdersForFoo.First(x => x.Id == bookOrder3.Id);
@@ -152,10 +152,10 @@ namespace Adapter.Persistence.MySql.Tests.Integration
 
             Guid orderId = Guid.NewGuid();
 
-            var bookOrder = new BookOrder("Foo", orderId, BookOrderState.New);
+            var bookOrder = BookOrder.CreateNew("Foo", orderId);
             bookOrder.AddBookRequest(new BookTitleRequest("Book1", "Foo", 10.5M, 2));
             sut.Store(bookOrder);
-            
+
             bookOrder.Approve();
 
             sut.Store(bookOrder);
@@ -172,7 +172,7 @@ namespace Adapter.Persistence.MySql.Tests.Integration
 
             Guid orderId = Guid.NewGuid();
 
-            var bookOrder = new BookOrder("Foo", orderId, BookOrderState.New);
+            var bookOrder = BookOrder.CreateNew("Foo", orderId);
             bookOrder.AddBookRequest(new BookTitleRequest("Book1", "Foo", 10.5M, 2));
             sut.Store(bookOrder);
 
