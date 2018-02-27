@@ -42,8 +42,15 @@ namespace Core.Tests.Unit
         public void ApproveABookOrder_WhenStateIsNotNew_ShouldThrowDomainException(BookOrderState state)
         {
             var sut = CreateSut();
+            BookOrder bookOrder;
 
-            BookOrder bookOrder = a.BookOrder.ThatIsApproved();
+            if (state == BookOrderState.Approved)
+                bookOrder = a.BookOrder.ThatIsApproved();
+            else if (state == BookOrderState.Sent)
+                bookOrder = a.BookOrder.ThatIsSent();
+            else
+                throw new ArgumentOutOfRangeException();
+
             _bookOrderRepository.Store(bookOrder);
 
             Action sendBookOrderThatIsAlreadySent = () => sut.Execute(bookOrder.Id);

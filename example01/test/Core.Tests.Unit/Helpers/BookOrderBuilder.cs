@@ -55,5 +55,14 @@ namespace Core.Tests.Unit.Helpers
             _state = BookOrderState.Approved;
             return this;
         }
+
+        public BookOrderBuilder ThatIsSent()
+        {
+            if (_state != null)
+                throw new InvalidOperationException("The state of a book order should only be specified once");
+
+            _state = BookOrderState.Sent;
+            return this;
+        }
     }
 }
