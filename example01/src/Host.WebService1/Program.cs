@@ -12,8 +12,9 @@ namespace Host.WebService.Client1
             string baseAddress = "http://localhost:10008/";
 
             using (WebApp.Start<Startup>(url: baseAddress))
-            {                
-                Console.WriteLine("Hit enter to exit");                
+            {
+                Console.WriteLine($"Running on {baseAddress}");
+                Console.WriteLine("Hit enter to exit");
                 Console.ReadLine();
             }
         }
