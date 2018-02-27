@@ -124,6 +124,10 @@
       <Project>{11455D71-79B1-4F03-8568-734A50B946A8}</Project>
       <Name>Host.WebService.Client1</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Domain.Builders\Domain.Builders.csproj">
+      <Project>{b889cae0-1827-4e64-9312-1439039a9c87}</Project>
+      <Name>Domain.Builders</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <Analyzer Include="..\..\packages\xunit.analyzers.0.7.0\analyzers\dotnet\cs\xunit.analyzers.dll" />

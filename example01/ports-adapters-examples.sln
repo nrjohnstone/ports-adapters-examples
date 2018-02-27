@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.27004.2006
+VisualStudioVersion = 15.0.27130.2036
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Adapter.Trigger.Test", "src\Adapter.Trigger.Test\Adapter.Trigger.Test.csproj", "{408F72C9-ED46-4B95-A1AA-9BA45D5681EE}"
 EndProject
@@ -46,6 +46,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Adapter.Trigger.Csv", "src\Adapter.Trigger.Csv\Adapter.Trigger.Csv.csproj", "{2FAC930D-F9AC-45BB-9C48-1EFE46BA8278}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Adapter.Trigger.Csv.Tests.Unit", "test\Adapter.Trigger.Csv.Tests.Unit\Adapter.Trigger.Csv.Tests.Unit.csproj", "{810ECEAA-C177-4662-A904-65E599FAC2EA}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Domain.Builders", "test\Domain.Builders\Domain.Builders.csproj", "{B889CAE0-1827-4E64-9312-1439039A9C87}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -129,6 +131,10 @@ Global
 		{810ECEAA-C177-4662-A904-65E599FAC2EA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{810ECEAA-C177-4662-A904-65E599FAC2EA}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{810ECEAA-C177-4662-A904-65E599FAC2EA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B889CAE0-1827-4E64-9312-1439039A9C87}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B889CAE0-1827-4E64-9312-1439039A9C87}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B889CAE0-1827-4E64-9312-1439039A9C87}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B889CAE0-1827-4E64-9312-1439039A9C87}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -152,6 +158,7 @@ Global
 		{8CAB6AE1-0317-4D8F-AFE2-92B1684E34E5} = {9234AD06-323F-461D-AC33-43C22EFF20B7}
 		{2FAC930D-F9AC-45BB-9C48-1EFE46BA8278} = {E188439D-1F1D-4EBA-B0DE-A7074E348190}
 		{810ECEAA-C177-4662-A904-65E599FAC2EA} = {9234AD06-323F-461D-AC33-43C22EFF20B7}
+		{B889CAE0-1827-4E64-9312-1439039A9C87} = {9234AD06-323F-461D-AC33-43C22EFF20B7}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {EC0DDD5A-EE19-4A43-AC53-2C779638CE26}
