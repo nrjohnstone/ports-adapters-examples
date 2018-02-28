@@ -10,7 +10,7 @@ namespace Domain.Builders
         private string _supplier = "BookSupplier";
         private Guid _id = Guid.NewGuid();
         private Nullable<BookOrderState> _state = null;
-        private IEnumerable<OrderLine> _orderLines = new List<OrderLine>();
+        private List<OrderLine> _orderLines = new List<OrderLine>();
 
         public BookOrderBuilder()
         {
@@ -25,15 +25,8 @@ namespace Domain.Builders
         protected override BookOrder GetNewInstance()
         {
             // Default BookOrder is a new one
-            if (_state == null || _state == BookOrderState.New)
-                return BookOrder.CreateNew(_supplier, _id);
-
-            if (_state == BookOrderState.Approved)
-            {
-                var bookOrder = BookOrder.CreateNew(_supplier, _id);
-                bookOrder.Approve();
-                return bookOrder;
-            }
+            if (_state == null)
+                _state = BookOrderState.New;
 
             return BookOrder.CreateExisting(_supplier, _id, _state.Value, _orderLines);
         }
@@ -62,6 +55,24 @@ namespace Domain.Builders
                 throw new InvalidOperationException("The state of a book order should only be specified once");
 
             _state = BookOrderState.Sent;
+            return this;
+        }
+
+        public BookOrderBuilder ForSupplier(string supplier)
+        {
+            _supplier = supplier;
+            return this;
+        }
+
+        public BookOrderBuilder WithId(Guid id)
+        {
+            _id = id;
+            return this;
+        }
+
+        public BookOrderBuilder WithLine(OrderLine line)
+        {
+            _orderLines.Add(line);
             return this;
         }
     }
