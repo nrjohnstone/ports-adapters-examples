@@ -39,6 +39,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Fluency, Version=1.0.59.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Fluency.1.0.59\lib\net40\Fluency.dll</HintPath>
+    </Reference>
     <Reference Include="FluentAssertions, Version=4.19.4.0, Culture=neutral, PublicKeyToken=33f2691a05b67b6a, processorArchitecture=MSIL">
       <HintPath>..\..\packages\FluentAssertions.4.19.4\lib\net45\FluentAssertions.dll</HintPath>
     </Reference>
@@ -103,6 +106,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="a.cs" />
     <Compile Include="BookOrdersControllerTests.cs" />
     <Compile Include="HttpClientExtensions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
