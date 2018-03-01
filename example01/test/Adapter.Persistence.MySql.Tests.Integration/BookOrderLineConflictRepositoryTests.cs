@@ -34,8 +34,7 @@ namespace Adapter.Persistence.MySql.Tests.Integration
         {
             var sut = CreateSut();
 
-            var bookOrderLineConflict = BookOrderLineConflict.CreateNew(Guid.NewGuid(),
-                ConflictType.Price, Guid.NewGuid());
+            var bookOrderLineConflict = BookOrderLineQuantityConflict.CreateNew(Guid.NewGuid(), Guid.NewGuid(), 1);
 
             sut.Store(bookOrderLineConflict);
 
@@ -47,13 +46,14 @@ namespace Adapter.Persistence.MySql.Tests.Integration
             storedConflict.BookOrderLineId.Should().Be(bookOrderLineConflict.BookOrderLineId);
         }
 
-        [Fact]
-        public void ShouldBeAbleToStoreAndRetrieveUsingGetById()
+        [Theory]
+        [InlineData("Price")]
+        [InlineData("Quantity")]
+        public void ShouldBeAbleToStoreAndRetrieveUsingGetById_WhenConflictTypeIs(string conflictType)
         {
             var sut = CreateSut();
 
-            var bookOrderLineConflict = BookOrderLineConflict.CreateNew(Guid.NewGuid(),
-                ConflictType.Price, Guid.NewGuid());
+            BookOrderLineConflict bookOrderLineConflict = CreateConflict(conflictType);
 
             sut.Store(bookOrderLineConflict);
 
@@ -62,6 +62,18 @@ namespace Adapter.Persistence.MySql.Tests.Integration
             storedConflict.BookOrderId.Should().Be(bookOrderLineConflict.BookOrderId);
             storedConflict.ConflictType.Should().Be(bookOrderLineConflict.ConflictType);
             storedConflict.BookOrderLineId.Should().Be(bookOrderLineConflict.BookOrderLineId);
+
+        }
+
+        private static BookOrderLineConflict CreateConflict(string conflictType)
+        {
+            if (conflictType.Equals("Quantity"))
+                return BookOrderLineQuantityConflict.CreateNew(Guid.NewGuid(), Guid.NewGuid(), 1);
+
+            if (conflictType.Equals("Price"))
+                return BookOrderLinePriceConflict.CreateNew(Guid.NewGuid(), Guid.NewGuid(), 10.5M);
+
+            throw new ArgumentOutOfRangeException();
         }
 
         [Fact]

@@ -8,9 +8,22 @@ namespace Adapter.Persistence.MySql.Repositories
     {
         internal static BookOrderLineConflict ToEntity(this BookOrderLineConflictDto dto)
         {
-            return BookOrderLineConflict.CreateExisting(dto.Id,
-                dto.Order_Id, (ConflictType)Enum.Parse(typeof(ConflictType), dto.conflict_type),
-                dto.Order_Line_Id);
+            if (dto.conflict_type.Equals("Quantity"))
+            {
+                int quantity = Convert.ToInt32(dto.Conflict_Value);
+                return BookOrderLineQuantityConflict.CreateExisting(dto.Id,
+                    dto.Order_Id,
+                    dto.Order_Line_Id, quantity);
+            }
+            else if (dto.conflict_type.Equals("Price"))
+            {
+                decimal price = Convert.ToDecimal(dto.Conflict_Value);
+                return BookOrderLinePriceConflict.CreateExisting(
+                    dto.Id, dto.Order_Id, dto.Order_Line_Id, price);
+            }
+
+            throw new ArgumentOutOfRangeException();
+
         }
     }
 }

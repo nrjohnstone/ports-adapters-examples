@@ -54,6 +54,8 @@
     <Compile Include="Entities\BookOrder.cs" />
     <Compile Include="Entities\BookOrderApproveException.cs" />
     <Compile Include="Entities\BookOrderLineConflict.cs" />
+    <Compile Include="Entities\BookOrderLinePriceConflict.cs" />
+    <Compile Include="Entities\BookOrderLineQuantityConflict.cs" />
     <Compile Include="Entities\BookOrderSendException.cs" />
     <Compile Include="Entities\BookOrderState.cs" />
     <Compile Include="Entities\ConflictType.cs" />

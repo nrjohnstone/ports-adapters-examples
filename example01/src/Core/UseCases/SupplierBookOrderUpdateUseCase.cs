@@ -46,12 +46,12 @@ namespace Domain.UseCases
                 var bookOrderLine = bookOrder.OrderLines.First(x => x.Id == lineUpdate.BookOrderLineId);
 
                 if (bookOrderLine.Price != lineUpdate.Price)
-                    conflicts.Add(BookOrderLineConflict.CreateNew(bookOrder.Id, ConflictType.Price,
-                        bookOrderLine.Id));
+                    conflicts.Add(BookOrderLinePriceConflict.CreateNew(bookOrder.Id,
+                        bookOrderLine.Id, lineUpdate.Price));
 
                 if (bookOrderLine.Quantity != lineUpdate.Quantity)
-                    conflicts.Add(BookOrderLineConflict.CreateNew(bookOrder.Id, ConflictType.Quantity,
-                        bookOrderLine.Id));
+                    conflicts.Add(BookOrderLineQuantityConflict.CreateNew(bookOrder.Id,
+                        bookOrderLine.Id, lineUpdate.Quantity));
             }
 
             return conflicts;

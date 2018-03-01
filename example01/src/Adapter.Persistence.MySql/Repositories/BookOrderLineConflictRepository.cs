@@ -38,8 +38,6 @@ namespace Adapter.Persistence.MySql.Repositories
             }
         }
 
-
-
         public void Store(IEnumerable<BookOrderLineConflict> conflict)
         {
             throw new NotImplementedException();
@@ -76,7 +74,7 @@ namespace Adapter.Persistence.MySql.Repositories
                 }
             }
 
-            var bookOrderLineConflicts = results.Select(dto => dto?.ToEntity());
+            var bookOrderLineConflicts = results?.Select(dto => dto.ToEntity());
 
             return bookOrderLineConflicts;
         }
