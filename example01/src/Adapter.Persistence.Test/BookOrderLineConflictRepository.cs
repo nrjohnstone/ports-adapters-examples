@@ -31,6 +31,11 @@ namespace Adapter.Persistence.Test
             return null;
         }
 
+        public IEnumerable<BookOrderLineConflict> Get()
+        {
+            return Data.Values;
+        }
+
         public IEnumerable<BookOrderLineConflict> GetForBookOrder(Guid bookOrderId)
         {
             List<BookOrderLineConflict> conflicts = new List<BookOrderLineConflict>();
