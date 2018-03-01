@@ -13,12 +13,15 @@ services:
   mysql:
     build:
       context: ./docker/mysql
+    container_name: bookorders_mysql
     ports:
       - "3306:3306"
+    volumes:
+      - "./database/:/database:ro"
     environment:
       - MYSQL_ROOT_PASSWORD=password
       - MYSQL_DATABASE=bookorders
-      - MYSQL_USER=bookorder_service
+      - MYSQL_USER=bookorder_srv
       - MYSQL_PASSWORD=123
 
   email:
