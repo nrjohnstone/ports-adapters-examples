@@ -13,7 +13,7 @@ namespace Adapter.Persistence.MySql.Repositories
                 Id = bookOrderLineConflict.Id,
                 conflict_type = bookOrderLineConflict.ConflictType.ToString(),
                 Order_Id = bookOrderLineConflict.BookOrderId,
-                Order_Line_Id = Guid.NewGuid()
+                Order_Line_Id = bookOrderLineConflict.BookOrderLineId
             };
             return dto;
         }

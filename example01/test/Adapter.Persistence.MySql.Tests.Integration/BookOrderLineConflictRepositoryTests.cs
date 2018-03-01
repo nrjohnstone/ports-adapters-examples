@@ -34,7 +34,8 @@ namespace Adapter.Persistence.MySql.Tests.Integration
         {
             var sut = CreateSut();
 
-            var bookOrderLineConflict = BookOrderLineConflict.CreateNew(Guid.NewGuid(), ConflictType.Price);
+            var bookOrderLineConflict = BookOrderLineConflict.CreateNew(Guid.NewGuid(),
+                ConflictType.Price, Guid.NewGuid());
 
             sut.Store(bookOrderLineConflict);
 
@@ -43,6 +44,7 @@ namespace Adapter.Persistence.MySql.Tests.Integration
             var storedConflict = result.Single(x => x.Id == bookOrderLineConflict.Id);
             storedConflict.BookOrderId.Should().Be(bookOrderLineConflict.BookOrderId);
             storedConflict.ConflictType.Should().Be(bookOrderLineConflict.ConflictType);
+            storedConflict.BookOrderLineId.Should().Be(bookOrderLineConflict.BookOrderLineId);
         }
 
         [Fact]
@@ -50,7 +52,8 @@ namespace Adapter.Persistence.MySql.Tests.Integration
         {
             var sut = CreateSut();
 
-            var bookOrderLineConflict = BookOrderLineConflict.CreateNew(Guid.NewGuid(), ConflictType.Price);
+            var bookOrderLineConflict = BookOrderLineConflict.CreateNew(Guid.NewGuid(),
+                ConflictType.Price, Guid.NewGuid());
 
             sut.Store(bookOrderLineConflict);
 
@@ -58,6 +61,7 @@ namespace Adapter.Persistence.MySql.Tests.Integration
 
             storedConflict.BookOrderId.Should().Be(bookOrderLineConflict.BookOrderId);
             storedConflict.ConflictType.Should().Be(bookOrderLineConflict.ConflictType);
+            storedConflict.BookOrderLineId.Should().Be(bookOrderLineConflict.BookOrderLineId);
         }
     }
 }

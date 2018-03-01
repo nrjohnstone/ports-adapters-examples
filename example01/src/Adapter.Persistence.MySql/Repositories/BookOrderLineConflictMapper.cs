@@ -9,7 +9,8 @@ namespace Adapter.Persistence.MySql.Repositories
         internal static BookOrderLineConflict From(BookOrderLineConflictDto dto)
         {
             return BookOrderLineConflict.CreateExisting(dto.Id,
-                dto.Order_Id, (ConflictType) Enum.Parse(typeof(ConflictType), dto.conflict_type));
+                dto.Order_Id, (ConflictType) Enum.Parse(typeof(ConflictType), dto.conflict_type),
+                dto.Order_Line_Id);
         }
 
     }
