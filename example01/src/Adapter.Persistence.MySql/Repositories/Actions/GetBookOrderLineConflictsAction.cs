@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.Data;
 using Adapter.Persistence.MySql.Repositories.Dtos;
+using Dapper;
 
 namespace Adapter.Persistence.MySql.Repositories.Actions
 {
@@ -9,8 +10,15 @@ namespace Adapter.Persistence.MySql.Repositories.Actions
         public static IEnumerable<BookOrderLineConflictDto> Execute(
             IDbConnection connection)
         {
-            IEnumerable<BookOrderLineConflictDto> results =
-                new List<BookOrderLineConflictDto>();
+            var results = connection.Query<BookOrderLineConflictDto>(
+                "SELECT " +
+                "id, " +
+                "order_id, " +
+                "order_line_id, " +
+                "conflict_type " +
+                //"conflict_value, " +
+                //"accepted " +
+                "FROM book_order_line_conflicts ");
             return results;
         }
     }

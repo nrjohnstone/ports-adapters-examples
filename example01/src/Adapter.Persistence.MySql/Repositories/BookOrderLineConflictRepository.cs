@@ -24,7 +24,20 @@ namespace Adapter.Persistence.MySql.Repositories
 
         public void Store(BookOrderLineConflict bookOrderLineConflict)
         {
+            var dto = BookOrderLineConflictDtoMapper.From(bookOrderLineConflict);
+
+            using (var connection = CreateConnection())
+            {
+                connection.Open();
+                using (var transaction = connection.BeginTransaction())
+                {
+                    InsertBookOrderLineConflictAction.Execute(connection, dto);
+                    transaction.Commit();
+                }
+            }
         }
+
+
 
         public void Store(IEnumerable<BookOrderLineConflict> conflict)
         {
@@ -50,8 +63,9 @@ namespace Adapter.Persistence.MySql.Repositories
                 }
             }
 
-            return results.Select(dto => BookOrderLineConflict.CreateExisting(dto.Id,
-                dto.Order_Id, (ConflictType) Enum.Parse(typeof(ConflictType), dto.ConflictType)));
+            var bookOrderLineConflicts = results.Select(dto => BookOrderLineConflictMapper.From(dto));
+
+            return bookOrderLineConflicts;
         }
 
         private IDbConnection CreateConnection()

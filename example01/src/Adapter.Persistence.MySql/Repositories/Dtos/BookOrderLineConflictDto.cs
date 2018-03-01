@@ -7,6 +7,8 @@ namespace Adapter.Persistence.MySql.Repositories.Dtos
         public Guid Id { get; set; }
         public Guid Order_Id { get; set; }
         public Guid Order_Line_Id { get; set; }
-        public string ConflictType { get; set; }
+        public string conflict_type { get; set; }
+        public string Conflict_Value { get; set; }
+        public bool Accepted { get; set; }
     }
 }

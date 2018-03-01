@@ -1,0 +1,32 @@
+﻿using System.Data;
+using Adapter.Persistence.MySql.Repositories.Dtos;
+using Dapper;
+
+namespace Adapter.Persistence.MySql.Repositories.Actions
+{
+    internal class InsertBookOrderLineConflictAction
+    {
+        public static void Execute(IDbConnection connection, BookOrderLineConflictDto bookOrderLineConflictDto)
+        {
+            connection.Execute("INSERT INTO book_order_line_conflicts (" +
+                               "id, " +
+                               "order_id, " +
+                               "order_line_id, " +
+                               "conflict_type," +
+                               "conflict_value, " +
+                               "accepted) " +
+                               "VALUES (?id, ?orderId, ?orderLineId, ?conflictType," +
+                               "?conflictValue," +
+                               "?accepted)",
+                new
+                {
+                    id = bookOrderLineConflictDto.Id,
+                    orderId = bookOrderLineConflictDto.Order_Id,
+                    orderLineId = bookOrderLineConflictDto.Order_Line_Id,
+                    conflictType = bookOrderLineConflictDto.conflict_type,
+                    conflictValue = 0,
+                    accepted = false
+                });
+        }
+    }
+}
