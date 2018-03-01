@@ -1,116 +1,28 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
   <PropertyGroup>
-    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
-    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{E7562808-6D94-4C58-902E-71CDFA832567}</ProjectGuid>
     <OutputType>Exe</OutputType>
-    <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Host.Console</RootNamespace>
-    <AssemblyName>Host.Console</AssemblyName>
-    <TargetFrameworkVersion>v4.6.2</TargetFrameworkVersion>
-    <FileAlignment>512</FileAlignment>
-    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
-    <TargetFrameworkProfile />
+    <TargetFramework>net462</TargetFramework>
+    <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
   </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <PlatformTarget>AnyCPU</PlatformTarget>
-    <DebugSymbols>true</DebugSymbols>
-    <DebugType>full</DebugType>
-    <Optimize>false</Optimize>
-    <OutputPath>bin\Debug\</OutputPath>
-    <DefineConstants>DEBUG;TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <PlatformTarget>AnyCPU</PlatformTarget>
-    <DebugType>pdbonly</DebugType>
-    <Optimize>true</Optimize>
-    <OutputPath>bin\Release\</OutputPath>
-    <DefineConstants>TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-  </PropertyGroup>
+
   <ItemGroup>
-    <Reference Include="AmbientContext, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\AmbientContext.2.0.0\lib\net45\AmbientContext.dll</HintPath>
-    </Reference>
-    <Reference Include="AmbientContext.LogService.Serilog, Version=1.1.1.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\AmbientContext.LogService.Serilog.1.1.1\lib\net45\AmbientContext.LogService.Serilog.dll</HintPath>
-    </Reference>
-    <Reference Include="Serilog, Version=2.0.0.0, Culture=neutral, PublicKeyToken=24c2f752a8e58a10, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\Serilog.2.5.0\lib\net46\Serilog.dll</HintPath>
-    </Reference>
-    <Reference Include="Serilog.Sinks.ColoredConsole, Version=3.0.1.0, Culture=neutral, PublicKeyToken=24c2f752a8e58a10, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\Serilog.Sinks.ColoredConsole.3.0.1\lib\net45\Serilog.Sinks.ColoredConsole.dll</HintPath>
-    </Reference>
-    <Reference Include="Serilog.Sinks.Console, Version=3.0.1.0, Culture=neutral, PublicKeyToken=24c2f752a8e58a10, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\Serilog.Sinks.Console.3.0.1\lib\net45\Serilog.Sinks.Console.dll</HintPath>
-    </Reference>
-    <Reference Include="SimpleInjector, Version=4.0.8.0, Culture=neutral, PublicKeyToken=984cb50dea722e99, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\SimpleInjector.4.0.8\lib\net45\SimpleInjector.dll</HintPath>
-    </Reference>
-    <Reference Include="System" />
-    <Reference Include="System.Core" />
-    <Reference Include="System.Xml.Linq" />
-    <Reference Include="System.Data.DataSetExtensions" />
-    <Reference Include="Microsoft.CSharp" />
-    <Reference Include="System.Data" />
-    <Reference Include="System.Net.Http" />
-    <Reference Include="System.Xml" />
+    <PackageReference Include="AmbientContext" Version="2.1.1" />
+    <PackageReference Include="AmbientContext.LogService.Serilog" Version="1.1.1" />
+    <PackageReference Include="Serilog" Version="2.5.0" />
+    <PackageReference Include="Serilog.Sinks.ColoredConsole" Version="3.0.1" />
+    <PackageReference Include="SimpleInjector" Version="4.0.8" />
   </ItemGroup>
+
   <ItemGroup>
-    <Compile Include="Program.cs" />
-    <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Application.cs" />
-    <Compile Include="Settings.cs" />
+    <ProjectReference Include="..\Adapter.Notification.Email\Adapter.Notification.Email.csproj" />
+    <ProjectReference Include="..\Adapter.Notification.RabbitMq\Adapter.Notification.RabbitMq.csproj" />
+    <ProjectReference Include="..\Adapter.Notification.Test\Adapter.Notification.Test.csproj" />
+    <ProjectReference Include="..\Adapter.Persistence.MySql\Adapter.Persistence.MySql.csproj" />
+    <ProjectReference Include="..\Adapter.Persistence.Test\Adapter.Persistence.Test.csproj" />
+    <ProjectReference Include="..\Adapter.Trigger.RabbitMq\Adapter.Trigger.RabbitMq.csproj" />
+    <ProjectReference Include="..\Adapter.Trigger.Test\Adapter.Trigger.Test.csproj" />
+    <ProjectReference Include="..\Core\Domain.csproj" />
   </ItemGroup>
-  <ItemGroup>
-    <None Include="App.config" />
-    <None Include="packages.config" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\Adapter.Notification.Email\Adapter.Notification.Email.csproj">
-      <Project>{bf17c870-a263-4d73-a1c2-be17c642f0bf}</Project>
-      <Name>Adapter.Notification.Email</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Adapter.Notification.RabbitMq\Adapter.Notification.RabbitMq.csproj">
-      <Project>{f939005a-4433-475d-bcea-41671de4d8c8}</Project>
-      <Name>Adapter.Notification.RabbitMq</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Adapter.Notification.Test\Adapter.Notification.Test.csproj">
-      <Project>{E8989F66-5BA3-4576-9F5F-4A9F26EDF5E3}</Project>
-      <Name>Adapter.Notification.Test</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Adapter.Persistence.MySql\Adapter.Persistence.MySql.csproj">
-      <Project>{b4f64e5c-a80a-4e48-a307-6ed26233c394}</Project>
-      <Name>Adapter.Persistence.MySql</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Adapter.Persistence.Test\Adapter.Persistence.Test.csproj">
-      <Project>{1649AA20-899F-4050-B99A-C408A4AA39FE}</Project>
-      <Name>Adapter.Persistence.Test</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Adapter.Trigger.RabbitMq\Adapter.Trigger.RabbitMq.csproj">
-      <Project>{9874DC72-7D4E-4F04-B9D1-6AA175F58224}</Project>
-      <Name>Adapter.Trigger.RabbitMq</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Adapter.Trigger.Test\Adapter.Trigger.Test.csproj">
-      <Project>{408f72c9-ed46-4b95-a1aa-9ba45d5681ee}</Project>
-      <Name>Adapter.Trigger.Test</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Core\Domain.csproj">
-      <Project>{97e5e8eb-26d7-49d9-a412-3df4f5716643}</Project>
-      <Name>Domain</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
-  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
-       Other similar extension points exist, see Microsoft.Common.targets.
-  <Target Name="BeforeBuild">
-  </Target>
-  <Target Name="AfterBuild">
-  </Target>
-  -->
+
 </Project>
