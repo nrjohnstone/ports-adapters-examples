@@ -12,20 +12,20 @@ namespace Host.WebService.Client3
 {
     public class Startup
     {
-        protected Container Container;        
+        protected Container Container;
         private Action _notificationAdapterShutdown = () => { };
         private Action _triggerAdapterShutdown = () => { };
         private TriggerAdapter _triggerAdapter;
 
         public Startup()
         {
-            Container = new Container();            
+            Container = new Container();
         }
 
         public void Configuration(IAppBuilder appBuilder)
         {
             HttpConfiguration config = new HttpConfiguration();
-            
+
             RegisterPersistenceAdapter();
             RegisterNotificationAdapter();
             RegisterTriggerAdapter();
@@ -42,7 +42,7 @@ namespace Host.WebService.Client3
                 .EnableSwaggerUi();
 
             config.EnsureInitialized();
-            
+
             appBuilder.UseWebApi(config);
         }
 
@@ -67,7 +67,7 @@ namespace Host.WebService.Client3
             persistenceAdapter.Initialize();
             persistenceAdapter.Register(Container);
         }
-        
+
         protected virtual void RegisterNotificationAdapter()
         {
             var notificationAdapter = new Adapter.Notification.RabbitMq.NotificationAdapter();
@@ -76,7 +76,7 @@ namespace Host.WebService.Client3
             _notificationAdapterShutdown = () => { notificationAdapter.Shutdown(); };
 
         }
-        
+
         private void RegisterControllers()
         {
             Container.Register<BookOrdersController>();
@@ -85,7 +85,7 @@ namespace Host.WebService.Client3
         /// <summary>
         /// Wire upstream ports to host implementations, in this case
         /// we are registering the ports (use cases) in the IoC container
-        /// as the Controllers are the host adapter implementations as they 
+        /// as the Controllers are the host adapter implementations as they
         /// call into the use cases
         /// </summary>
         private void RegisterHostAdapter()
