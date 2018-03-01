@@ -6,7 +6,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="AmbientContext.LogService.Serilog" Version="1.1.1" />
+    <PackageReference Include="AmbientContext.LogService.Serilog" Version="1.1.5" />
     <PackageReference Include="SimpleInjector" Version="4.0.8" />
   </ItemGroup>
 
