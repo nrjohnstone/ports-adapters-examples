@@ -7,7 +7,9 @@ namespace Domain.Entities
     {
         public decimal Price { get; }
 
-        protected BookOrderLinePriceConflict(Guid id, Guid bookOrderId, ConflictType conflictType, Guid bookOrderLineId, decimal price) : base(id, bookOrderId, conflictType, bookOrderLineId)
+        protected BookOrderLinePriceConflict(Guid id, Guid bookOrderId, ConflictType conflictType, Guid bookOrderLineId,
+            decimal price, bool accepted)
+            : base(id, bookOrderId, conflictType, bookOrderLineId, accepted)
         {
             Price = price;
             ConflictValue = price.ToString(CultureInfo.InvariantCulture);
@@ -17,14 +19,14 @@ namespace Domain.Entities
         {
 
             return new BookOrderLinePriceConflict(
-                Guid.NewGuid(), bookOrderId, ConflictType.Price, bookOrderLineId, price);
+                Guid.NewGuid(), bookOrderId, ConflictType.Price, bookOrderLineId, price, false);
         }
 
         public static BookOrderLinePriceConflict CreateExisting(Guid id, Guid bookOrderId,
-            Guid bookOrderLineId, decimal price)
+            Guid bookOrderLineId, decimal price, bool accepted)
         {
             return new BookOrderLinePriceConflict(
-                id, bookOrderId, ConflictType.Price, bookOrderLineId, price);
+                id, bookOrderId, ConflictType.Price, bookOrderLineId, price, accepted);
         }
     }
 }

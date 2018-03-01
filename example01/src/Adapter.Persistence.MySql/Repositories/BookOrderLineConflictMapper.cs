@@ -13,13 +13,13 @@ namespace Adapter.Persistence.MySql.Repositories
                 int quantity = Convert.ToInt32(dto.Conflict_Value);
                 return BookOrderLineQuantityConflict.CreateExisting(dto.Id,
                     dto.Order_Id,
-                    dto.Order_Line_Id, quantity);
+                    dto.Order_Line_Id, quantity, dto.Accepted);
             }
             else if (dto.conflict_type.Equals("Price"))
             {
                 decimal price = Convert.ToDecimal(dto.Conflict_Value);
                 return BookOrderLinePriceConflict.CreateExisting(
-                    dto.Id, dto.Order_Id, dto.Order_Line_Id, price);
+                    dto.Id, dto.Order_Id, dto.Order_Line_Id, price, dto.Accepted);
             }
 
             throw new ArgumentOutOfRangeException();

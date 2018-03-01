@@ -15,8 +15,8 @@ namespace Adapter.Persistence.MySql.Repositories.Actions
                 "order_id, " +
                 "order_line_id, " +
                 "conflict_type, " +
-                "conflict_value " +
-                //"accepted " +
+                "conflict_value, " +
+                "accepted " +
                 "FROM book_order_line_conflicts " +
                 "WHERE id = ?id",
                 new { id = id });

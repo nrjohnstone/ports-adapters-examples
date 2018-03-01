@@ -34,7 +34,8 @@ namespace Adapter.Persistence.MySql.Tests.Integration
         {
             var sut = CreateSut();
 
-            var bookOrderLineConflict = BookOrderLineQuantityConflict.CreateNew(Guid.NewGuid(), Guid.NewGuid(), 1);
+            var bookOrderLineConflict = BookOrderLineQuantityConflict.CreateExisting(Guid.NewGuid(),
+                Guid.NewGuid(), Guid.NewGuid(), 1, true);
 
             sut.Store(bookOrderLineConflict);
 
@@ -45,6 +46,7 @@ namespace Adapter.Persistence.MySql.Tests.Integration
             storedConflict.ConflictType.Should().Be(bookOrderLineConflict.ConflictType);
             storedConflict.BookOrderLineId.Should().Be(bookOrderLineConflict.BookOrderLineId);
             storedConflict.ConflictValue.Should().Be(bookOrderLineConflict.ConflictValue);
+            storedConflict.Accepted.Should().Be(bookOrderLineConflict.Accepted);
         }
 
         [Theory]
@@ -61,7 +63,7 @@ namespace Adapter.Persistence.MySql.Tests.Integration
             var storedConflict = sut.Get(bookOrderLineConflict.Id);
 
             storedConflict.BookOrderId.Should().Be(bookOrderLineConflict.BookOrderId);
-            storedConflict.ConflictType.Should().Be(bookOrderLineConflict.ConflictType);
+            storedConflict.ConflictType.ToString().Should().Be(conflictType);
             storedConflict.BookOrderLineId.Should().Be(bookOrderLineConflict.BookOrderLineId);
             storedConflict.ConflictValue.Should().Be(bookOrderLineConflict.ConflictValue);
         }
