@@ -5,6 +5,7 @@ using System.Linq;
 using System.Xml.XPath;
 using Adapter.Persistence.MySql.Repositories.Actions;
 using Adapter.Persistence.MySql.Repositories.Dtos;
+using Adapter.Persistence.MySql.Repositories.Mappers;
 using Domain.Entities;
 using Domain.Ports.Persistence;
 using MySql.Data.MySqlClient;
@@ -38,9 +39,21 @@ namespace Adapter.Persistence.MySql.Repositories
             }
         }
 
-        public void Store(IEnumerable<BookOrderLineConflict> conflict)
+        public void Store(IEnumerable<BookOrderLineConflict> conflicts)
         {
-            throw new NotImplementedException();
+            using (var connection = CreateConnection())
+            {
+                connection.Open();
+                using (var transaction = connection.BeginTransaction())
+                {
+                    foreach (var bookOrderLineConflict in conflicts)
+                    {
+                        var dto = bookOrderLineConflict.ToDto();
+                        InsertBookOrderLineConflictAction.Execute(connection, dto);
+                    }
+                    transaction.Commit();
+                }
+            }
         }
 
         public BookOrderLineConflict Get(Guid id)

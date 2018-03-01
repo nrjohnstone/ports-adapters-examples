@@ -2,7 +2,7 @@
 using Adapter.Persistence.MySql.Repositories.Dtos;
 using Domain.Entities;
 
-namespace Adapter.Persistence.MySql.Repositories
+namespace Adapter.Persistence.MySql.Repositories.Mappers
 {
     internal static class BookOrderLineConflictMapper
     {

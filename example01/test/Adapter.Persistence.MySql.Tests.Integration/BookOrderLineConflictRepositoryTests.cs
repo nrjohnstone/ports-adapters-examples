@@ -30,6 +30,35 @@ namespace Adapter.Persistence.MySql.Tests.Integration
         }
 
         [Fact]
+        public void ShouldBeAbleToStoreMultipleConflictsAndRetrieveUsingGetAll()
+        {
+            var sut = CreateSut();
+
+            var bookOrderLineConflict1 = BookOrderLineQuantityConflict.CreateExisting(Guid.NewGuid(),
+                Guid.NewGuid(), Guid.NewGuid(), 1, true);
+            var bookOrderLineConflict2 = BookOrderLinePriceConflict.CreateExisting(Guid.NewGuid(),
+                Guid.NewGuid(), Guid.NewGuid(), 30.25M, false);
+
+            sut.Store(new BookOrderLineConflict[] {bookOrderLineConflict1, bookOrderLineConflict2 });
+
+            var result = sut.Get();
+
+            var storedConflict1 = result.Single(x => x.Id == bookOrderLineConflict1.Id);
+            storedConflict1.BookOrderId.Should().Be(bookOrderLineConflict1.BookOrderId);
+            storedConflict1.ConflictType.Should().Be(bookOrderLineConflict1.ConflictType);
+            storedConflict1.BookOrderLineId.Should().Be(bookOrderLineConflict1.BookOrderLineId);
+            storedConflict1.ConflictValue.Should().Be(bookOrderLineConflict1.ConflictValue);
+            storedConflict1.Accepted.Should().Be(bookOrderLineConflict1.Accepted);
+
+            var storedConflict2 = result.Single(x => x.Id == bookOrderLineConflict2.Id);
+            storedConflict2.BookOrderId.Should().Be(bookOrderLineConflict2.BookOrderId);
+            storedConflict2.ConflictType.Should().Be(bookOrderLineConflict2.ConflictType);
+            storedConflict2.BookOrderLineId.Should().Be(bookOrderLineConflict2.BookOrderLineId);
+            storedConflict2.ConflictValue.Should().Be(bookOrderLineConflict2.ConflictValue);
+            storedConflict2.Accepted.Should().Be(bookOrderLineConflict2.Accepted);
+        }
+
+        [Fact]
         public void ShouldBeAbleToStoreAndRetrieveUsingGetAll()
         {
             var sut = CreateSut();

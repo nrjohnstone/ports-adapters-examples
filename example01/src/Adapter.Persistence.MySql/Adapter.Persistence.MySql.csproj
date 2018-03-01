@@ -56,8 +56,8 @@
     <Compile Include="Repositories\Actions\GetBookOrderLineConflictsAction.cs" />
     <Compile Include="Repositories\Actions\GetBookOrderLineConflictsByIdAction.cs" />
     <Compile Include="Repositories\Actions\InsertBookOrderLineConflictAction.cs" />
-    <Compile Include="Repositories\BookOrderLineConflictDtoMapper.cs" />
-    <Compile Include="Repositories\BookOrderLineConflictMapper.cs" />
+    <Compile Include="Repositories\Mappers\BookOrderLineConflictDtoMapper.cs" />
+    <Compile Include="Repositories\Mappers\BookOrderLineConflictMapper.cs" />
     <Compile Include="Repositories\BookOrderLineConflictRepository.cs" />
     <Compile Include="Repositories\Dtos\BookOrderDto.cs" />
     <Compile Include="Repositories\BookOrderRepository.cs" />
