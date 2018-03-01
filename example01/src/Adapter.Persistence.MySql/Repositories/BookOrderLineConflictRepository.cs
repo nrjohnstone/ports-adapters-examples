@@ -25,7 +25,7 @@ namespace Adapter.Persistence.MySql.Repositories
 
         public void Store(BookOrderLineConflict bookOrderLineConflict)
         {
-            var dto = BookOrderLineConflictDtoMapper.From(bookOrderLineConflict);
+            var dto = bookOrderLineConflict.ToDto();
 
             using (var connection = CreateConnection())
             {
@@ -59,7 +59,7 @@ namespace Adapter.Persistence.MySql.Repositories
                 }
             }
 
-            return BookOrderLineConflictMapper.From(dto);
+            return dto.ToEntity();
         }
 
         public IEnumerable<BookOrderLineConflict> Get()
@@ -76,7 +76,7 @@ namespace Adapter.Persistence.MySql.Repositories
                 }
             }
 
-            var bookOrderLineConflicts = results.Select(dto => BookOrderLineConflictMapper.From(dto));
+            var bookOrderLineConflicts = results.Select(dto => dto.ToEntity());
 
             return bookOrderLineConflicts;
         }

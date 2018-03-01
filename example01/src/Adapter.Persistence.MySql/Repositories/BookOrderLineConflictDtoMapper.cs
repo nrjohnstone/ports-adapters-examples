@@ -6,7 +6,7 @@ namespace Adapter.Persistence.MySql.Repositories
 {
     internal static class BookOrderLineConflictDtoMapper
     {
-        internal static BookOrderLineConflictDto From(BookOrderLineConflict bookOrderLineConflict)
+        internal static BookOrderLineConflictDto ToDto(this BookOrderLineConflict bookOrderLineConflict)
         {
             BookOrderLineConflictDto dto = new BookOrderLineConflictDto()
             {

@@ -6,12 +6,11 @@ namespace Adapter.Persistence.MySql.Repositories
 {
     internal static class BookOrderLineConflictMapper
     {
-        internal static BookOrderLineConflict From(BookOrderLineConflictDto dto)
+        internal static BookOrderLineConflict ToEntity(this BookOrderLineConflictDto dto)
         {
             return BookOrderLineConflict.CreateExisting(dto.Id,
-                dto.Order_Id, (ConflictType) Enum.Parse(typeof(ConflictType), dto.conflict_type),
+                dto.Order_Id, (ConflictType)Enum.Parse(typeof(ConflictType), dto.conflict_type),
                 dto.Order_Line_Id);
         }
-
     }
 }
