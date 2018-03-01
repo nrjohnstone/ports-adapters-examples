@@ -6,7 +6,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Fluency" Version="1.0.59" />
+    <PackageReference Include="Fluency" Version="1.0.64" />
     <PackageReference Include="FluentAssertions" Version="4.19.4" />
     <PackageReference Include="Microsoft.Owin.Testing" Version="3.1.0" />
     <PackageReference Include="Newtonsoft.Json" Version="10.0.3" />

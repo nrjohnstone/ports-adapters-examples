@@ -6,7 +6,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Fluency" Version="1.0.59" />
+    <PackageReference Include="Fluency" Version="1.0.64" />
   </ItemGroup>
 
   <ItemGroup>
