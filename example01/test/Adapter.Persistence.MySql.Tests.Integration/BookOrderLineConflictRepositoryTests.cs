@@ -30,7 +30,7 @@ namespace Adapter.Persistence.MySql.Tests.Integration
         }
 
         [Fact]
-        public void ShouldBeAbleToStoreAndRetrieve()
+        public void ShouldBeAbleToStoreAndRetrieveUsingGetAll()
         {
             var sut = CreateSut();
 
@@ -41,6 +41,21 @@ namespace Adapter.Persistence.MySql.Tests.Integration
             var result = sut.Get();
 
             var storedConflict = result.Single(x => x.Id == bookOrderLineConflict.Id);
+            storedConflict.BookOrderId.Should().Be(bookOrderLineConflict.BookOrderId);
+            storedConflict.ConflictType.Should().Be(bookOrderLineConflict.ConflictType);
+        }
+
+        [Fact]
+        public void ShouldBeAbleToStoreAndRetrieveUsingGetById()
+        {
+            var sut = CreateSut();
+
+            var bookOrderLineConflict = BookOrderLineConflict.CreateNew(Guid.NewGuid(), ConflictType.Price);
+
+            sut.Store(bookOrderLineConflict);
+
+            var storedConflict = sut.Get(bookOrderLineConflict.Id);
+
             storedConflict.BookOrderId.Should().Be(bookOrderLineConflict.BookOrderId);
             storedConflict.ConflictType.Should().Be(bookOrderLineConflict.ConflictType);
         }

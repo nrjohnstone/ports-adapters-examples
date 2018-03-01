@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
+using System.Xml.XPath;
 using Adapter.Persistence.MySql.Repositories.Actions;
 using Adapter.Persistence.MySql.Repositories.Dtos;
 using Domain.Entities;
@@ -46,7 +47,19 @@ namespace Adapter.Persistence.MySql.Repositories
 
         public BookOrderLineConflict Get(Guid id)
         {
-            throw new NotImplementedException();
+            BookOrderLineConflictDto dto = null;
+
+            using (var connection = CreateConnection())
+            {
+                connection.Open();
+                using (var transaction = connection.BeginTransaction())
+                {
+                    dto = GetBookOrderLineConflictsByIdAction.Execute(connection, id);
+                    transaction.Commit();
+                }
+            }
+
+            return BookOrderLineConflictMapper.From(dto);
         }
 
         public IEnumerable<BookOrderLineConflict> Get()
