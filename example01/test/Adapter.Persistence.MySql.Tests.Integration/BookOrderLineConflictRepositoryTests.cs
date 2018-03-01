@@ -63,5 +63,15 @@ namespace Adapter.Persistence.MySql.Tests.Integration
             storedConflict.ConflictType.Should().Be(bookOrderLineConflict.ConflictType);
             storedConflict.BookOrderLineId.Should().Be(bookOrderLineConflict.BookOrderLineId);
         }
+
+        [Fact]
+        public void WhenNoConflictExists_ShouldReturnNull()
+        {
+            var sut = CreateSut();
+
+            var storedConflict = sut.Get(Guid.NewGuid());
+
+            storedConflict.Should().BeNull();
+        }
     }
 }

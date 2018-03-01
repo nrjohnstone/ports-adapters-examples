@@ -59,7 +59,7 @@ namespace Adapter.Persistence.MySql.Repositories
                 }
             }
 
-            return dto.ToEntity();
+            return dto?.ToEntity();
         }
 
         public IEnumerable<BookOrderLineConflict> Get()
@@ -76,7 +76,7 @@ namespace Adapter.Persistence.MySql.Repositories
                 }
             }
 
-            var bookOrderLineConflicts = results.Select(dto => dto.ToEntity());
+            var bookOrderLineConflicts = results.Select(dto => dto?.ToEntity());
 
             return bookOrderLineConflicts;
         }
