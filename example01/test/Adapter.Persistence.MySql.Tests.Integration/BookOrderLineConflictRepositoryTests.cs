@@ -44,6 +44,7 @@ namespace Adapter.Persistence.MySql.Tests.Integration
             storedConflict.BookOrderId.Should().Be(bookOrderLineConflict.BookOrderId);
             storedConflict.ConflictType.Should().Be(bookOrderLineConflict.ConflictType);
             storedConflict.BookOrderLineId.Should().Be(bookOrderLineConflict.BookOrderLineId);
+            storedConflict.ConflictValue.Should().Be(bookOrderLineConflict.ConflictValue);
         }
 
         [Theory]
@@ -62,7 +63,7 @@ namespace Adapter.Persistence.MySql.Tests.Integration
             storedConflict.BookOrderId.Should().Be(bookOrderLineConflict.BookOrderId);
             storedConflict.ConflictType.Should().Be(bookOrderLineConflict.ConflictType);
             storedConflict.BookOrderLineId.Should().Be(bookOrderLineConflict.BookOrderLineId);
-
+            storedConflict.ConflictValue.Should().Be(bookOrderLineConflict.ConflictValue);
         }
 
         private static BookOrderLineConflict CreateConflict(string conflictType)

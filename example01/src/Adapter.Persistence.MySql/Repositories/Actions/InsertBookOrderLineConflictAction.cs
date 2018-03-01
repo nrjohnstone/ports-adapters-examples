@@ -24,7 +24,7 @@ namespace Adapter.Persistence.MySql.Repositories.Actions
                     orderId = bookOrderLineConflictDto.Order_Id,
                     orderLineId = bookOrderLineConflictDto.Order_Line_Id,
                     conflictType = bookOrderLineConflictDto.conflict_type,
-                    conflictValue = 0,
+                    conflictValue = bookOrderLineConflictDto.Conflict_Value,
                     accepted = false
                 });
         }

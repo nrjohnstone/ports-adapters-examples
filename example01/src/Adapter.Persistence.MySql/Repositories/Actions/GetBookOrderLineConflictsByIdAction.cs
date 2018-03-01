@@ -1,16 +1,15 @@
-using System.Collections.Generic;
+using System;
 using System.Data;
 using Adapter.Persistence.MySql.Repositories.Dtos;
 using Dapper;
 
 namespace Adapter.Persistence.MySql.Repositories.Actions
 {
-    internal static class GetBookOrderLineConflictsAction
+    internal static class GetBookOrderLineConflictsByIdAction
     {
-        public static IEnumerable<BookOrderLineConflictDto> Execute(
-            IDbConnection connection)
+        public static BookOrderLineConflictDto Execute(IDbConnection connection ,Guid id)
         {
-            var results = connection.Query<BookOrderLineConflictDto>(
+            var result = connection.QuerySingleOrDefault<BookOrderLineConflictDto>(
                 "SELECT " +
                 "id, " +
                 "order_id, " +
@@ -18,8 +17,10 @@ namespace Adapter.Persistence.MySql.Repositories.Actions
                 "conflict_type, " +
                 "conflict_value " +
                 //"accepted " +
-                "FROM book_order_line_conflicts ");
-            return results;
+                "FROM book_order_line_conflicts " +
+                "WHERE id = ?id",
+                new { id = id });
+            return result;
         }
     }
 }
