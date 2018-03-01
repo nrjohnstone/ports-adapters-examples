@@ -53,12 +53,15 @@
     <Compile Include="PersistenceAdapterSettings.cs" />
     <Compile Include="Repositories\Actions\BookOrderExistsAction.cs" />
     <Compile Include="Repositories\Actions\DeleteBookOrdersAction.cs" />
+    <Compile Include="Repositories\Actions\GetBookOrderLineConflictsAction.cs" />
+    <Compile Include="Repositories\BookOrderLineConflictRepository.cs" />
     <Compile Include="Repositories\Dtos\BookOrderDto.cs" />
     <Compile Include="Repositories\BookOrderRepository.cs" />
     <Compile Include="Repositories\Actions\InsertBookOrderAction.cs" />
     <Compile Include="PersistenceAdapter.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repositories\Actions\UpdateBookOrderAction.cs" />
+    <Compile Include="Repositories\Dtos\BookOrderLineConflictDto.cs" />
     <Compile Include="Repositories\Dtos\OrderLineDto.cs" />
     <Compile Include="Repositories\Actions\GetBookOrderByIdAction.cs" />
     <Compile Include="Repositories\Actions\GetBookOrdersAction.cs" />

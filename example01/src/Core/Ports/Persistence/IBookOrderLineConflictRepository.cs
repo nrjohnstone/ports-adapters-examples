@@ -9,5 +9,6 @@ namespace Domain.Ports.Persistence
         void Store(BookOrderLineConflict conflict);
         void Store(IEnumerable<BookOrderLineConflict> conflict);
         BookOrderLineConflict Get(Guid id);
+        IEnumerable<BookOrderLineConflict> Get();
     }
 }
