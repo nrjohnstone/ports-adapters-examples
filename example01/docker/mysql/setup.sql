@@ -10,3 +10,12 @@ create table book_order_lines (
     price DECIMAL(10,2) NOT NULL,
     quantity INT NOT NULL
 );
+
+create table book_order_line_conflicts (
+    id CHAR(36) NOT NULL PRIMARY KEY,
+    order_id CHAR(36) NOT NULL,
+    order_line_id CHAR(36) NOT NULL,
+    conflict_type CHAR(36) NOT NULL,
+    conflict_value CHAR(36) NOT NULL,
+    accepted BOOLEAN NOT NULL
+);
