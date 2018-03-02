@@ -8,7 +8,7 @@ namespace Domain.Entities
         public decimal Price { get; }
 
         protected BookOrderLinePriceConflict(Guid id, Guid bookOrderId, ConflictType conflictType, Guid bookOrderLineId,
-            decimal price, bool accepted, DateTimeOffset createdDateTime)
+            decimal price, bool accepted, DateTime createdDateTime)
             : base(id, bookOrderId, conflictType, bookOrderLineId, accepted, createdDateTime)
         {
             Price = price;
@@ -17,13 +17,13 @@ namespace Domain.Entities
 
         public static BookOrderLinePriceConflict CreateNew(Guid bookOrderId, Guid bookOrderLineId, decimal price)
         {
-            DateTimeOffset currentDateTime = DateTimeOffset.Now;
+            DateTime currentDateTime = DateTime.UtcNow;
             return new BookOrderLinePriceConflict(
                 Guid.NewGuid(), bookOrderId, ConflictType.Price, bookOrderLineId, price, false, currentDateTime);
         }
 
         public static BookOrderLinePriceConflict CreateExisting(Guid id, Guid bookOrderId,
-            Guid bookOrderLineId, decimal price, bool accepted, DateTimeOffset currentDateTime)
+            Guid bookOrderLineId, decimal price, bool accepted, DateTime currentDateTime)
         {
             return new BookOrderLinePriceConflict(
                 id, bookOrderId, ConflictType.Price, bookOrderLineId, price, accepted, currentDateTime);

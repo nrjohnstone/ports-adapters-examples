@@ -14,10 +14,12 @@ namespace Adapter.Persistence.MySql.Repositories.Actions
                                "order_line_id, " +
                                "conflict_type," +
                                "conflict_value, " +
-                               "accepted) " +
+                               "accepted," +
+                               "created_datetime) " +
                                "VALUES (?id, ?orderId, ?orderLineId, ?conflictType," +
                                "?conflictValue," +
-                               "?accepted)",
+                               "?accepted," +
+                               "?createdDateTime)",
                 new
                 {
                     id = bookOrderLineConflictDto.Id,
@@ -25,7 +27,8 @@ namespace Adapter.Persistence.MySql.Repositories.Actions
                     orderLineId = bookOrderLineConflictDto.Order_Line_Id,
                     conflictType = bookOrderLineConflictDto.conflict_type,
                     conflictValue = bookOrderLineConflictDto.Conflict_Value,
-                    accepted = bookOrderLineConflictDto.Accepted
+                    accepted = bookOrderLineConflictDto.Accepted,
+                    createdDateTime = bookOrderLineConflictDto.Created_DateTime
                 });
         }
     }
