@@ -21,7 +21,7 @@ namespace Host.WebService.Client2
 
         public Startup()
         {
-            Container = new Container();            
+            Container = new Container();
         }
 
         public void Configuration(IAppBuilder appBuilder)
@@ -45,7 +45,7 @@ namespace Host.WebService.Client2
                 .EnableSwaggerUi();
 
             config.EnsureInitialized();
-            
+
             appBuilder.UseWebApi(config);
         }
 
@@ -55,7 +55,7 @@ namespace Host.WebService.Client2
                 new PersistenceAdapterSettings()
                 {
                     ConnectionString = "server=127.0.0.1;" +
-                                       "uid=bookorder_service;" +
+                                       "uid=bookorder_srv;" +
                                        "pwd=123;" +
                                        "database=bookorders"
                 });
@@ -88,7 +88,7 @@ namespace Host.WebService.Client2
         /// <summary>
         /// Wire upstream ports to host implementations, in this case
         /// we are registering the ports (use cases) in the IoC container
-        /// as the Controllers are the host adapter implementations as they 
+        /// as the Controllers are the host adapter implementations as they
         /// call into the use cases
         /// </summary>
         private void RegisterHostAdapter()

@@ -82,7 +82,7 @@ namespace Host.WebService.Client1
                 new PersistenceAdapterSettings()
                 {
                     ConnectionString = "server=127.0.0.1;" +
-                                       "uid=bookorder_service;" +
+                                       "uid=bookorder_srv;" +
                                        "pwd=123;" +
                                        "database=bookorders"
                 });
