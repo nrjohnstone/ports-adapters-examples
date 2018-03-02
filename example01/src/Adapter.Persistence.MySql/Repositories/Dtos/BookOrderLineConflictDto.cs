@@ -10,5 +10,6 @@ namespace Adapter.Persistence.MySql.Repositories.Dtos
         public string conflict_type { get; set; }
         public string Conflict_Value { get; set; }
         public bool Accepted { get; set; }
+        public DateTimeOffset CreatedDateTime { get; set; }
     }
 }

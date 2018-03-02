@@ -35,9 +35,9 @@ namespace Adapter.Persistence.MySql.Tests.Integration
             var sut = CreateSut();
 
             var bookOrderLineConflict1 = BookOrderLineQuantityConflict.CreateExisting(Guid.NewGuid(),
-                Guid.NewGuid(), Guid.NewGuid(), 1, true);
+                Guid.NewGuid(), Guid.NewGuid(), 1, true, DateTimeOffset.Now);
             var bookOrderLineConflict2 = BookOrderLinePriceConflict.CreateExisting(Guid.NewGuid(),
-                Guid.NewGuid(), Guid.NewGuid(), 30.25M, false);
+                Guid.NewGuid(), Guid.NewGuid(), 30.25M, false, DateTimeOffset.Now);
 
             sut.Store(new BookOrderLineConflict[] {bookOrderLineConflict1, bookOrderLineConflict2 });
 
@@ -64,7 +64,7 @@ namespace Adapter.Persistence.MySql.Tests.Integration
             var sut = CreateSut();
 
             var bookOrderLineConflict = BookOrderLineQuantityConflict.CreateExisting(Guid.NewGuid(),
-                Guid.NewGuid(), Guid.NewGuid(), 1, true);
+                Guid.NewGuid(), Guid.NewGuid(), 1, true, DateTimeOffset.Now);
 
             sut.Store(bookOrderLineConflict);
 
