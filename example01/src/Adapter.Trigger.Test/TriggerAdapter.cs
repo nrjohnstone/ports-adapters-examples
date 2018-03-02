@@ -15,12 +15,12 @@ namespace Adapter.Trigger.Test
             _initialized = true;
         }
 
-        public void Handle(OrderBookUseCase orderBookUseCase)
+        public void Handle(AddBookTitleRequestUseCase addBookTitleRequestUseCase)
         {
             if (!_initialized)
                 throw new InvalidOperationException("Adapter must be initialized prior to use");
             
-            _orderBookUseCaseTrigger = new OrderBookUseCaseRandomTrigger(orderBookUseCase);
+            _orderBookUseCaseTrigger = new OrderBookUseCaseRandomTrigger(addBookTitleRequestUseCase);
             _orderBookUseCaseTrigger.Start();
         }
 

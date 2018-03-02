@@ -16,7 +16,7 @@ namespace Host.WebService.Client1
 
         public Startup()
         {
-            Container = new Container();            
+            Container = new Container();
         }
 
         public void Configuration(IAppBuilder appBuilder)
@@ -37,7 +37,7 @@ namespace Host.WebService.Client1
                 .EnableSwaggerUi();
 
             config.EnsureInitialized();
-            
+
             appBuilder.UseWebApi(config);
         }
 
@@ -49,16 +49,17 @@ namespace Host.WebService.Client1
         /// <summary>
         /// Wire upstream ports to host implementations, in this case
         /// we are registering the ports (use cases) in the IoC container
-        /// as the Controllers are the host adapter implementations as they 
+        /// as the Controllers are the host adapter implementations as they
         /// call into the use cases
         /// </summary>
         private void RegisterHostAdapter()
         {
-            Container.Register<OrderBookUseCase>();
+            Container.Register<AddBookTitleRequestUseCase>();
             Container.Register<ApproveBookOrderUseCase>();
             Container.Register<SendBookOrderUseCase>();
-            Container.Register<GetBookOrdersUseCase>();
+            Container.Register<GetAllBookOrdersUseCase>();
             Container.Register<DeleteBookOrdersUseCase>();
+            Container.Register<SupplierBookOrderUpdateUseCase>();
         }
 
         protected virtual void RegisterNotificationAdapter()
@@ -81,13 +82,13 @@ namespace Host.WebService.Client1
                 new PersistenceAdapterSettings()
                 {
                     ConnectionString = "server=127.0.0.1;" +
-                                       "uid=bookorder_service;" +
+                                       "uid=bookorder_srv;" +
                                        "pwd=123;" +
                                        "database=bookorders"
                 });
 
             persistenceAdapter.Initialize();
             persistenceAdapter.Register(Container);
-        }       
+        }
     }
 }

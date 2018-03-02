@@ -10,32 +10,37 @@ namespace Host.WebService.Client1.BookOrders
     public class BookOrdersController : ApiController
     {
         public AmbientLogService Log { get; set; }
-        private readonly OrderBookUseCase _orderBookUseCase;
+        private readonly AddBookTitleRequestUseCase _addBookTitleRequestUseCase;
         private readonly ApproveBookOrderUseCase _approveBookOrderUseCase;
         private readonly SendBookOrderUseCase _sendBookOrderUseCase;
-        private readonly GetBookOrdersUseCase _getBookOrdersUseCase;
+        private readonly GetAllBookOrdersUseCase _getAllBookOrdersUseCase;
         private readonly DeleteBookOrdersUseCase _deleteBookOrdersUseCase;
-        private readonly GetNewBookOrdersUseCase _getNewBookOrdersUseCase;
+        private readonly GetAllNewBookOrdersUseCase _getAllNewBookOrdersUseCase;
+        private readonly SupplierBookOrderUpdateUseCase _supplierBookOrderUpdateUseCase;
 
-        public BookOrdersController(OrderBookUseCase orderBookUseCase,
+        public BookOrdersController(AddBookTitleRequestUseCase addBookTitleRequestUseCase,
             ApproveBookOrderUseCase approveBookOrderUseCase,
             SendBookOrderUseCase sendBookOrderUseCase,
-            GetBookOrdersUseCase getBookOrdersUseCase,
+            GetAllBookOrdersUseCase getAllBookOrdersUseCase,
             DeleteBookOrdersUseCase deleteBookOrdersUseCase,
-            GetNewBookOrdersUseCase getNewBookOrdersUseCase)
+            GetAllNewBookOrdersUseCase getAllNewBookOrdersUseCase,
+            SupplierBookOrderUpdateUseCase supplierBookOrderUpdateUseCase)
         {
-            if (orderBookUseCase == null) throw new ArgumentNullException(nameof(orderBookUseCase));
+            if (supplierBookOrderUpdateUseCase == null) throw new ArgumentNullException(nameof(supplierBookOrderUpdateUseCase));
+            if (addBookTitleRequestUseCase == null) throw new ArgumentNullException(nameof(addBookTitleRequestUseCase));
             if (approveBookOrderUseCase == null) throw new ArgumentNullException(nameof(approveBookOrderUseCase));
             if (sendBookOrderUseCase == null) throw new ArgumentNullException(nameof(sendBookOrderUseCase));
-            if (getBookOrdersUseCase == null) throw new ArgumentNullException(nameof(getBookOrdersUseCase));
+            if (getAllBookOrdersUseCase == null) throw new ArgumentNullException(nameof(getAllBookOrdersUseCase));
             if (deleteBookOrdersUseCase == null) throw new ArgumentNullException(nameof(deleteBookOrdersUseCase));
-            if (getNewBookOrdersUseCase == null) throw new ArgumentNullException(nameof(getNewBookOrdersUseCase));
-            _orderBookUseCase = orderBookUseCase;
+            if (getAllNewBookOrdersUseCase == null) throw new ArgumentNullException(nameof(getAllNewBookOrdersUseCase));
+
+            _addBookTitleRequestUseCase = addBookTitleRequestUseCase;
             _approveBookOrderUseCase = approveBookOrderUseCase;
             _sendBookOrderUseCase = sendBookOrderUseCase;
-            _getBookOrdersUseCase = getBookOrdersUseCase;
+            _getAllBookOrdersUseCase = getAllBookOrdersUseCase;
             _deleteBookOrdersUseCase = deleteBookOrdersUseCase;
-            _getNewBookOrdersUseCase = getNewBookOrdersUseCase;
+            _getAllNewBookOrdersUseCase = getAllNewBookOrdersUseCase;
+            _supplierBookOrderUpdateUseCase = supplierBookOrderUpdateUseCase;
         }
 
         [HttpGet]
@@ -44,7 +49,7 @@ namespace Host.WebService.Client1.BookOrders
         {
             return Ok();
         }
-        
+
         [HttpPost]
         [Route("bookRequests")]
         public IHttpActionResult CreateBookRequest([FromBody] BookTitleOrderRequest bookTitleOrderRequest)
@@ -52,12 +57,12 @@ namespace Host.WebService.Client1.BookOrders
             if (bookTitleOrderRequest == null)
                 return BadRequest();
 
-            Guid bookOrderId = _orderBookUseCase.Execute(new BookTitleOrder(
-                bookTitleOrderRequest.Title, 
+            Guid bookOrderId = _addBookTitleRequestUseCase.Execute(new BookTitleRequest(
+                bookTitleOrderRequest.Title,
                 bookTitleOrderRequest.Supplier,
                 bookTitleOrderRequest.Price,
                 bookTitleOrderRequest.Quantity ));
-            
+
             return Created<string>($"bookOrders/{bookOrderId}", null);
         }
 
@@ -65,7 +70,7 @@ namespace Host.WebService.Client1.BookOrders
         [Route("bookOrders")]
         public IHttpActionResult GetBookOrders()
         {
-            var bookOrders = _getBookOrdersUseCase.Execute();
+            var bookOrders = _getAllBookOrdersUseCase.Execute();
 
             IList<BookOrderResponse> bookOrdersResponse = new List<BookOrderResponse>();
 
@@ -91,9 +96,9 @@ namespace Host.WebService.Client1.BookOrders
                     OrderLines = orderLineResponses
                 };
 
-                bookOrdersResponse.Add(bookOrderResponse);                
+                bookOrdersResponse.Add(bookOrderResponse);
             }
-                        
+
             return Ok(bookOrdersResponse);
         }
 
@@ -101,7 +106,7 @@ namespace Host.WebService.Client1.BookOrders
         [Route("bookOrders/new")]
         public IHttpActionResult GetNewBookOrders()
         {
-            var bookOrders = _getNewBookOrdersUseCase.Execute();
+            var bookOrders = _getAllNewBookOrdersUseCase.Execute();
 
             IList<BookOrderResponse> bookOrdersResponse = new List<BookOrderResponse>();
 
@@ -171,5 +176,22 @@ namespace Host.WebService.Client1.BookOrders
             return Ok();
         }
 
+        [HttpPost]
+        [Route("bookOrders/{bookOrderId}/supplierUpdate")]
+        public IHttpActionResult ReceiveSupplierUpdate([FromUri] Guid bookOrderId, [FromBody] SupplierBookOrderUpdateDto dto)
+        {
+            List<SupplierBookOrderLineUpdateRequest> orderlineUpdates = new List<SupplierBookOrderLineUpdateRequest>();
+
+            foreach (var supplierBookOrderLineUpdateDto in dto.OrderLineUpdates)
+            {
+                orderlineUpdates.Add(new SupplierBookOrderLineUpdateRequest(
+                    supplierBookOrderLineUpdateDto.BookOrderLineId, supplierBookOrderLineUpdateDto.Price,
+                    supplierBookOrderLineUpdateDto.Quantity));
+            }
+            SupplierBookOrderUpdateRequest supplierBookOrderUpdateRequest =
+                new SupplierBookOrderUpdateRequest(bookOrderId, orderlineUpdates);
+            _supplierBookOrderUpdateUseCase.Execute(supplierBookOrderUpdateRequest);
+            return Ok();
+        }
     }
 }

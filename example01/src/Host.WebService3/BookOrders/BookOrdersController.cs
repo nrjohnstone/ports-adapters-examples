@@ -8,27 +8,27 @@ namespace Host.WebService.Client3.BookOrders
 {
     public class BookOrdersController : ApiController
     {
-        private readonly OrderBookUseCase _orderBookUseCase;
+        private readonly AddBookTitleRequestUseCase _addBookTitleRequestUseCase;
         private readonly ApproveBookOrderUseCase _approveBookOrderUseCase;
         private readonly SendBookOrderUseCase _sendBookOrderUseCase;
-        private readonly GetBookOrdersUseCase _getBookOrdersUseCase;
+        private readonly GetAllBookOrdersUseCase _getAllBookOrdersUseCase;
         private readonly DeleteBookOrdersUseCase _deleteBookOrdersUseCase;
 
-        public BookOrdersController(OrderBookUseCase orderBookUseCase,
+        public BookOrdersController(AddBookTitleRequestUseCase addBookTitleRequestUseCase,
             ApproveBookOrderUseCase approveBookOrderUseCase,
             SendBookOrderUseCase sendBookOrderUseCase,
-            GetBookOrdersUseCase getBookOrdersUseCase,
+            GetAllBookOrdersUseCase getAllBookOrdersUseCase,
             DeleteBookOrdersUseCase deleteBookOrdersUseCase)
         {
-            if (orderBookUseCase == null) throw new ArgumentNullException(nameof(orderBookUseCase));
+            if (addBookTitleRequestUseCase == null) throw new ArgumentNullException(nameof(addBookTitleRequestUseCase));
             if (approveBookOrderUseCase == null) throw new ArgumentNullException(nameof(approveBookOrderUseCase));
             if (sendBookOrderUseCase == null) throw new ArgumentNullException(nameof(sendBookOrderUseCase));
-            if (getBookOrdersUseCase == null) throw new ArgumentNullException(nameof(getBookOrdersUseCase));
+            if (getAllBookOrdersUseCase == null) throw new ArgumentNullException(nameof(getAllBookOrdersUseCase));
             if (deleteBookOrdersUseCase == null) throw new ArgumentNullException(nameof(deleteBookOrdersUseCase));
-            _orderBookUseCase = orderBookUseCase;
+            _addBookTitleRequestUseCase = addBookTitleRequestUseCase;
             _approveBookOrderUseCase = approveBookOrderUseCase;
             _sendBookOrderUseCase = sendBookOrderUseCase;
-            _getBookOrdersUseCase = getBookOrdersUseCase;
+            _getAllBookOrdersUseCase = getAllBookOrdersUseCase;
             _deleteBookOrdersUseCase = deleteBookOrdersUseCase;
         }
 
@@ -46,7 +46,7 @@ namespace Host.WebService.Client3.BookOrders
             if (bookTitleOrderRequest == null)
                 return BadRequest();
 
-            Guid bookOrderId = _orderBookUseCase.Execute(new BookTitleOrder(
+            Guid bookOrderId = _addBookTitleRequestUseCase.Execute(new BookTitleRequest(
                 bookTitleOrderRequest.Title,
                 bookTitleOrderRequest.Supplier,
                 bookTitleOrderRequest.Price,
@@ -59,7 +59,7 @@ namespace Host.WebService.Client3.BookOrders
         [Route("bookOrders")]
         public IHttpActionResult GetBookOrders()
         {
-            var bookOrders = _getBookOrdersUseCase.Execute();
+            var bookOrders = _getAllBookOrdersUseCase.Execute();
 
             IList<BookOrderResponse> bookOrdersResponse = new List<BookOrderResponse>();
 

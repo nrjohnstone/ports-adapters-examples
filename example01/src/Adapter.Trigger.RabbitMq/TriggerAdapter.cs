@@ -39,12 +39,12 @@ namespace Adapter.Trigger.RabbitMq
             }
         }
 
-        public void Handle(OrderBookUseCase orderBookUseCase)
+        public void Handle(AddBookTitleRequestUseCase addBookTitleRequestUseCase)
         {
             if (!_initialized)
                 throw new InvalidOperationException("Adapter must be initialized prior to use");
 
-            _orderBookUseCaseTrigger = new OrderBookUseCaseTrigger(orderBookUseCase, _connection);
+            _orderBookUseCaseTrigger = new OrderBookUseCaseTrigger(addBookTitleRequestUseCase, _connection);
 
             _orderBookUseCaseTrigger.Start();
         }

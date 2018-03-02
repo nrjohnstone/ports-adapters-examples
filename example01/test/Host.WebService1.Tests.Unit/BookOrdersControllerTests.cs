@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Net;
 using Domain.Entities;
@@ -33,9 +34,9 @@ namespace Host.WebService.Client1.Tests.Unit
                 Price = "25.50",
                 Quantity = 1
             });
-            
+
             result.StatusCode.Should().Be(HttpStatusCode.Created);
-            
+
             MockBookOrderRepository.Received(1).Store(
                 Arg.Is<BookOrder>(
                     x => x.Id != Guid.Empty &&
@@ -49,11 +50,11 @@ namespace Host.WebService.Client1.Tests.Unit
         public void Post_ApproveBookOrder_WhenBookOrderIsNew_ShouldApproveBookOrder()
         {
             Guid bookOrderId = Guid.NewGuid();
-            MockBookOrderRepository.Get(bookOrderId).Returns(new BookOrder(
-                "SupplierFoo", bookOrderId, BookOrderState.New));
+            MockBookOrderRepository.Get(bookOrderId).Returns(BookOrder.CreateNew(
+                "SupplierFoo", bookOrderId));
 
             StartServer();
-            
+
             var result = Client.Post($"bookOrders/{bookOrderId}/approve", null);
 
             result.StatusCode.Should().Be(HttpStatusCode.OK);
@@ -67,8 +68,11 @@ namespace Host.WebService.Client1.Tests.Unit
         public void Post_SendBookOrder_WhenBookOrderIsApproved_ShouldSendBookOrder()
         {
             Guid bookOrderId = Guid.NewGuid();
-            MockBookOrderRepository.Get(bookOrderId).Returns(new BookOrder(
-                "SupplierFoo", bookOrderId, BookOrderState.Approved));
+            var bookOrder = a.BookOrder.ForSupplier("SupplierFoo")
+                .WithId(bookOrderId)
+                .ThatIsApproved();
+
+            MockBookOrderRepository.Get(bookOrderId).Returns(bookOrder);
 
             StartServer();
 
@@ -89,11 +93,23 @@ namespace Host.WebService.Client1.Tests.Unit
         public void Get_ShouldReturnAllBookOrders()
         {
             var bookOrders = new List<BookOrder>();
-            var bookOrder = new BookOrder("Supplier1", Guid.NewGuid(), BookOrderState.New, 
-                new List<OrderLine>() { new OrderLine("Title1", 10.5M, 1, Guid.NewGuid())});
-            
-            bookOrders.Add(bookOrder);
-            bookOrders.Add(new BookOrder("Supplier2", Guid.NewGuid(), BookOrderState.Approved));
+
+            var line1 = new OrderLine("Title1", 10.5M, 1, Guid.NewGuid());
+
+            var bookOrder1 = a.BookOrder.ForSupplier("Supplier1")
+                .WithId(Guid.NewGuid())
+                .WithLine(line1)
+                .ThatIsNew();
+
+            bookOrders.Add(bookOrder1);
+
+            var line2 = new OrderLine("Title2", 20.5M, 2, Guid.NewGuid());
+            var bookOrder2 = a.BookOrder.ForSupplier("Supplier2")
+                .WithId(Guid.NewGuid())
+                .WithLine(line2)
+                .ThatIsApproved();
+
+            bookOrders.Add(bookOrder2);
 
             MockBookOrderRepository.Get().Returns(bookOrders);
 
@@ -117,6 +133,10 @@ namespace Host.WebService.Client1.Tests.Unit
             bookOrdersResponse[1].Supplier.Should().Be("Supplier2");
             bookOrdersResponse[1].State.Should().Be("Approved");
             bookOrdersResponse[1].Id.Should().Be(bookOrders[1].Id.ToString());
+            bookOrdersResponse[1].OrderLines.Count.Should().Be(1);
+            bookOrdersResponse[1].OrderLines[0].Title.Should().Be("Title2");
+            bookOrdersResponse[1].OrderLines[0].Price.Should().Be(20.5M);
+            bookOrdersResponse[1].OrderLines[0].Quantity.Should().Be(2);
         }
     }
 

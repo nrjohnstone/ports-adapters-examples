@@ -9,6 +9,7 @@ namespace Host.WebService.Client1.Tests.Unit
     public class WebServiceTestFixtureBase : IDisposable
     {
         protected IBookOrderRepository MockBookOrderRepository => _startup.MockBookOrderRepository;
+        protected IBookOrderLineConflictRepository MockBookOrderLineRepositry => _startup.MockBookOrderLineConflictRepository;
         protected IBookSupplierGateway MockBookSupplierGateway => _startup.MockBookSupplierGateway;
         protected TestServer Server { get; private set; }
         protected HttpClient Client { get; private set; }
@@ -19,7 +20,7 @@ namespace Host.WebService.Client1.Tests.Unit
         }
 
         public void StartServer()
-        {            
+        {
             Server = TestServer.Create(_startup.Configuration);
             Client = Server.HttpClient;
         }

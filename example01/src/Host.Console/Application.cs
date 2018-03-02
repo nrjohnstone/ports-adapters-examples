@@ -33,7 +33,7 @@ namespace Host.Console
 
         public void Configure()
         {
-            Container.Register<OrderBookUseCase>();
+            Container.Register<AddBookTitleRequestUseCase>();
             Container.Register<ApproveBookOrderUseCase>();
             Container.Register<SendBookOrderUseCase>();            
 
@@ -83,7 +83,7 @@ namespace Host.Console
                 _triggerAdapterShutdown = () => { triggerAdapter.Shutdown(); };
 
                 // Wire upstream ports into adapter
-                triggerAdapter.Handle(Container.GetInstance<OrderBookUseCase>());                
+                triggerAdapter.Handle(Container.GetInstance<AddBookTitleRequestUseCase>());                
             }
             else if (_settings.TriggerAdapter == "RabbitMq")
             {
@@ -92,7 +92,7 @@ namespace Host.Console
                 _triggerAdapterShutdown = () => { triggerAdapter.Shutdown(); };
 
                 // Wire upstream ports into adapter
-                triggerAdapter.Handle(Container.GetInstance<OrderBookUseCase>());                
+                triggerAdapter.Handle(Container.GetInstance<AddBookTitleRequestUseCase>());                
             }
         }
 

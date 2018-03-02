@@ -13,13 +13,13 @@ namespace Adapter.Trigger.RabbitMq
     internal class OrderBookUseCaseTrigger
     {
         public AmbientLogService Logger { get; } = new AmbientLogService();
-        private readonly OrderBookUseCase _orderBookUseCase;
+        private readonly AddBookTitleRequestUseCase _addBookTitleRequestUseCase;
         private readonly IConnection _connection;
         private IModel _channel;
 
-        public OrderBookUseCaseTrigger(OrderBookUseCase orderBookUseCase, IConnection connection)
+        public OrderBookUseCaseTrigger(AddBookTitleRequestUseCase addBookTitleRequestUseCase, IConnection connection)
         {
-            _orderBookUseCase = orderBookUseCase;
+            _addBookTitleRequestUseCase = addBookTitleRequestUseCase;
             _connection = connection;
         }
 
@@ -40,8 +40,8 @@ namespace Adapter.Trigger.RabbitMq
 
             try
             {
-                var bookRequest = JsonConvert.DeserializeObject<BookTitleOrder>(message);
-                _orderBookUseCase.Execute(bookRequest);
+                var bookRequest = JsonConvert.DeserializeObject<BookTitleRequest>(message);
+                _addBookTitleRequestUseCase.Execute(bookRequest);
                 _channel.BasicAck(args.DeliveryTag, false);
             }
             catch (Exception ex)

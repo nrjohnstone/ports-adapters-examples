@@ -1,51 +1,53 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.27004.2006
+VisualStudioVersion = 15.0.27130.2036
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Adapter.Trigger.Test", "src\Adapter.Trigger.Test\Adapter.Trigger.Test.csproj", "{408F72C9-ED46-4B95-A1AA-9BA45D5681EE}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Adapter.Trigger.Test", "src\Adapter.Trigger.Test\Adapter.Trigger.Test.csproj", "{408F72C9-ED46-4B95-A1AA-9BA45D5681EE}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Domain", "src\Core\Domain.csproj", "{97E5E8EB-26D7-49D9-A412-3DF4F5716643}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Domain", "src\Core\Domain.csproj", "{97E5E8EB-26D7-49D9-A412-3DF4F5716643}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Host.Console", "src\Host.Console\Host.Console.csproj", "{E7562808-6D94-4C58-902E-71CDFA832567}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Host.Console", "src\Host.Console\Host.Console.csproj", "{E7562808-6D94-4C58-902E-71CDFA832567}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Adapter.Persistence.Test", "src\Adapter.Persistence.Test\Adapter.Persistence.Test.csproj", "{1649AA20-899F-4050-B99A-C408A4AA39FE}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Adapter.Persistence.Test", "src\Adapter.Persistence.Test\Adapter.Persistence.Test.csproj", "{1649AA20-899F-4050-B99A-C408A4AA39FE}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{9234AD06-323F-461D-AC33-43C22EFF20B7}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Core.Tests.Unit", "test\Core.Tests.Unit\Core.Tests.Unit.csproj", "{222627B0-B4D5-4C36-9D57-D9E8D6BAAB28}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Core.Tests.Unit", "test\Core.Tests.Unit\Core.Tests.Unit.csproj", "{222627B0-B4D5-4C36-9D57-D9E8D6BAAB28}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Adapter.Notification.Test", "src\Adapter.Notification.Test\Adapter.Notification.Test.csproj", "{E8989F66-5BA3-4576-9F5F-4A9F26EDF5E3}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Adapter.Notification.Test", "src\Adapter.Notification.Test\Adapter.Notification.Test.csproj", "{E8989F66-5BA3-4576-9F5F-4A9F26EDF5E3}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Adapter.Trigger.RabbitMq", "src\Adapter.Trigger.RabbitMq\Adapter.Trigger.RabbitMq.csproj", "{9874DC72-7D4E-4F04-B9D1-6AA175F58224}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Adapter.Trigger.RabbitMq", "src\Adapter.Trigger.RabbitMq\Adapter.Trigger.RabbitMq.csproj", "{9874DC72-7D4E-4F04-B9D1-6AA175F58224}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Adapter.Persistence.MySql", "src\Adapter.Persistence.MySql\Adapter.Persistence.MySql.csproj", "{B4F64E5C-A80A-4E48-A307-6ED26233C394}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Adapter.Persistence.MySql", "src\Adapter.Persistence.MySql\Adapter.Persistence.MySql.csproj", "{B4F64E5C-A80A-4E48-A307-6ED26233C394}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Adapter.Persistence.MySql.Tests.Integration", "test\Adapter.Persistence.MySql.Tests.Integration\Adapter.Persistence.MySql.Tests.Integration.csproj", "{55E378B7-78B8-4B18-83B8-E174B9028A43}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Adapter.Persistence.MySql.Tests.Integration", "test\Adapter.Persistence.MySql.Tests.Integration\Adapter.Persistence.MySql.Tests.Integration.csproj", "{55E378B7-78B8-4B18-83B8-E174B9028A43}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Adapters", "Adapters", "{E188439D-1F1D-4EBA-B0DE-A7074E348190}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Hosts", "Hosts", "{291979A6-2D81-4532-945E-47F00C7DEC70}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Adapter.Notification.RabbitMq", "src\Adapter.Notification.RabbitMq\Adapter.Notification.RabbitMq.csproj", "{F939005A-4433-475D-BCEA-41671DE4D8C8}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Adapter.Notification.RabbitMq", "src\Adapter.Notification.RabbitMq\Adapter.Notification.RabbitMq.csproj", "{F939005A-4433-475D-BCEA-41671DE4D8C8}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Adapter.Notification.Email", "src\Adapter.Notification.Email\Adapter.Notification.Email.csproj", "{BF17C870-A263-4D73-A1C2-BE17C642F0BF}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Adapter.Notification.Email", "src\Adapter.Notification.Email\Adapter.Notification.Email.csproj", "{BF17C870-A263-4D73-A1C2-BE17C642F0BF}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Host.WebService.Client1", "src\Host.WebService1\Host.WebService.Client1.csproj", "{11455D71-79B1-4F03-8568-734A50B946A8}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Host.WebService.Client1", "src\Host.WebService1\Host.WebService.Client1.csproj", "{11455D71-79B1-4F03-8568-734A50B946A8}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Host.WebService.Client2", "src\Host.WebService2\Host.WebService.Client2.csproj", "{941768B7-F35F-4F0F-A4CC-E5BE60083D68}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Host.WebService.Client2", "src\Host.WebService2\Host.WebService.Client2.csproj", "{941768B7-F35F-4F0F-A4CC-E5BE60083D68}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Adapter.Persistence.CouchDb", "src\Adapter.Persistence.CouchDb\Adapter.Persistence.CouchDb.csproj", "{F9B62C54-9131-4606-8E44-6118D576FEE4}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Adapter.Persistence.CouchDb", "src\Adapter.Persistence.CouchDb\Adapter.Persistence.CouchDb.csproj", "{F9B62C54-9131-4606-8E44-6118D576FEE4}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Adapter.Persistence.CouchDb.Tests.Integration", "test\Adapter.Persistence.CouchDb.Tests.Integration\Adapter.Persistence.CouchDb.Tests.Integration.csproj", "{2DB22EFF-48A7-4D49-9EC1-D8C2AAB1AEEF}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Adapter.Persistence.CouchDb.Tests.Integration", "test\Adapter.Persistence.CouchDb.Tests.Integration\Adapter.Persistence.CouchDb.Tests.Integration.csproj", "{2DB22EFF-48A7-4D49-9EC1-D8C2AAB1AEEF}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Host.WebService.Client3", "src\Host.WebService3\Host.WebService.Client3.csproj", "{941768B7-F35F-4F0F-A4CC-E5BE61183D68}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Host.WebService.Client3", "src\Host.WebService3\Host.WebService.Client3.csproj", "{941768B7-F35F-4F0F-A4CC-E5BE61183D68}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Host.WebService.Client1.Tests.Unit", "test\Host.WebService1.Tests.Unit\Host.WebService.Client1.Tests.Unit.csproj", "{8CAB6AE1-0317-4D8F-AFE2-92B1684E34E5}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Host.WebService.Client1.Tests.Unit", "test\Host.WebService1.Tests.Unit\Host.WebService.Client1.Tests.Unit.csproj", "{8CAB6AE1-0317-4D8F-AFE2-92B1684E34E5}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Adapter.Trigger.Csv", "src\Adapter.Trigger.Csv\Adapter.Trigger.Csv.csproj", "{2FAC930D-F9AC-45BB-9C48-1EFE46BA8278}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Adapter.Trigger.Csv", "src\Adapter.Trigger.Csv\Adapter.Trigger.Csv.csproj", "{2FAC930D-F9AC-45BB-9C48-1EFE46BA8278}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Adapter.Trigger.Csv.Tests.Unit", "test\Adapter.Trigger.Csv.Tests.Unit\Adapter.Trigger.Csv.Tests.Unit.csproj", "{810ECEAA-C177-4662-A904-65E599FAC2EA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Adapter.Trigger.Csv.Tests.Unit", "test\Adapter.Trigger.Csv.Tests.Unit\Adapter.Trigger.Csv.Tests.Unit.csproj", "{810ECEAA-C177-4662-A904-65E599FAC2EA}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Domain.Builders", "test\Domain.Builders\Domain.Builders.csproj", "{B889CAE0-1827-4E64-9312-1439039A9C87}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -129,6 +131,10 @@ Global
 		{810ECEAA-C177-4662-A904-65E599FAC2EA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{810ECEAA-C177-4662-A904-65E599FAC2EA}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{810ECEAA-C177-4662-A904-65E599FAC2EA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B889CAE0-1827-4E64-9312-1439039A9C87}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B889CAE0-1827-4E64-9312-1439039A9C87}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B889CAE0-1827-4E64-9312-1439039A9C87}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B889CAE0-1827-4E64-9312-1439039A9C87}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -152,6 +158,7 @@ Global
 		{8CAB6AE1-0317-4D8F-AFE2-92B1684E34E5} = {9234AD06-323F-461D-AC33-43C22EFF20B7}
 		{2FAC930D-F9AC-45BB-9C48-1EFE46BA8278} = {E188439D-1F1D-4EBA-B0DE-A7074E348190}
 		{810ECEAA-C177-4662-A904-65E599FAC2EA} = {9234AD06-323F-461D-AC33-43C22EFF20B7}
+		{B889CAE0-1827-4E64-9312-1439039A9C87} = {9234AD06-323F-461D-AC33-43C22EFF20B7}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {EC0DDD5A-EE19-4A43-AC53-2C779638CE26}
