@@ -15,6 +15,9 @@ namespace Adapter.Persistence.MySql.Repositories.Actions
                 "SELECT supplier, order_id, state FROM book_orders WHERE order_id = ?orderId",
                 new { orderId = id });
 
+            if (bookOrderDto == null)
+                return null;
+
             var orderLineDtos = connection.Query<OrderLineDto>(
                 "SELECT order_line_id, " +
                 "order_id," +
