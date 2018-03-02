@@ -12,17 +12,20 @@ namespace Host.WebService.Client1.Tests.Unit
     {
         public IBookOrderRepository MockBookOrderRepository { get; set; }
         public IBookSupplierGateway MockBookSupplierGateway { get; set; }
+        public IBookOrderLineConflictRepository MockBookOrderLineConflictRepository { get; set; }
 
         public TestableStartup()
         {
             MockBookOrderRepository = Substitute.For<IBookOrderRepository>();
             MockBookSupplierGateway = Substitute.For<IBookSupplierGateway>();
+            MockBookOrderLineConflictRepository = Substitute.For<IBookOrderLineConflictRepository>();
             Container.Options.AllowOverridingRegistrations = true;
         }
-        
+
         protected override void RegisterPersistenceAdapter()
         {
-            Container.RegisterSingleton<IBookOrderRepository>(MockBookOrderRepository);            
+            Container.RegisterSingleton<IBookOrderRepository>(MockBookOrderRepository);
+            Container.RegisterSingleton<IBookOrderLineConflictRepository>(MockBookOrderLineConflictRepository);
         }
 
         protected override void RegisterNotificationAdapter()
