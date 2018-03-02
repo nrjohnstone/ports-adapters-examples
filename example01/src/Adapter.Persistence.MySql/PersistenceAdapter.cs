@@ -27,8 +27,10 @@ namespace Adapter.Persistence.MySql
                 throw new AdpaterNotInitializedException();
 
             BookOrderRepository bookOrderRepository = new BookOrderRepository(_settings.ConnectionString);
+            var bookOrderLineConflictRepository = new BookOrderLineConflictRepository(_settings.ConnectionString);
 
             container.RegisterSingleton<IBookOrderRepository>(bookOrderRepository);
+            container.RegisterSingleton<IBookOrderLineConflictRepository>(bookOrderLineConflictRepository);
         }
     }
 }
