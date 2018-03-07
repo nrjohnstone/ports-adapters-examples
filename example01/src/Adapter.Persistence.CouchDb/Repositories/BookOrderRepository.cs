@@ -27,7 +27,7 @@ namespace Adapter.Persistence.CouchDb.Repositories
         public BookOrder Get(Guid id)
         {
             BookOrderDto retrieved;
-            
+
             using (var store = new MyCouchStore(_databaseUri, _databaseName))
             {
                 var doc = store.GetByIdAsync(id.ToString()).Result;
@@ -49,9 +49,9 @@ namespace Adapter.Persistence.CouchDb.Repositories
                 // Don't do this in production environments !! Implement concurrency properly all the way
                 // to the client !!
                 string rev = GetRev(store, bookOrder.Id);
-                
+
                 BookOrderDto bookOrderDto = BookOrderMapper.MapTo(bookOrder, rev);
-                
+
                 if (rev == null)
                 {
                     store.StoreAsync(bookOrderDto).Wait();
@@ -60,7 +60,7 @@ namespace Adapter.Persistence.CouchDb.Repositories
                 {
                     bookOrderDto._rev = rev;
                     store.StoreAsync(bookOrderDto).Wait();
-                }                    
+                }
             }
         }
 
@@ -113,7 +113,7 @@ namespace Adapter.Persistence.CouchDb.Repositories
 
                 ViewQueryResponse<string> docIdsBySupplier =
                     client.Views.QueryAsync<string>(request).Result;
-                
+
                 if (docIdsBySupplier.IsEmpty)
                     return Enumerable.Empty<BookOrder>();
 

@@ -190,6 +190,7 @@ namespace Host.WebService.Client1.BookOrders
             }
             SupplierBookOrderUpdateRequest supplierBookOrderUpdateRequest =
                 new SupplierBookOrderUpdateRequest(bookOrderId, orderlineUpdates);
+
             _supplierBookOrderUpdateUseCase.Execute(supplierBookOrderUpdateRequest);
             return Ok();
         }

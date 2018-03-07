@@ -14,7 +14,6 @@ using Xunit;
 
 namespace Adapter.Persistence.CouchDb.Tests.Integration
 {
-
     public class BookOrderRepositoryTests
     {
         private readonly string _databaseName;
