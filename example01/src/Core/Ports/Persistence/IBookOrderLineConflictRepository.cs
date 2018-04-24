@@ -7,8 +7,8 @@ namespace Domain.Ports.Persistence
     public interface IBookOrderLineConflictRepository
     {
         void Store(BookOrderLineConflict conflict);
-        void Store(IEnumerable<BookOrderLineConflict> conflict);
-        BookOrderLineConflict Get(Guid id);
+        void Store(IEnumerable<BookOrderLineConflict> conflicts);
+        BookOrderLineConflict Get(Guid bookOrderLineConflictId);
         IEnumerable<BookOrderLineConflict> Get();
     }
 }

@@ -58,18 +58,21 @@ namespace Adapter.Persistence.CouchDb.Repositories
             return retrieved._rev;
         }
 
-        public void Store(IEnumerable<BookOrderLineConflict> conflict)
+        public void Store(IEnumerable<BookOrderLineConflict> conflicts)
         {
-            throw new NotImplementedException();
+            foreach (var bookOrderLineConflict in conflicts)
+            {
+                Store(bookOrderLineConflict);
+            }
         }
 
-        public BookOrderLineConflict Get(Guid id)
+        public BookOrderLineConflict Get(Guid bookOrderLineConflictId)
         {
             BookOrderLineConflictDto dto;
 
             using (var store = new MyCouchStore(_databaseUri, _databaseName))
             {
-                var doc = store.GetByIdAsync(id.ToString()).Result;
+                var doc = store.GetByIdAsync(bookOrderLineConflictId.ToString()).Result;
 
                 if (doc == null)
                     return null;

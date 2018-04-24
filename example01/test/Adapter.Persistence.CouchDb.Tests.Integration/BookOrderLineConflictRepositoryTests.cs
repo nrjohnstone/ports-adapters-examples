@@ -34,7 +34,7 @@ namespace Adapter.Persistence.CouchDb.Tests.Integration
         }
 
         [Fact]
-        public void Store_ShouldStoreBookOrder()
+        public void CanStoreAndRetrieve_Single_BookOrderLineConflict()
         {
             var sut = CreateSut();
 
@@ -52,6 +52,32 @@ namespace Adapter.Persistence.CouchDb.Tests.Integration
             retrievedEntity.BookOrderId.Should().Be(bookOrderLineConflict.BookOrderId);
             retrievedEntity.BookOrderLineId.Should().Be(bookOrderLineConflict.BookOrderLineId);
             retrievedEntity.Accepted.Should().Be(bookOrderLineConflict.Accepted);
+        }
+
+        [Fact]
+        public void CanStore_Multiple_BookOrderLineConflicts()
+        {
+            var sut = CreateSut();
+
+            var bookOrderId = Guid.NewGuid();
+
+            BookOrderLineConflict bookOrderLineConflict1 =
+                BookOrderLinePriceConflict.CreateExisting(
+                    Guid.NewGuid(),
+                    bookOrderId, Guid.NewGuid(), 10.50M, false, DateTime.Now);
+
+            BookOrderLineConflict bookOrderLineConflict2 =
+                BookOrderLinePriceConflict.CreateExisting(
+                    Guid.NewGuid(),
+                    bookOrderId, Guid.NewGuid(), 10.50M, false, DateTime.Now);
+
+            sut.Store(new []{ bookOrderLineConflict1, bookOrderLineConflict2});
+
+            var retrievedConflict1 = sut.Get(bookOrderLineConflict1.Id);
+            var retrievedConflict2 = sut.Get(bookOrderLineConflict2.Id);
+
+            retrievedConflict1.Should().NotBeNull();
+            retrievedConflict2.Should().NotBeNull();
         }
     }
 }
