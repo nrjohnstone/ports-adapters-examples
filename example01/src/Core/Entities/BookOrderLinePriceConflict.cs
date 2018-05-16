@@ -23,10 +23,10 @@ namespace Domain.Entities
         }
 
         public static BookOrderLinePriceConflict CreateExisting(Guid id, Guid bookOrderId,
-            Guid bookOrderLineId, decimal price, bool accepted, DateTime currentDateTime)
+            Guid bookOrderLineId, decimal price, bool accepted, DateTime createdDateTime)
         {
             return new BookOrderLinePriceConflict(
-                id, bookOrderId, ConflictType.Price, bookOrderLineId, price, accepted, currentDateTime);
+                id, bookOrderId, ConflictType.Price, bookOrderLineId, price, accepted, createdDateTime);
         }
     }
 }

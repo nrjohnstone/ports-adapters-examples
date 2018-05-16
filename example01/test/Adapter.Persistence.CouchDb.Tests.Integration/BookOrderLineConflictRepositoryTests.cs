@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using Adapter.Persistence.CouchDb.Repositories;
 using Domain.Entities;
 using FluentAssertions;
@@ -78,6 +79,30 @@ namespace Adapter.Persistence.CouchDb.Tests.Integration
 
             retrievedConflict1.Should().NotBeNull();
             retrievedConflict2.Should().NotBeNull();
+        }
+
+        [Fact]
+        public void CanRetrieveAllBookOrderLineConflicts()
+        {
+            var sut = CreateSut();
+
+            var bookOrderId = Guid.NewGuid();
+
+            BookOrderLineConflict bookOrderLineConflict1 =
+                BookOrderLinePriceConflict.CreateExisting(
+                    Guid.NewGuid(),
+                    bookOrderId, Guid.NewGuid(), 10.50M, false, DateTime.Now);
+
+            BookOrderLineConflict bookOrderLineConflict2 =
+                BookOrderLinePriceConflict.CreateExisting(
+                    Guid.NewGuid(),
+                    bookOrderId, Guid.NewGuid(), 10.50M, false, DateTime.Now);
+
+            sut.Store(new[] { bookOrderLineConflict1, bookOrderLineConflict2 });
+
+            var retrievedConflicts = sut.Get();
+
+            retrievedConflicts.ShouldAllBeEquivalentTo(new[] { bookOrderLineConflict1, bookOrderLineConflict2 });
         }
     }
 }

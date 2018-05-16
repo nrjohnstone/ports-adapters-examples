@@ -4,6 +4,8 @@ using Adapter.Persistence.CouchDb.Repositories.Dtos;
 using Domain.Entities;
 using Domain.Ports.Persistence;
 using MyCouch;
+using MyCouch.Requests;
+using MyCouch.Responses;
 using Newtonsoft.Json;
 
 namespace Adapter.Persistence.CouchDb.Repositories
@@ -32,7 +34,10 @@ namespace Adapter.Persistence.CouchDb.Repositories
                 {
                     _id = conflict.Id.ToString(),
                     BookOrderId = conflict.BookOrderId,
-                    BookOrderLineId = conflict.BookOrderLineId
+                    BookOrderLineId = conflict.BookOrderLineId,
+                    Accepted = conflict.Accepted,
+                    CreatedDateTime = conflict.CreatedDateTime,
+                    ConflictValue = conflict.ConflictValue
                 };
 
                 if (rev == null)
@@ -87,7 +92,27 @@ namespace Adapter.Persistence.CouchDb.Repositories
 
         public IEnumerable<BookOrderLineConflict> Get()
         {
-            throw new NotImplementedException();
+            List<BookOrderLineConflict> conflicts = new List<BookOrderLineConflict>();
+            using (var client = new MyCouchClient(_databaseUri, _databaseName))
+            {
+                QueryViewRequest request = new QueryViewRequest(
+                    "bookorderLineConflicts", "all");
+                request.Configure(parameters => parameters.IncludeDocs(true));
+
+                ViewQueryResponse<string> results =
+                    client.Views.QueryAsync<string>(request).Result;
+
+                foreach (var resultsRow in results.Rows)
+                {
+                    BookOrderLineConflictDto dto = JsonConvert.DeserializeObject<BookOrderLineConflictDto>(
+                        resultsRow.IncludedDoc);
+
+                    conflicts.Add(BookOrderLinePriceConflict.CreateExisting(
+                        Guid.Parse(dto._id), dto.BookOrderId, dto.BookOrderLineId,
+                        Convert.ToDecimal(dto.ConflictValue), dto.Accepted, dto.CreatedDateTime));
+                }
+            }
+            return conflicts;
         }
     }
 }

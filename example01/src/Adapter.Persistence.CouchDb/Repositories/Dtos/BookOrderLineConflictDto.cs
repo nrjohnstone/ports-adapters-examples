@@ -8,5 +8,8 @@ namespace Adapter.Persistence.CouchDb.Repositories.Dtos
         public string _rev { get; set; }
         public Guid BookOrderId { get; set; }
         public Guid BookOrderLineId { get; set; }
+        public string ConflictValue { get; set; }
+        public bool Accepted { get; set; }
+        public DateTime CreatedDateTime { get; set; }
     }
 }
