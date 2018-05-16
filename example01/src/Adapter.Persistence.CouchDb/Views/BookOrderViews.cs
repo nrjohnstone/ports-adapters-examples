@@ -2,11 +2,11 @@
 
 namespace Adapter.Persistence.CouchDb.Views
 {
-    public class BookOrderViews
+    public class BookOrderViews : ICouchDbView
     {
         public string Id => "_design/" + DesignDocument;
         public string DesignDocument => "bookorders";
-   
+
         public string Json()
         {
             return JsonConvert.SerializeObject(new
