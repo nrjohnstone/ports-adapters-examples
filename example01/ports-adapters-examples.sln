@@ -49,6 +49,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Adapter.Trigger.Csv.Tests.U
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Domain.Builders", "test\Domain.Builders\Domain.Builders.csproj", "{B889CAE0-1827-4E64-9312-1439039A9C87}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Adapter.Persistence.InMemory", "src\Adapter.Persistence.InMemory\Adapter.Persistence.InMemory.csproj", "{F4479DCC-BBB7-43F6-ADDA-BE695E27F788}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -135,6 +137,10 @@ Global
 		{B889CAE0-1827-4E64-9312-1439039A9C87}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B889CAE0-1827-4E64-9312-1439039A9C87}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B889CAE0-1827-4E64-9312-1439039A9C87}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F4479DCC-BBB7-43F6-ADDA-BE695E27F788}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F4479DCC-BBB7-43F6-ADDA-BE695E27F788}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F4479DCC-BBB7-43F6-ADDA-BE695E27F788}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F4479DCC-BBB7-43F6-ADDA-BE695E27F788}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -159,6 +165,7 @@ Global
 		{2FAC930D-F9AC-45BB-9C48-1EFE46BA8278} = {E188439D-1F1D-4EBA-B0DE-A7074E348190}
 		{810ECEAA-C177-4662-A904-65E599FAC2EA} = {9234AD06-323F-461D-AC33-43C22EFF20B7}
 		{B889CAE0-1827-4E64-9312-1439039A9C87} = {9234AD06-323F-461D-AC33-43C22EFF20B7}
+		{F4479DCC-BBB7-43F6-ADDA-BE695E27F788} = {E188439D-1F1D-4EBA-B0DE-A7074E348190}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {EC0DDD5A-EE19-4A43-AC53-2C779638CE26}
