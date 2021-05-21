@@ -2,35 +2,44 @@
 using System.Net.Http;
 using Domain.Ports.Notification;
 using Domain.Ports.Persistence;
-using Microsoft.Owin.Testing;
+using Microsoft.AspNetCore.TestHost;
+using Microsoft.Extensions.Hosting;
+using SimpleInjector;
 
 namespace Host.WebService.Client1.Tests.Unit
 {
     public class WebServiceTestFixtureBase : IDisposable
     {
-        protected IBookOrderRepository MockBookOrderRepository => _startup.MockBookOrderRepository;
-        protected IBookOrderLineConflictRepository MockBookOrderLineRepositry => _startup.MockBookOrderLineConflictRepository;
-        protected IBookSupplierGateway MockBookSupplierGateway => _startup.MockBookSupplierGateway;
-        protected TestServer Server { get; private set; }
+        protected IBookOrderRepository MockBookOrderRepository => _applicationHostBuilder.MockBookOrderRepository;
+        protected IBookOrderLineConflictRepository MockBookOrderLineRepositry => _applicationHostBuilder.MockBookOrderLineConflictRepository;
+        protected IBookSupplierGateway MockBookSupplierGateway => _applicationHostBuilder.MockBookSupplierGateway;
+        
         protected HttpClient Client { get; private set; }
 
         public WebServiceTestFixtureBase()
         {
-            _startup = new TestableStartup();
+            Container container = new Container();
+            
+            _applicationHostBuilder = new TestApplicationHostBuilder(new []{ "" }, "Host.WebService.Client1.Tests.Unit", container);
         }
 
         public void StartServer()
         {
-            Server = TestServer.Create(_startup.Configuration);
-            Client = Server.HttpClient;
+            _host = _applicationHostBuilder.Build();
+
+            _host.StartAsync().GetAwaiter().GetResult();
+
+            Client = _host.GetTestClient();
         }
 
-        public void Dispose()
+        public async void Dispose()
         {
-            Server?.Dispose();
             Client?.Dispose();
+            await _host.StopAsync();
+            _host.Dispose();
         }
 
-        private TestableStartup _startup;
+        private TestApplicationHostBuilder _applicationHostBuilder;
+        private IHost _host;
     }
 }

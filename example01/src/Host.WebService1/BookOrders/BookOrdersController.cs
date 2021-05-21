@@ -1,13 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Web.Http;
 using AmbientContext.LogService.Serilog;
 using Domain.UseCases;
 using Domain.ValueObjects;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Infrastructure;
 
 namespace Host.WebService.Client1.BookOrders
 {
-    public class BookOrdersController : ApiController
+    [ApiController]
+    public class BookOrdersController : ControllerBase
     {
         public AmbientLogService Log { get; set; }
         private readonly AddBookTitleRequestUseCase _addBookTitleRequestUseCase;
@@ -45,14 +47,13 @@ namespace Host.WebService.Client1.BookOrders
 
         [HttpGet]
         [Route("health/instance")]
-        public IHttpActionResult HealthCheck()
+        public IStatusCodeActionResult HealthCheck()
         {
             return Ok();
         }
 
-        [HttpPost]
-        [Route("bookRequests")]
-        public IHttpActionResult CreateBookRequest([FromBody] BookTitleOrderRequest bookTitleOrderRequest)
+        [HttpPost("bookRequests")]
+        public IStatusCodeActionResult CreateBookRequest([FromBody] BookTitleOrderRequest bookTitleOrderRequest)
         {
             if (bookTitleOrderRequest == null)
                 return BadRequest();
@@ -63,12 +64,12 @@ namespace Host.WebService.Client1.BookOrders
                 bookTitleOrderRequest.Price,
                 bookTitleOrderRequest.Quantity ));
 
-            return Created<string>($"bookOrders/{bookOrderId}", null);
+            return Created($"bookOrders/{bookOrderId}", null);
         }
 
         [HttpGet]
         [Route("bookOrders")]
-        public IHttpActionResult GetBookOrders()
+        public IStatusCodeActionResult GetBookOrders()
         {
             var bookOrders = _getAllBookOrdersUseCase.Execute();
 
@@ -104,7 +105,7 @@ namespace Host.WebService.Client1.BookOrders
 
         [HttpGet]
         [Route("bookOrders/new")]
-        public IHttpActionResult GetNewBookOrders()
+        public IStatusCodeActionResult GetNewBookOrders()
         {
             var bookOrders = _getAllNewBookOrdersUseCase.Execute();
 
@@ -140,7 +141,7 @@ namespace Host.WebService.Client1.BookOrders
 
         [HttpDelete]
         [Route("bookOrders")]
-        public IHttpActionResult DeleteBookOrders()
+        public IStatusCodeActionResult DeleteBookOrders()
         {
             try
             {
@@ -149,14 +150,14 @@ namespace Host.WebService.Client1.BookOrders
             catch (Exception ex)
             {
                 Log.Error(ex ,"Exception occurred while deleting book orders");
-                return InternalServerError();
+                return StatusCode(500);
             }
             return Ok();
         }
 
         [HttpPost]
         [Route("bookOrders/{bookOrderId}/approve")]
-        public IHttpActionResult ApproveBookOrder(Guid bookOrderId)
+        public IStatusCodeActionResult ApproveBookOrder(Guid bookOrderId)
         {
             if (bookOrderId == Guid.Empty)
                 return BadRequest();
@@ -167,7 +168,7 @@ namespace Host.WebService.Client1.BookOrders
 
         [HttpPost]
         [Route("bookOrders/{bookOrderId}/send")]
-        public IHttpActionResult SendBookOrder(Guid bookOrderId)
+        public IStatusCodeActionResult SendBookOrder(Guid bookOrderId)
         {
             if (bookOrderId == Guid.Empty)
                 return BadRequest();
@@ -178,7 +179,7 @@ namespace Host.WebService.Client1.BookOrders
 
         [HttpPost]
         [Route("bookOrders/{bookOrderId}/supplierUpdate")]
-        public IHttpActionResult ReceiveSupplierUpdate([FromUri] Guid bookOrderId, [FromBody] SupplierBookOrderUpdateDto dto)
+        public IStatusCodeActionResult ReceiveSupplierUpdate([FromRoute] Guid bookOrderId, [FromBody] SupplierBookOrderUpdateDto dto)
         {
             List<SupplierBookOrderLineUpdateRequest> orderlineUpdates = new List<SupplierBookOrderLineUpdateRequest>();
 

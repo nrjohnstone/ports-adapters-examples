@@ -1,8 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
 using System.Net;
+using System.Net.Http;
+using System.Text;
 using Domain.Entities;
 using FluentAssertions;
 using Newtonsoft.Json;
@@ -23,19 +24,25 @@ namespace Host.WebService.Client1.Tests.Unit
         }
 
         [Fact]
-        public void Post_BookRequest_ShouldCreateNewBookOrder()
+        public async void Post_BookRequest_ShouldCreateNewBookOrder()
         {
             StartServer();
 
-            var result = Client.Post("bookRequests", new
+            var jsonObject = JsonConvert.SerializeObject(new
             {
                 Title = "The Maltese Falcon",
                 Supplier = "Test",
-                Price = "25.50",
+                Price = 25.50,
                 Quantity = 1
             });
+            
+            var stringContent = new StringContent(jsonObject, Encoding.UTF8, "application/json");
+            
+            // act
+            HttpResponseMessage response = await Client.PostAsync("bookRequests", stringContent);
 
-            result.StatusCode.Should().Be(HttpStatusCode.Created);
+            // assert
+            response.StatusCode.Should().Be(HttpStatusCode.Created);
 
             MockBookOrderRepository.Received(1).Store(
                 Arg.Is<BookOrder>(
