@@ -24,7 +24,7 @@ namespace Host.WebService.Client1.Tests.Unit
         }
 
         [Fact]
-        public async void Post_BookRequest_ShouldCreateNewBookOrder()
+        public async void Post_BookRequest_WhenOrderDoesNotExistForSupplier_ShouldCreateNewBookOrder()
         {
             StartServer();
 
@@ -53,6 +53,47 @@ namespace Host.WebService.Client1.Tests.Unit
                     x.OrderLines[0].Quantity == 1));
         }
 
+        [Fact]
+        public async void Post_BookRequest_WhenNewOrderExistsForSupplier_ShouldAddRequestToExistingSupplierOrder()
+        {
+            StartServer();
+
+            var bookRequest1 = JsonConvert.SerializeObject(new
+            {
+                Title = "The Maltese Falcon",
+                Supplier = "Test",
+                Price = 25.50,
+                Quantity = 1
+            });
+            
+            // add initial book for the supplier
+            var stringContent = new StringContent(bookRequest1, Encoding.UTF8, "application/json");
+            HttpResponseMessage response1 = await Client.PostAsync("bookRequests", stringContent);
+            
+            var bookRequest2 = JsonConvert.SerializeObject(new
+            {
+                Title = "Gone With the Wind",
+                Supplier = "Test2",
+                Price = 30.50,
+                Quantity = 2
+            });
+            stringContent = new StringContent(bookRequest2, Encoding.UTF8, "application/json");
+            
+            // act
+            HttpResponseMessage response2 = await Client.PostAsync("bookRequests", stringContent);
+            
+            // assert
+            response1.StatusCode.Should().Be(HttpStatusCode.Created);
+            response2.StatusCode.Should().Be(HttpStatusCode.Created);
+
+            response1.Headers.Location.ToString().Should().StartWith("bookOrders");
+            response2.Headers.Location.ToString().Should().StartWith("bookOrders");
+            
+            // TODO NJ: Need to remove mocks because as usual they are now more trouble than they are worth
+            // and replace with in memory implementation to give us the required behavior that our database
+            // implementations would
+        }
+        
         [Fact]
         public void Post_ApproveBookOrder_WhenBookOrderIsNew_ShouldApproveBookOrder()
         {
