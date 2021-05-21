@@ -29,14 +29,14 @@ This example by no means claims to be the one best way of implementing hexagonal
 
 The example uses a book order service as the domain, and the use cases that are implemented are ;
 
-* Allow users to submit book title orders from a supplier which are aggregated into a single book order
-* Allow users to approve a book order
-* Allow users to send a book order to a book wholesaler for purchase and shipping
+* Allow users to submit book title order requests from a supplier which are aggregated into a single book order for that supplier
+* Allow users to approve or reject a book order 
+* Allow users to send a book order to a supplier for purchase and shipping
 
 The work flow consists of book title orders being submitted, at some point a book order is approved and then the book order is sent
 to the supplier.
 
-Multiple clients want to run the book ordering service and each has a slightly different configuration
+Multiple customers want to run the book ordering service but each has a slightly different configuration requirements
 
 ### Client 1 ###
 
