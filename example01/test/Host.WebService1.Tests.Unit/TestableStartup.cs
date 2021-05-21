@@ -1,4 +1,5 @@
-﻿using Domain.Ports.Notification;
+﻿using Adapter.Persistence.InMemory;
+using Domain.Ports.Notification;
 using Domain.Ports.Persistence;
 using Microsoft.AspNetCore.TestHost;
 using Microsoft.Extensions.Hosting;
@@ -9,14 +10,14 @@ namespace Host.WebService.Client1.Tests.Unit
 {
     internal class TestApplicationHostBuilder : ApplicationHostBuilder
     {
-        public IBookOrderRepository MockBookOrderRepository { get; set; }
+        public IBookOrderRepository BookOrderRepository { get; set; }
         public IBookSupplierGateway MockBookSupplierGateway { get; set; }
         public IBookOrderLineConflictRepository MockBookOrderLineConflictRepository { get; set; }
 
         
         public TestApplicationHostBuilder(string[] args, string applicationName, Container container) : base(args, applicationName, container)
         {
-            MockBookOrderRepository = Substitute.For<IBookOrderRepository>();
+            BookOrderRepository = new BookOrderRepositoryInMemory();
             MockBookSupplierGateway = Substitute.For<IBookSupplierGateway>();
             MockBookOrderLineConflictRepository = Substitute.For<IBookOrderLineConflictRepository>();
             
@@ -25,7 +26,7 @@ namespace Host.WebService.Client1.Tests.Unit
 
         protected override void PreHostBuildActions(IHostBuilder hostBuilder, Container container)
         {
-            container.RegisterSingleton<IBookOrderRepository>(MockBookOrderRepository);
+            container.RegisterSingleton<IBookOrderRepository>(BookOrderRepository);
             container.RegisterSingleton<IBookOrderLineConflictRepository>(MockBookOrderLineConflictRepository);
             container.RegisterSingleton<IBookSupplierGateway>(MockBookSupplierGateway);
             

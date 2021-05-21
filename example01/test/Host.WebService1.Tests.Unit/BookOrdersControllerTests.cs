@@ -44,13 +44,14 @@ namespace Host.WebService.Client1.Tests.Unit
             // assert
             response.StatusCode.Should().Be(HttpStatusCode.Created);
 
-            MockBookOrderRepository.Received(1).Store(
-                Arg.Is<BookOrder>(
-                    x => x.Id != Guid.Empty &&
-                    x.Supplier.Equals("Test") &&
-                    x.OrderLines[0].Title.Equals("The Maltese Falcon") &&
-                    x.OrderLines[0].Price == 25.5M &&
-                    x.OrderLines[0].Quantity == 1));
+            var storedBookOrders = BookOrderRepository.GetBySupplier("Test").ToList();
+            storedBookOrders.Should().NotBeEmpty();
+            storedBookOrders.Count().Should().Be(1);
+            storedBookOrders[0].Supplier.Should().Be("Test");
+            storedBookOrders[0].State.Should().Be(BookOrderState.New);
+            storedBookOrders[0].OrderLines[0].Title.Should().Be("The Maltese Falcon");
+            storedBookOrders[0].OrderLines[0].Price.Should().Be(25.50M);
+            storedBookOrders[0].OrderLines[0].Quantity.Should().Be(1);
         }
 
         [Fact]
@@ -73,7 +74,7 @@ namespace Host.WebService.Client1.Tests.Unit
             var bookRequest2 = JsonConvert.SerializeObject(new
             {
                 Title = "Gone With the Wind",
-                Supplier = "Test2",
+                Supplier = "Test",
                 Price = 30.50,
                 Quantity = 2
             });
@@ -89,51 +90,56 @@ namespace Host.WebService.Client1.Tests.Unit
             response1.Headers.Location.ToString().Should().StartWith("bookOrders");
             response2.Headers.Location.ToString().Should().StartWith("bookOrders");
             
-            // TODO NJ: Need to remove mocks because as usual they are now more trouble than they are worth
-            // and replace with in memory implementation to give us the required behavior that our database
-            // implementations would
+            var storedBookOrders = BookOrderRepository.GetBySupplier("Test").ToList();
+            storedBookOrders.Should().NotBeEmpty();
+            storedBookOrders.Count().Should().Be(1);
+            storedBookOrders[0].Supplier.Should().Be("Test");
+            storedBookOrders[0].State.Should().Be(BookOrderState.New);
+            storedBookOrders[0].OrderLines[0].Title.Should().Be("The Maltese Falcon");
+            storedBookOrders[0].OrderLines[0].Price.Should().Be(25.50M);
+            storedBookOrders[0].OrderLines[0].Quantity.Should().Be(1);
+            storedBookOrders[0].OrderLines[1].Title.Should().Be("Gone With the Wind");
+            storedBookOrders[0].OrderLines[1].Price.Should().Be(30.50M);
+            storedBookOrders[0].OrderLines[1].Quantity.Should().Be(2);
         }
         
         [Fact]
         public void Post_ApproveBookOrder_WhenBookOrderIsNew_ShouldApproveBookOrder()
         {
-            Guid bookOrderId = Guid.NewGuid();
-            MockBookOrderRepository.Get(bookOrderId).Returns(BookOrder.CreateNew(
-                "SupplierFoo", bookOrderId));
-
+            BookOrder bookOrder = BookOrder.CreateNew("SupplierFoo", Guid.NewGuid());
+            bookOrder.State.Should().Be(BookOrderState.New);
+            BookOrderRepository.Store(bookOrder);
+            
             StartServer();
+            
+            // act
+            var result = Client.Post($"bookOrders/{bookOrder.Id}/approve", null);
 
-            var result = Client.Post($"bookOrders/{bookOrderId}/approve", null);
-
+            // assert
             result.StatusCode.Should().Be(HttpStatusCode.OK);
-            MockBookOrderRepository.Received(1).Store(
-                Arg.Is<BookOrder>(
-                    x => x.Id == bookOrderId &&
-                    x.State == BookOrderState.Approved));
+            var storedBookOrder = BookOrderRepository.Get(bookOrder.Id);
+            storedBookOrder.State.Should().Be(BookOrderState.Approved);
         }
 
         [Fact]
         public void Post_SendBookOrder_WhenBookOrderIsApproved_ShouldSendBookOrder()
         {
-            Guid bookOrderId = Guid.NewGuid();
-            var bookOrder = a.BookOrder.ForSupplier("SupplierFoo")
-                .WithId(bookOrderId)
-                .ThatIsApproved();
-
-            MockBookOrderRepository.Get(bookOrderId).Returns(bookOrder);
+            BookOrder bookOrder = BookOrder.CreateNew("SupplierFoo", Guid.NewGuid());
+            bookOrder.Approve();
+            BookOrderRepository.Store(bookOrder);
 
             StartServer();
 
-            var result = Client.Post($"bookOrders/{bookOrderId}/send", null);
+            // act
+            var result = Client.Post($"bookOrders/{bookOrder.Id}/send", null);
 
+            // assert
             result.StatusCode.Should().Be(HttpStatusCode.OK);
-            MockBookOrderRepository.Received(1).Store(
-                Arg.Is<BookOrder>(
-                    x => x.Id == bookOrderId &&
-                         x.State == BookOrderState.Sent));
+            var storedBookOrder = BookOrderRepository.Get(bookOrder.Id);
+            storedBookOrder.State.Should().Be(BookOrderState.Sent);
             MockBookSupplierGateway.Received(1).Send(
                 Arg.Is<BookOrder>(
-                    x => x.Id == bookOrderId &&
+                    x => x.Id == bookOrder.Id &&
                     x.State == BookOrderState.Sent));
         }
 
@@ -158,16 +164,19 @@ namespace Host.WebService.Client1.Tests.Unit
                 .ThatIsApproved();
 
             bookOrders.Add(bookOrder2);
-
-            MockBookOrderRepository.Get().Returns(bookOrders);
+            
+            BookOrderRepository.Store(bookOrder1);
+            BookOrderRepository.Store(bookOrder2);
 
             StartServer();
 
+            // act
             var result = Client.GetAsync("bookOrders").Result;
 
+            // assert
             result.StatusCode.Should().Be(HttpStatusCode.OK);
             var bookOrdersResponse =
-                JsonConvert.DeserializeObject<IEnumerable<BookOrderResponse>>(result.Content.ReadAsStringAsync().Result)
+                JsonConvert.DeserializeObject<IEnumerable<BookOrderResponseDto>>(result.Content.ReadAsStringAsync().Result)
                     .ToList();
 
             bookOrdersResponse.Count.Should().Be(2);
@@ -188,15 +197,15 @@ namespace Host.WebService.Client1.Tests.Unit
         }
     }
 
-    internal class BookOrderResponse
+    internal class BookOrderResponseDto
     {
         public string Supplier { get; set; }
         public string State { get; set; }
         public string Id { get; set; }
-        public IList<OrderLineResponse> OrderLines { get; set; }
+        public IList<OrderLineResponseDto> OrderLines { get; set; }
     }
 
-    internal class OrderLineResponse
+    internal class OrderLineResponseDto
     {
         public string Title { get; set; }
         public decimal Price { get; set; }

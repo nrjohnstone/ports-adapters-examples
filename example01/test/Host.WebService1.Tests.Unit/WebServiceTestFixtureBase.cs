@@ -10,7 +10,7 @@ namespace Host.WebService.Client1.Tests.Unit
 {
     public class WebServiceTestFixtureBase : IDisposable
     {
-        protected IBookOrderRepository MockBookOrderRepository => _applicationHostBuilder.MockBookOrderRepository;
+        protected IBookOrderRepository BookOrderRepository => _applicationHostBuilder.BookOrderRepository;
         protected IBookOrderLineConflictRepository MockBookOrderLineRepositry => _applicationHostBuilder.MockBookOrderLineConflictRepository;
         protected IBookSupplierGateway MockBookSupplierGateway => _applicationHostBuilder.MockBookSupplierGateway;
         
