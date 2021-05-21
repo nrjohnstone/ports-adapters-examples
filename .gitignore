@@ -217,3 +217,5 @@ FakesAssemblies/
 _Pvt_Extensions
 *.ncrunchproject
 *.ncrunchsolution
+
+/**/.idea/
