@@ -25,6 +25,20 @@ This code strives to keep itself focused on how the inside of an application, th
 
 This example by no means claims to be the one best way of implementing hexagonal architecture, but over time and working with a number of developers I find it allows the quickest path to 'groking' ports, adapters and inside / outside thinking.
 
+However, there are quite a few things that I always insist on, such as ;
+* The interfaces for ports are OWNED by the Domain and as such they live in the Domain assembly. Not another "Something.Interfaces" assembly.
+You do NOT need to share them with anything else outside of the solution so DON'T put them in seperate assemblies
+* Having the interfaces in the Domain assembly helps to ensure that implementation details (Adapters) can't leak types into the domain
+since if the Adapter is referencing the Domain assembly, it is impossible for any public types from the Adapter to be used in the Domain because, obviously,
+  that would be a circular reference.
+* Always always always have multiple Host adapters and at least an InMemory adapter. Doing this forces you to make your Domain code generic and have
+a better chance of being able to handle a different implementation should the need arise, and it's not that much work for the benefit.
+* Do not share bloody DTO classes between different assemblies. You doing it because you believe you are being "DRY" and it currently looks the same
+but all you are doing is now coupling two different things (eg a WebApi and a WPF UI) to the same DTO classes. For the sake of writing a bit
+  of extra mapping code (which is the easiest to write and test, but not the most thrilling I agree) you can have each Host/Adapter with their
+  own DTO types and make them internal to the assembly as well which indicates to everyone that they are an implementation detail.
+* Use the internal keyword ALL THE TIME. Do not make classes public unless they should be used by another assembly.
+
 ## The Sample Space ##
 
 The example uses a book order service as the domain, and the use cases that are implemented are ;
