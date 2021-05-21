@@ -24,10 +24,13 @@ namespace Domain.UseCases
         {
             Logger.Information($"Execute {nameof(AddBookTitleRequestUseCase)} for Title: {{Title}}", bookTitleRequest.Title);
 
+            // Check for any existing new orders for the supplier
             IEnumerable<BookOrder> bookOrders = _bookOrderRepository.GetBySupplier(
                 bookTitleRequest.Supplier, BookOrderState.New);
+            
             var bookOrder = bookOrders.FirstOrDefault();
 
+            // Create a new book order if none already exists for this supplier
             if (bookOrder == null)
             {
                 bookOrder = BookOrder.CreateNew(
