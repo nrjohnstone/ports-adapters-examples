@@ -10,7 +10,7 @@ using Newtonsoft.Json;
 using NSubstitute;
 using Xunit;
 
-namespace Host.WebService.Client1.Tests.Unit
+namespace HostApp.WebService.Client1.Tests.Unit
 {
     public class BookOrdersControllerTests : WebServiceTestFixtureBase
     {

@@ -1,0 +1,26 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>    
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
+    <RootNamespace>HostApp.WebService.Client1.Tests.Unit</RootNamespace>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="fluentassertions" Version="5.10.0" />
+    <PackageReference Include="Microsoft.AspNetCore.TestHost" Version="3.1.1" />
+    <PackageReference Include="Microsoft.Extensions.Configuration" Version="3.1.1" />
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.2.0" />
+    <PackageReference Include="NSubstitute" Version="4.2.2" />
+    <PackageReference Include="xunit" Version="2.4.0" />
+    <PackageReference Include="xunit.runner.visualstudio" Version="2.4.0" />
+  </ItemGroup>
+
+  <ItemGroup>        
+    <ProjectReference Include="..\..\src\Adapter.Persistence.InMemory\Adapter.Persistence.InMemory.csproj" />        
+    <ProjectReference Include="..\..\src\Core\Domain.csproj" />        
+    <ProjectReference Include="..\..\src\Host.WebService1\HostApp.WebService.Client1.csproj" />        
+    <ProjectReference Include="..\Domain.Builders\Domain.Builders.csproj" />
+  </ItemGroup>
+ 
+</Project>

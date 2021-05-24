@@ -1,7 +1,8 @@
 ﻿using System;
 using System.Text.Json.Serialization;
-using Adapter.Notification.Email;
+using Adapter.Notification.RabbitMq;
 using Adapter.Persistence.MySql;
+using Adapter.Trigger.RabbitMq;
 using Domain.UseCases;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -12,7 +13,7 @@ using SimpleInjector;
 using SimpleInjector.Lifestyles;
 using Swashbuckle.AspNetCore.SwaggerUI;
 
-namespace HostApp.WebService.Client1
+namespace HostApp.WebService.Client2
 {
     /// <summary>
     /// Building the IHost using this approach allows for a lot more testing flexibility than using the standard
@@ -23,13 +24,15 @@ namespace HostApp.WebService.Client1
         private readonly Container _container;
         private readonly string[] _args;
         private readonly string _applicationName;
+        private Action _triggerAdapterShutdown = () => { };
+        private Action _notificationAdapterShutdown = () => { };
+        private TriggerAdapter _triggerAdapter;
 
         public ApplicationHostBuilder(string[] args, string applicationName, Container container)
         {
             if (container == null) throw new ArgumentNullException(nameof(container));
             _container = container;
             _args = args;
-            
             _applicationName = applicationName;
             
             _container.Options.DefaultScopedLifestyle = new AsyncScopedLifestyle();
@@ -48,6 +51,7 @@ namespace HostApp.WebService.Client1
             
             RegisterPersistenceAdapter();
             RegisterNotificationAdapter();
+            RegisterTriggerAdapter();
             RegisterDomain();
 
             PreHostBuildActions(hostBuilder, _container);
@@ -121,6 +125,8 @@ namespace HostApp.WebService.Client1
             {
                 endpoints.MapControllers();
             });
+            
+            AttachUseCasesToTriggers();
         }
         
         private void RegisterDomain()
@@ -155,11 +161,24 @@ namespace HostApp.WebService.Client1
         
         protected virtual void RegisterNotificationAdapter()
         {
-            var notificationAdapter = new Adapter.Notification.Email.NotificationAdapter(
-                new NotificationAdapterSettings(
-                    "localhost", 1025, bookSupplierEmail: "BookSupplierGateway@fakedomain.com"));
+            var notificationAdapter = new NotificationAdapter();
             notificationAdapter.Initialize();
             notificationAdapter.Register(_container);
+            _notificationAdapterShutdown = () => { notificationAdapter.Shutdown(); };
+
+        }
+
+        private void RegisterTriggerAdapter()
+        {
+            _triggerAdapter = new TriggerAdapter();
+            _triggerAdapter.Initialize();
+            _triggerAdapterShutdown = () => { _triggerAdapter.Shutdown(); };
+        }
+        
+        private void AttachUseCasesToTriggers()
+        {
+            // Wire use cases from domain to be triggered from RabbitMq messages
+            _triggerAdapter.Handle(_container.GetInstance<AddBookTitleRequestUseCase>());
         }
         
         private void OnShutdown()

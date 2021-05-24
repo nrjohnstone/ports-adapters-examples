@@ -2,18 +2,18 @@ using System.Reflection;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 
-[assembly: AssemblyTitle("HostApp.WebService1.Tests.Unit")]
+[assembly: AssemblyTitle("Domain.Tests.Unit")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("HostApp.WebService1.Tests.Unit")]
+[assembly: AssemblyProduct("Domain.Tests.Unit")]
 [assembly: AssemblyCopyright("Copyright ©  2017")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
 [assembly: ComVisible(false)]
 
-[assembly: Guid("8cab6ae1-0317-4d8f-afe2-92b1684e34e5")]
+[assembly: Guid("222627b0-b4d5-4c36-9d57-d9e8d6baab28")]
 
 // [assembly: AssemblyVersion("1.0.*")]
 [assembly: AssemblyVersion("1.0.0.0")]
