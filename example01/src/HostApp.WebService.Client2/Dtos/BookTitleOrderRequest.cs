@@ -1,6 +1,6 @@
-namespace Host.WebService.Client2.BookOrders
+namespace HostApp.WebService.Client2.Dtos
 {
-    public class BookTitleOrderRequest
+    internal class BookTitleOrderRequest
     {
         public string Title { get; set; }
         public string Supplier { get; set; }

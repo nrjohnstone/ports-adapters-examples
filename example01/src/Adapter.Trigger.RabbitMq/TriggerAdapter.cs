@@ -39,6 +39,12 @@ namespace Adapter.Trigger.RabbitMq
             }
         }
 
+        /// <summary>
+        /// Attach an instance of the use case from the domain that will handle add book title requests
+        /// from the rabbit mq containing book order messages
+        /// </summary>
+        /// <param name="addBookTitleRequestUseCase"></param>
+        /// <exception cref="InvalidOperationException"></exception>
         public void Handle(AddBookTitleRequestUseCase addBookTitleRequestUseCase)
         {
             if (!_initialized)

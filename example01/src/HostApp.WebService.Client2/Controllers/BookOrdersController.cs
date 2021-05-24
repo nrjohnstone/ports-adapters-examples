@@ -1,12 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Web.Http;
 using Domain.UseCases;
-using Domain.ValueObjects;
+using HostApp.WebService.Client2.Dtos;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Infrastructure;
 
-namespace Host.WebService.Client2.BookOrders
+namespace HostApp.WebService.Client2.Controllers
 {
-    public class BookOrdersController : ApiController
+    [ApiController]
+    public class BookOrdersController : ControllerBase
     {
         private readonly ApproveBookOrderUseCase _approveBookOrderUseCase;
         private readonly SendBookOrderUseCase _sendBookOrderUseCase;
@@ -30,14 +32,14 @@ namespace Host.WebService.Client2.BookOrders
 
         [HttpGet]
         [Route("health/instance")]
-        public IHttpActionResult HealthCheck()
+        public IStatusCodeActionResult HealthCheck()
         {
             return Ok();
         }
        
         [HttpGet]
         [Route("bookOrders")]
-        public IHttpActionResult GetBookOrders()
+        public IStatusCodeActionResult GetBookOrders()
         {
             var bookOrders = _getAllBookOrdersUseCase.Execute();
 
@@ -73,7 +75,7 @@ namespace Host.WebService.Client2.BookOrders
 
         [HttpDelete]
         [Route("bookOrders")]
-        public IHttpActionResult DeleteBookOrders()
+        public IStatusCodeActionResult DeleteBookOrders()
         {
             try
             {
@@ -81,14 +83,14 @@ namespace Host.WebService.Client2.BookOrders
             }
             catch (Exception)
             {
-                return InternalServerError();
+                return new StatusCodeResult(500);
             }
             return Ok();
         }
 
         [HttpPost]
         [Route("bookOrders/{bookOrderId}/approve")]
-        public IHttpActionResult ApproveBookOrder(Guid bookOrderId)
+        public IStatusCodeActionResult ApproveBookOrder(Guid bookOrderId)
         {
             if (bookOrderId == Guid.Empty)
                 return BadRequest();
@@ -99,7 +101,7 @@ namespace Host.WebService.Client2.BookOrders
 
         [HttpPost]
         [Route("bookOrders/{bookOrderId}/send")]
-        public IHttpActionResult SendBookOrder(Guid bookOrderId)
+        public IStatusCodeActionResult SendBookOrder(Guid bookOrderId)
         {
             if (bookOrderId == Guid.Empty)
                 return BadRequest();

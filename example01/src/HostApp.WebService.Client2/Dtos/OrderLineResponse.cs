@@ -1,6 +1,6 @@
-namespace Host.WebService.Client2.BookOrders
+namespace HostApp.WebService.Client2.Dtos
 {
-    public class OrderLineResponse
+    internal class OrderLineResponse
     {
         public string Title { get; set; }
         public decimal Price { get; set; }

@@ -1,8 +1,8 @@
 using System.Collections.Generic;
 
-namespace Host.WebService.Client2.BookOrders
+namespace HostApp.WebService.Client2.Dtos
 {
-    public class BookOrderResponse
+    internal class BookOrderResponse
     {
         public string Supplier { get; set; }
         public string State { get; set; }
