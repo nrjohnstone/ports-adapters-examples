@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.TestHost;
 using Microsoft.Extensions.Hosting;
 using SimpleInjector;
 
-namespace Host.WebService.Client1.Tests.Unit
+namespace HostApp.WebService.Client1.Tests.Unit
 {
     public class WebServiceTestFixtureBase : IDisposable
     {
@@ -20,7 +20,7 @@ namespace Host.WebService.Client1.Tests.Unit
         {
             Container container = new Container();
             
-            _applicationHostBuilder = new TestApplicationHostBuilder(new []{ "" }, "Host.WebService.Client1.Tests.Unit", container);
+            _applicationHostBuilder = new TestApplicationHostBuilder(new []{ "" }, "HostApp.WebService.Client1.Tests.Unit", container);
         }
 
         public void StartServer()

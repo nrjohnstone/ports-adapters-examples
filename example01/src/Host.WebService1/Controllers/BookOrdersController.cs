@@ -3,10 +3,11 @@ using System.Collections.Generic;
 using AmbientContext.LogService.Serilog;
 using Domain.UseCases;
 using Domain.ValueObjects;
+using HostApp.WebService.Client1.Dtos;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Infrastructure;
 
-namespace Host.WebService.Client1.BookOrders
+namespace HostApp.WebService.Client1.Controllers
 {
     [ApiController]
     public class BookOrdersController : ControllerBase

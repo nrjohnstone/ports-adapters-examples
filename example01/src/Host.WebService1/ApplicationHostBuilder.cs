@@ -1,16 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Net;
-using System.Reflection;
 using System.Text.Json.Serialization;
 using Adapter.Notification.Email;
 using Adapter.Persistence.MySql;
 using Domain.UseCases;
-using Host.WebService.Client1.BookOrders;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Server.Kestrel;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
@@ -18,13 +12,13 @@ using SimpleInjector;
 using SimpleInjector.Lifestyles;
 using Swashbuckle.AspNetCore.SwaggerUI;
 
-namespace Host.WebService.Client1
+namespace HostApp.WebService.Client1
 {
     /// <summary>
     /// Building the IHost using this approach allows for a lot more testing flexibility than using the standard
     /// Startup.cs file that is demonstrated all over the web 
     /// </summary>
-    public class ApplicationHostBuilder
+    internal class ApplicationHostBuilder
     {
         private readonly Container _container;
         private readonly string[] _args;

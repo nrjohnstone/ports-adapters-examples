@@ -3,6 +3,7 @@
   <PropertyGroup>    
     <TargetFramework>netcoreapp3.1</TargetFramework>
     <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
+    <RootNamespace>HostApp.WebService.Client1.Tests.Unit</RootNamespace>
   </PropertyGroup>
 
   <ItemGroup>
@@ -18,7 +19,7 @@
   <ItemGroup>        
     <ProjectReference Include="..\..\src\Adapter.Persistence.InMemory\Adapter.Persistence.InMemory.csproj" />        
     <ProjectReference Include="..\..\src\Core\Domain.csproj" />        
-    <ProjectReference Include="..\..\src\Host.WebService1\Host.WebService.Client1.csproj" />        
+    <ProjectReference Include="..\..\src\Host.WebService1\HostApp.WebService.Client1.csproj" />        
     <ProjectReference Include="..\Domain.Builders\Domain.Builders.csproj" />
   </ItemGroup>
  

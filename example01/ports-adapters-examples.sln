@@ -13,7 +13,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Adapter.Persistence.Test", 
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{9234AD06-323F-461D-AC33-43C22EFF20B7}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Core.Tests.Unit", "test\Core.Tests.Unit\Core.Tests.Unit.csproj", "{222627B0-B4D5-4C36-9D57-D9E8D6BAAB28}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Domain.Tests.Unit", "test\Domain.Tests.Unit\Domain.Tests.Unit.csproj", "{222627B0-B4D5-4C36-9D57-D9E8D6BAAB28}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Adapter.Notification.Test", "src\Adapter.Notification.Test\Adapter.Notification.Test.csproj", "{E8989F66-5BA3-4576-9F5F-4A9F26EDF5E3}"
 EndProject
@@ -31,7 +31,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Adapter.Notification.Rabbit
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Adapter.Notification.Email", "src\Adapter.Notification.Email\Adapter.Notification.Email.csproj", "{BF17C870-A263-4D73-A1C2-BE17C642F0BF}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Host.WebService.Client1", "src\Host.WebService1\Host.WebService.Client1.csproj", "{11455D71-79B1-4F03-8568-734A50B946A8}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HostApp.WebService.Client1", "src\Host.WebService1\HostApp.WebService.Client1.csproj", "{11455D71-79B1-4F03-8568-734A50B946A8}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Adapter.Persistence.CouchDb", "src\Adapter.Persistence.CouchDb\Adapter.Persistence.CouchDb.csproj", "{F9B62C54-9131-4606-8E44-6118D576FEE4}"
 EndProject
@@ -39,7 +39,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Adapter.Persistence.CouchDb
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Host.WebService.Client3", "src\Host.WebService3\Host.WebService.Client3.csproj", "{941768B7-F35F-4F0F-A4CC-E5BE61183D68}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Host.WebService.Client1.Tests.Unit", "test\Host.WebService1.Tests.Unit\Host.WebService.Client1.Tests.Unit.csproj", "{8CAB6AE1-0317-4D8F-AFE2-92B1684E34E5}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HostApp.WebService.Client1.Tests.Unit", "test\Host.WebService1.Tests.Unit\HostApp.WebService.Client1.Tests.Unit.csproj", "{8CAB6AE1-0317-4D8F-AFE2-92B1684E34E5}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Adapter.Trigger.Csv", "src\Adapter.Trigger.Csv\Adapter.Trigger.Csv.csproj", "{2FAC930D-F9AC-45BB-9C48-1EFE46BA8278}"
 EndProject

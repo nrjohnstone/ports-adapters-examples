@@ -1,9 +1,8 @@
-﻿using System;
-using Microsoft.Extensions.Hosting;
+﻿using Microsoft.Extensions.Hosting;
 using Serilog;
 using SimpleInjector;
 
-namespace Host.WebService.Client1
+namespace HostApp.WebService.Client1
 {
     public class Program
     {
@@ -15,7 +14,7 @@ namespace Host.WebService.Client1
             
             Container container = new Container();
 
-            using (_host = new ApplicationHostBuilder(args, "Host.WebService.Client1",  container).Build())
+            using (_host = new ApplicationHostBuilder(args, "HostApp.WebService.Client1",  container).Build())
             {
                 // Use "Start" and "WaitForShutdown" instead of "Run" as this handles being stopped
                 // from a container and allow the CloseAndFlush to be called

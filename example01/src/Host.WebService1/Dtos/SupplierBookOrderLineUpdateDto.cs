@@ -1,6 +1,6 @@
 using System;
 
-namespace Host.WebService.Client1.BookOrders
+namespace HostApp.WebService.Client1.Dtos
 {
     public class SupplierBookOrderLineUpdateDto
     {

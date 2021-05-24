@@ -1,6 +1,6 @@
 ﻿using Domain.Builders;
 
-namespace Host.WebService.Client1.Tests.Unit
+namespace HostApp.WebService.Client1.Tests.Unit
 {
     internal static class a
     {

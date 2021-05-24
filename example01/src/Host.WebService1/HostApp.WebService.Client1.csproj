@@ -3,6 +3,7 @@
   <PropertyGroup>
     <TargetFramework>netcoreapp3.1</TargetFramework>
     <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
+    <RootNamespace>HostApp.WebService.Client1</RootNamespace>
   </PropertyGroup>
 
   <ItemGroup>
