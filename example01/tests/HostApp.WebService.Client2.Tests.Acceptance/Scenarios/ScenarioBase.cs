@@ -6,6 +6,7 @@ using FluentAssertions;
 using HostApp.WebService.Client2.Tests.Acceptance.Dtos;
 using Newtonsoft.Json;
 using RabbitMQ.Client;
+using RabbitMQ.Client.Framing.Impl;
 using RestSharp;
 
 namespace HostApp.WebService.Client2.Tests.Acceptance.Scenarios
@@ -45,6 +46,46 @@ namespace HostApp.WebService.Client2.Tests.Acceptance.Scenarios
             }
         }
         
+        protected BookOrderResponseDto GetBookOrderMessageFromSupplierQueue()
+        {
+            using (var connection = _connectionFactory.CreateConnection())
+            {
+                var model = connection.CreateModel();
+                var message = model.BasicGet(RabbitMqConstants.SupplierQueueName, true);
+
+                var messageString = Encoding.Default.GetString(message.Body);
+                return JsonConvert.DeserializeObject<BookOrderResponseDto>(messageString);
+            }
+        }
+
+        protected void InitializeSupplierQueue()
+        {
+            DeclareSupplierQueue();
+            BindQueueToSupplierExchange();
+        }
+        
+        private void BindQueueToSupplierExchange()
+        {
+            using (var connection = _connectionFactory.CreateConnection())
+            {
+                using (var channel = connection.CreateModel())
+                {
+                    channel.QueueBind(queue: RabbitMqConstants.SupplierQueueName, exchange: RabbitMqConstants.SupplierExchangeName, routingKey: RabbitMqConstants.SupplierQueueName);
+                }
+            }
+        }
+
+        private void DeclareSupplierQueue()
+        {
+            using (var connection = _connectionFactory.CreateConnection())
+            {
+                using (var channel = connection.CreateModel())
+                {
+                    channel.QueueDeclare(RabbitMqConstants.SupplierQueueName, durable:false, exclusive: false, autoDelete:true);
+                }    
+            }
+        }
+        
         protected static RestClient GetRestClient()
         {
             RestClient client = new RestClient("http://localhost:10009");
@@ -66,5 +107,11 @@ namespace HostApp.WebService.Client2.Tests.Acceptance.Scenarios
             return bookOrderResponseDto;
         }
 
+    }
+    
+    internal class RabbitMqConstants
+    {
+        public const string SupplierExchangeName = "bookorder.supplier";
+        public const string SupplierQueueName = "bookorder.supplier";
     }
 }

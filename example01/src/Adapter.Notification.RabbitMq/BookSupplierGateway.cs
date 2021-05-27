@@ -3,6 +3,7 @@ using System.Text;
 using Domain.Entities;
 using Domain.Ports.Notification;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Converters;
 using RabbitMQ.Client;
 using RabbitMQ.Client.Framing;
 
@@ -22,8 +23,8 @@ namespace Adapter.Notification.RabbitMq
         {
             using (var channel = _connection.CreateModel())
             {
-                byte[] body = Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(bookOrder));
-                channel.BasicPublish(RabbitMqConstants.SupplierExchangeName, String.Empty, null, body);
+                byte[] body = Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(bookOrder, new StringEnumConverter()));
+                channel.BasicPublish(RabbitMqConstants.SupplierExchangeName, RabbitMqConstants.SupplierQueueName, null, body);
             }
         }
     }

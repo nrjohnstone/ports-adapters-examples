@@ -2,6 +2,7 @@
 {
     internal class RabbitMqConstants
     {
-        public const string SupplierExchangeName = "supplierbookorder";
+        public const string SupplierExchangeName = "bookorder.supplier";
+        public const string SupplierQueueName = "bookorder.supplier";
     }
 }

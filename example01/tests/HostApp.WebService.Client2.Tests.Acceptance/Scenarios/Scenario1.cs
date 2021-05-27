@@ -12,11 +12,11 @@ namespace HostApp.WebService.Client2.Tests.Acceptance.Scenarios
 {
     /// <summary>
     /// Validate the happy path for Client 2
-    /// * Create a new book order by sending a book title request from a new supplier
-    /// * Add to an existing book order by sending a book title request from a supplier with an existing book order
-    /// * Create a second book order by sending a book title request from a different supplier
-    /// * Approve a book order that is in the New state
-    /// * Send a book order that is in the Approved state
+    /// <br/> * Create a new book order by sending a book title request from a supplier that does not already have a new order
+    /// <br/> * Add to an existing "new" book order by sending a book title request from a supplier with an existing "new" book order
+    /// <br/> * Create a second book order by sending a book title request from a different supplier
+    /// <br/> * Approve a book order that is in the New state
+    /// <br/> * Send a book order that is in the Approved state
     /// </summary>
     internal class Scenario1 : ScenarioBase
     {
@@ -44,9 +44,10 @@ namespace HostApp.WebService.Client2.Tests.Acceptance.Scenarios
                 ApproveBookOrderForSupplier1();
                 VerifyBookOrderForSupplier1IsApproved();
 
+                ConnectToSupplierQueue();
                 SendBookOrderForSupplier1();
                 VerifyBookOrderForSupplier1IsSent();
-
+                VerifyBookOrderMessageForSupplier1IsSent();
             }
             catch (Exception ex)
             {
@@ -55,6 +56,34 @@ namespace HostApp.WebService.Client2.Tests.Acceptance.Scenarios
             }
 
             TestPassed();
+        }
+        
+        /// <summary>
+        /// Need to create a queue and attach it to the correct exchange with the right routing key to obtain the message
+        /// that is sent to suppliers when a book is to be ordered
+        /// </summary>
+        private void ConnectToSupplierQueue()
+        {
+            InitializeSupplierQueue();
+        }
+
+        private void VerifyBookOrderMessageForSupplier1IsSent()
+        {
+            var supplierBookOrderDto = GetBookOrderMessageFromSupplierQueue();
+            
+            // Assert that the book order message on the supplier queue has the expected values
+            supplierBookOrderDto.Id.Should().NotBeEmpty();
+            supplierBookOrderDto.Supplier.Should().Be(_supplier1Name);
+            supplierBookOrderDto.OrderLines.Count().Should().Be(2);
+            supplierBookOrderDto.OrderLines.Should().ContainSingle(
+                x => x.Title == "The Matrix" &&
+                     x.Price == 20 &&
+                     x.Quantity == 2);
+            supplierBookOrderDto.OrderLines.Should().ContainSingle(
+                x => x.Title == "A Warm Summers Evening" &&
+                     x.Price == 10 &&
+                     x.Quantity == 1);
+            supplierBookOrderDto.State.Should().Be("Sent");
         }
 
         private void VerifyBookOrderForSupplier1IsSent()
@@ -75,6 +104,10 @@ namespace HostApp.WebService.Client2.Tests.Acceptance.Scenarios
                      x.Quantity == 1);
         }
 
+        /// <summary>
+        /// POST to the REST endpoint of the API to execute the "Send" business logic
+        /// for a book order that is approved
+        /// </summary>
         private void SendBookOrderForSupplier1()
         {
             RestClient client = GetRestClient();
@@ -91,6 +124,10 @@ namespace HostApp.WebService.Client2.Tests.Acceptance.Scenarios
             response.IsSuccessful.Should().BeTrue();
         }
 
+        /// <summary>
+        /// Retrieve the book order for Supplier 1 and verify that the order contains the expected values
+        /// and the state of the order is "Approved"
+        /// </summary>
         private void VerifyBookOrderForSupplier1IsApproved()
         {
             var bookOrder = GetBookOrderForSupplier(_supplier1Name);
@@ -109,6 +146,10 @@ namespace HostApp.WebService.Client2.Tests.Acceptance.Scenarios
                      x.Quantity == 1);
         }
 
+        /// <summary>
+        /// POST to the REST endpoint of the API to execute the "Approve" business logic
+        /// for a book order that is new
+        /// </summary>
         private void ApproveBookOrderForSupplier1()
         {
             RestClient client = GetRestClient();
