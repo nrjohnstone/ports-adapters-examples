@@ -11,7 +11,6 @@ namespace HostApp.WebService.Client1.Tests.Unit
     public class WebServiceTestFixtureBase : IDisposable
     {
         protected IBookOrderRepository BookOrderRepository => _applicationHostBuilder.BookOrderRepository;
-        protected IBookOrderLineConflictRepository MockBookOrderLineRepositry => _applicationHostBuilder.MockBookOrderLineConflictRepository;
         protected IBookSupplierGateway MockBookSupplierGateway => _applicationHostBuilder.MockBookSupplierGateway;
         
         protected HttpClient Client { get; private set; }

@@ -31,7 +31,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Adapter.Notification.Rabbit
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Adapter.Notification.Email", "src\Adapter.Notification.Email\Adapter.Notification.Email.csproj", "{BF17C870-A263-4D73-A1C2-BE17C642F0BF}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HostApp.WebService.Client1", "src\Host.WebService1\HostApp.WebService.Client1.csproj", "{11455D71-79B1-4F03-8568-734A50B946A8}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HostApp.WebService.Client1", "src\HostApp.WebService.Client1\HostApp.WebService.Client1.csproj", "{11455D71-79B1-4F03-8568-734A50B946A8}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Adapter.Persistence.CouchDb", "src\Adapter.Persistence.CouchDb\Adapter.Persistence.CouchDb.csproj", "{F9B62C54-9131-4606-8E44-6118D576FEE4}"
 EndProject
