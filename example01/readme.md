@@ -34,6 +34,11 @@ Multiple customers want to run the book ordering service but each has a slightly
 * wants to use a message queue (RabbitMq) to notify their book wholesaler of their orders when sending
 * wants to store their state in a CouchDb document database
 
+## Dependency Diagram
+A diagram that depicts the overall references between the assemblies is below
+
+![](docs/DependencyDiagram.png)
+
 ## Testing ##
 This repository also contains various examples of unit and integration testing.
 
