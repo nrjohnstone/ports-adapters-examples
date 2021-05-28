@@ -17,7 +17,7 @@
   <ItemGroup>
     <ProjectReference Include="..\Adapter.Notification.Email\Adapter.Notification.Email.csproj" />
     <ProjectReference Include="..\Adapter.Notification.RabbitMq\Adapter.Notification.RabbitMq.csproj" />
-    <ProjectReference Include="..\Adapter.Notification.Test\Adapter.Notification.Test.csproj" />
+    <ProjectReference Include="..\Adapter.Notification.InMemory\Adapter.Notification.InMemory.csproj" />
     <ProjectReference Include="..\Adapter.Persistence.MySql\Adapter.Persistence.MySql.csproj" />
     <ProjectReference Include="..\Adapter.Persistence.Test\Adapter.Persistence.Test.csproj" />
     <ProjectReference Include="..\Adapter.Trigger.RabbitMq\Adapter.Trigger.RabbitMq.csproj" />
