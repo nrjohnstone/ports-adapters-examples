@@ -1,7 +1,7 @@
 ﻿using Domain.Ports.Notification;
 using SimpleInjector;
 
-namespace Adapter.Notification.Test
+namespace Adapter.Notification.InMemory
 {
     public class NotificationAdapter
     {
@@ -17,7 +17,7 @@ namespace Adapter.Notification.Test
             if (!_initialized)
                 throw new AdpaterNotInitializedException();
 
-            container.Register<IBookSupplierGateway, BookSupplierGateway>();
+            container.Register<IBookSupplierGateway, BookSupplierGatewayInMemory>();
         }
     }
 }

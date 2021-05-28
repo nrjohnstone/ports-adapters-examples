@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Runtime.Serialization;
 
-namespace Adapter.Notification.Test
+namespace Adapter.Notification.InMemory
 {
     internal class AdpaterNotInitializedException : Exception
     {

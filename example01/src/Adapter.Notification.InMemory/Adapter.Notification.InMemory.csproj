@@ -3,7 +3,7 @@
   <PropertyGroup>    
     <TargetFramework>netstandard2.0</TargetFramework>
     <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
-    <RootNamespace>Adapter.Notification.Test</RootNamespace>
+    <RootNamespace>Adapter.Notification.InMemory</RootNamespace>
   </PropertyGroup>
 
   <ItemGroup>

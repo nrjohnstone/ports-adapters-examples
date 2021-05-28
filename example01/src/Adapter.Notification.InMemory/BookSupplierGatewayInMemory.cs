@@ -2,9 +2,9 @@
 using Domain.Entities;
 using Domain.Ports.Notification;
 
-namespace Adapter.Notification.Test
+namespace Adapter.Notification.InMemory
 {
-    public class BookSupplierGateway : IBookSupplierGateway
+    public class BookSupplierGatewayInMemory : IBookSupplierGateway
     {
         public List<BookOrder> SentBookOrders { get; } = new List<BookOrder>();
 

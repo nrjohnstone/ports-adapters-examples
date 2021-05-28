@@ -1,5 +1,5 @@
 ﻿using System;
-using Adapter.Notification.Test;
+using Adapter.Notification.InMemory;
 using Adapter.Persistence.Test;
 using Core.Tests.Unit.Helpers;
 using Domain.Entities;
@@ -14,17 +14,17 @@ namespace Core.Tests.Unit
     public class SendBookOrderUseCaseTests
     {
         private readonly IBookOrderRepository _bookOrderRepository;
-        private readonly BookSupplierGateway _bookSupplierGateway;
+        private readonly BookSupplierGatewayInMemory _bookSupplierGatewayInMemory;
 
         public SendBookOrderUseCaseTests()
         {
             _bookOrderRepository = new BookOrderRepository();
-            _bookSupplierGateway = new BookSupplierGateway();
+            _bookSupplierGatewayInMemory = new BookSupplierGatewayInMemory();
         }
 
         private SendBookOrderUseCase CreateSut()
         {
-            return new SendBookOrderUseCase(_bookOrderRepository, _bookSupplierGateway);
+            return new SendBookOrderUseCase(_bookOrderRepository, _bookSupplierGatewayInMemory);
         }
 
         [Fact]
@@ -37,7 +37,7 @@ namespace Core.Tests.Unit
 
             sut.Execute(bookOrder.Id);
 
-            _bookSupplierGateway.SentBookOrders.Should().Contain(bookOrder);
+            _bookSupplierGatewayInMemory.SentBookOrders.Should().Contain(bookOrder);
         }
 
         [Theory]

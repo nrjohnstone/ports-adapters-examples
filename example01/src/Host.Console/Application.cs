@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Linq;
 using System.Threading;
+using Adapter.Notification.InMemory;
 using Adapter.Persistence.MySql;
 using Adapter.Trigger.Test;
 using Domain.Entities;
@@ -100,7 +101,7 @@ namespace Host.Console
         {
             if (_settings.NotificationAdapter == "Test")
             {
-                var notificationAdapter = new Adapter.Notification.Test.NotificationAdapter();
+                var notificationAdapter = new NotificationAdapter();
                 notificationAdapter.Initialize();
                 notificationAdapter.Register(Container);
                 _notificationAdapterShutdown = () => { };

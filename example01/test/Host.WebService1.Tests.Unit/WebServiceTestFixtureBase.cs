@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Net.Http;
+using Adapter.Notification.InMemory;
+using Adapter.Persistence.InMemory;
 using Domain.Ports.Notification;
 using Domain.Ports.Persistence;
 using Microsoft.AspNetCore.TestHost;
@@ -10,9 +12,15 @@ namespace HostApp.WebService.Client1.Tests.Unit
 {
     public class WebServiceTestFixtureBase : IDisposable
     {
-        protected IBookOrderRepository BookOrderRepository => _applicationHostBuilder.BookOrderRepository;
-        protected IBookSupplierGateway MockBookSupplierGateway => _applicationHostBuilder.MockBookSupplierGateway;
-        
+        protected BookOrderRepositoryInMemory BookOrderRepositoryInMemory => _applicationHostBuilder.BookOrderRepositoryInMemory;
+        protected BookSupplierGatewayInMemory BookSupplierGatewayInMemory => _applicationHostBuilder.BookSupplierGatewayInMemory;
+
+        /// <summary>
+        /// Allow tests to override any default registrations eg. replace InMemory instance with a mock for throwing exceptions
+        /// or add extra ones
+        /// </summary>
+        protected Action<Container> TestContainerRegistrations = container => { };
+            
         protected HttpClient Client { get; private set; }
 
         public WebServiceTestFixtureBase()
@@ -24,6 +32,8 @@ namespace HostApp.WebService.Client1.Tests.Unit
 
         public void StartServer()
         {
+            _applicationHostBuilder.TestContainerRegistrations = TestContainerRegistrations;
+            
             _host = _applicationHostBuilder.Build();
 
             _host.StartAsync().GetAwaiter().GetResult();

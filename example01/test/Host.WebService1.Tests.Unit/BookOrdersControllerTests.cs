@@ -5,9 +5,13 @@ using System.Net;
 using System.Net.Http;
 using System.Text;
 using Domain.Entities;
+using Domain.Ports.Persistence;
 using FluentAssertions;
+using HostApp.WebService.Client1.Tests.Unit.Dtos;
 using Newtonsoft.Json;
 using NSubstitute;
+using NSubstitute.Extensions;
+using NSubstitute.ReceivedExtensions;
 using Xunit;
 
 namespace HostApp.WebService.Client1.Tests.Unit
@@ -44,7 +48,7 @@ namespace HostApp.WebService.Client1.Tests.Unit
             // assert
             response.StatusCode.Should().Be(HttpStatusCode.Created);
 
-            var storedBookOrders = BookOrderRepository.GetBySupplier("Test").ToList();
+            var storedBookOrders = BookOrderRepositoryInMemory.GetBySupplier("Test").ToList();
             storedBookOrders.Should().NotBeEmpty();
             storedBookOrders.Count().Should().Be(1);
             storedBookOrders[0].Supplier.Should().Be("Test");
@@ -90,7 +94,7 @@ namespace HostApp.WebService.Client1.Tests.Unit
             response1.Headers.Location.ToString().Should().StartWith("bookOrders");
             response2.Headers.Location.ToString().Should().StartWith("bookOrders");
             
-            var storedBookOrders = BookOrderRepository.GetBySupplier("Test").ToList();
+            var storedBookOrders = BookOrderRepositoryInMemory.GetBySupplier("Test").ToList();
             storedBookOrders.Should().NotBeEmpty();
             storedBookOrders.Count().Should().Be(1);
             storedBookOrders[0].Supplier.Should().Be("Test");
@@ -108,7 +112,7 @@ namespace HostApp.WebService.Client1.Tests.Unit
         {
             BookOrder bookOrder = BookOrder.CreateNew("SupplierFoo", Guid.NewGuid());
             bookOrder.State.Should().Be(BookOrderState.New);
-            BookOrderRepository.Store(bookOrder);
+            BookOrderRepositoryInMemory.Store(bookOrder);
             
             StartServer();
             
@@ -117,7 +121,7 @@ namespace HostApp.WebService.Client1.Tests.Unit
 
             // assert
             result.StatusCode.Should().Be(HttpStatusCode.OK);
-            var storedBookOrder = BookOrderRepository.Get(bookOrder.Id);
+            var storedBookOrder = BookOrderRepositoryInMemory.Get(bookOrder.Id);
             storedBookOrder.State.Should().Be(BookOrderState.Approved);
         }
 
@@ -126,7 +130,7 @@ namespace HostApp.WebService.Client1.Tests.Unit
         {
             BookOrder bookOrder = BookOrder.CreateNew("SupplierFoo", Guid.NewGuid());
             bookOrder.Approve();
-            BookOrderRepository.Store(bookOrder);
+            BookOrderRepositoryInMemory.Store(bookOrder);
 
             StartServer();
 
@@ -135,12 +139,43 @@ namespace HostApp.WebService.Client1.Tests.Unit
 
             // assert
             result.StatusCode.Should().Be(HttpStatusCode.OK);
-            var storedBookOrder = BookOrderRepository.Get(bookOrder.Id);
+            var storedBookOrder = BookOrderRepositoryInMemory.Get(bookOrder.Id);
             storedBookOrder.State.Should().Be(BookOrderState.Sent);
-            MockBookSupplierGateway.Received(1).Send(
-                Arg.Is<BookOrder>(
-                    x => x.Id == bookOrder.Id &&
-                    x.State == BookOrderState.Sent));
+            
+            BookSupplierGatewayInMemory.SentBookOrders.Count().Should().Be(1);
+            BookSupplierGatewayInMemory.SentBookOrders[0].Id.Should().Be(bookOrder.Id);
+            BookSupplierGatewayInMemory.SentBookOrders[0].State.Should().Be(BookOrderState.Sent);
+        }
+        
+        /// <summary>
+        /// This test demonstrates how to override the base InMemory implementations with a Mock
+        /// if you have need to (for example to throw exceptions etc..)
+        /// </summary>
+        [Fact]
+        public void Post_SendBookOrder_ExampleOfOverrideWithMock_ShouldSucceed()
+        {
+            BookOrder bookOrder = BookOrder.CreateNew("SupplierFoo", Guid.NewGuid());
+            bookOrder.Approve();
+            
+            IBookOrderRepository mockBookOrderRepository = Substitute.For<IBookOrderRepository>();
+            mockBookOrderRepository.Get(bookOrder.Id).Returns(bookOrder);
+            
+            TestContainerRegistrations = container =>
+            {
+                container.RegisterInstance(mockBookOrderRepository);
+            };
+            
+            StartServer();
+
+            // act
+            var result = Client.Post($"bookOrders/{bookOrder.Id}/send", null);
+
+            // assert
+            result.StatusCode.Should().Be(HttpStatusCode.OK);
+            
+            mockBookOrderRepository.Received(1).Store(Arg.Is<BookOrder>(
+                x => x.Id == bookOrder.Id &&
+                     x.State == BookOrderState.Sent));
         }
 
         [Fact]
@@ -165,8 +200,8 @@ namespace HostApp.WebService.Client1.Tests.Unit
 
             bookOrders.Add(bookOrder2);
             
-            BookOrderRepository.Store(bookOrder1);
-            BookOrderRepository.Store(bookOrder2);
+            BookOrderRepositoryInMemory.Store(bookOrder1);
+            BookOrderRepositoryInMemory.Store(bookOrder2);
 
             StartServer();
 
@@ -195,20 +230,5 @@ namespace HostApp.WebService.Client1.Tests.Unit
             bookOrdersResponse[1].OrderLines[0].Price.Should().Be(20.5M);
             bookOrdersResponse[1].OrderLines[0].Quantity.Should().Be(2);
         }
-    }
-
-    internal class BookOrderResponseDto
-    {
-        public string Supplier { get; set; }
-        public string State { get; set; }
-        public string Id { get; set; }
-        public IList<OrderLineResponseDto> OrderLines { get; set; }
-    }
-
-    internal class OrderLineResponseDto
-    {
-        public string Title { get; set; }
-        public decimal Price { get; set; }
-        public int Quantity { get; set; }
     }
 }

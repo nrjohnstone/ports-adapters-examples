@@ -1,4 +1,6 @@
-﻿using Adapter.Persistence.InMemory;
+﻿using System;
+using Adapter.Notification.InMemory;
+using Adapter.Persistence.InMemory;
 using Domain.Ports.Notification;
 using Domain.Ports.Persistence;
 using HostApp.WebService.Client1;
@@ -11,14 +13,16 @@ namespace HostApp.WebService.Client1.Tests.Unit
 {
     internal class TestApplicationHostBuilder : ApplicationHostBuilder
     {
-        public IBookOrderRepository BookOrderRepository { get; set; }
-        public IBookSupplierGateway MockBookSupplierGateway { get; set; }
+        public BookOrderRepositoryInMemory BookOrderRepositoryInMemory { get; set; }
+        public BookSupplierGatewayInMemory BookSupplierGatewayInMemory { get; set; }
         public IBookOrderLineConflictRepository MockBookOrderLineConflictRepository { get; set; }
+        
+        public Action<Container> TestContainerRegistrations = container => { };
         
         public TestApplicationHostBuilder(string[] args, string applicationName, Container container) : base(args, applicationName, container)
         {
-            BookOrderRepository = new BookOrderRepositoryInMemory();
-            MockBookSupplierGateway = Substitute.For<IBookSupplierGateway>();
+            BookOrderRepositoryInMemory = new BookOrderRepositoryInMemory();
+            BookSupplierGatewayInMemory = new BookSupplierGatewayInMemory();
             MockBookOrderLineConflictRepository = Substitute.For<IBookOrderLineConflictRepository>();
             
             container.Options.AllowOverridingRegistrations = true;
@@ -26,9 +30,13 @@ namespace HostApp.WebService.Client1.Tests.Unit
 
         protected override void PreHostBuildActions(IHostBuilder hostBuilder, Container container)
         {
-            container.RegisterInstance<IBookOrderRepository>(BookOrderRepository);
+            // Default registrations for all tests to use
+            container.RegisterInstance<IBookOrderRepository>(BookOrderRepositoryInMemory);
             container.RegisterInstance<IBookOrderLineConflictRepository>(MockBookOrderLineConflictRepository);
-            container.RegisterInstance<IBookSupplierGateway>(MockBookSupplierGateway);
+            container.RegisterInstance<IBookSupplierGateway>(BookSupplierGatewayInMemory);
+
+            // Allow tests to override or add registrations if they wish
+            TestContainerRegistrations(container);
             
             hostBuilder.ConfigureWebHost(webHost => webHost.UseTestServer());
         }

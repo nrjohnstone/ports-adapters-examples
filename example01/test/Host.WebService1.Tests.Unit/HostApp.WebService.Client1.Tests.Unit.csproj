@@ -17,6 +17,7 @@
   </ItemGroup>
 
   <ItemGroup>        
+    <ProjectReference Include="..\..\src\Adapter.Notification.InMemory\Adapter.Notification.InMemory.csproj" />        
     <ProjectReference Include="..\..\src\Adapter.Persistence.InMemory\Adapter.Persistence.InMemory.csproj" />        
     <ProjectReference Include="..\..\src\Core\Domain.csproj" />        
     <ProjectReference Include="..\..\src\HostApp.WebService.Client1\HostApp.WebService.Client1.csproj" />        
