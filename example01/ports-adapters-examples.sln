@@ -13,7 +13,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Adapter.Persistence.Test", 
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{9234AD06-323F-461D-AC33-43C22EFF20B7}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Domain.Tests.Unit", "test\Domain.Tests.Unit\Domain.Tests.Unit.csproj", "{222627B0-B4D5-4C36-9D57-D9E8D6BAAB28}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Domain.Tests.Unit", "tests\Domain.Tests.Unit\Domain.Tests.Unit.csproj", "{222627B0-B4D5-4C36-9D57-D9E8D6BAAB28}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Adapter.Notification.InMemory", "src\Adapter.Notification.InMemory\Adapter.Notification.InMemory.csproj", "{E8989F66-5BA3-4576-9F5F-4A9F26EDF5E3}"
 EndProject
@@ -21,7 +21,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Adapter.Trigger.RabbitMq", 
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Adapter.Persistence.MySql", "src\Adapter.Persistence.MySql\Adapter.Persistence.MySql.csproj", "{B4F64E5C-A80A-4E48-A307-6ED26233C394}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Adapter.Persistence.MySql.Tests.Integration", "test\Adapter.Persistence.MySql.Tests.Integration\Adapter.Persistence.MySql.Tests.Integration.csproj", "{55E378B7-78B8-4B18-83B8-E174B9028A43}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Adapter.Persistence.MySql.Tests.Integration", "tests\Adapter.Persistence.MySql.Tests.Integration\Adapter.Persistence.MySql.Tests.Integration.csproj", "{55E378B7-78B8-4B18-83B8-E174B9028A43}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Adapters", "Adapters", "{E188439D-1F1D-4EBA-B0DE-A7074E348190}"
 EndProject
@@ -35,17 +35,17 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HostApp.WebService.Client1"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Adapter.Persistence.CouchDb", "src\Adapter.Persistence.CouchDb\Adapter.Persistence.CouchDb.csproj", "{F9B62C54-9131-4606-8E44-6118D576FEE4}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Adapter.Persistence.CouchDb.Tests.Integration", "test\Adapter.Persistence.CouchDb.Tests.Integration\Adapter.Persistence.CouchDb.Tests.Integration.csproj", "{2DB22EFF-48A7-4D49-9EC1-D8C2AAB1AEEF}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Adapter.Persistence.CouchDb.Tests.Integration", "tests\Adapter.Persistence.CouchDb.Tests.Integration\Adapter.Persistence.CouchDb.Tests.Integration.csproj", "{2DB22EFF-48A7-4D49-9EC1-D8C2AAB1AEEF}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HostApp.WebService.Client3", "src\HostApp.WebService.Client3\HostApp.WebService.Client3.csproj", "{941768B7-F35F-4F0F-A4CC-E5BE61183D68}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HostApp.WebService.Client1.Tests.Unit", "test\Host.WebService1.Tests.Unit\HostApp.WebService.Client1.Tests.Unit.csproj", "{8CAB6AE1-0317-4D8F-AFE2-92B1684E34E5}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HostApp.WebService.Client1.Tests.Unit", "tests\Host.WebService1.Tests.Unit\HostApp.WebService.Client1.Tests.Unit.csproj", "{8CAB6AE1-0317-4D8F-AFE2-92B1684E34E5}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Adapter.Trigger.Csv", "src\Adapter.Trigger.Csv\Adapter.Trigger.Csv.csproj", "{2FAC930D-F9AC-45BB-9C48-1EFE46BA8278}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Adapter.Trigger.Csv.Tests.Unit", "test\Adapter.Trigger.Csv.Tests.Unit\Adapter.Trigger.Csv.Tests.Unit.csproj", "{810ECEAA-C177-4662-A904-65E599FAC2EA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Adapter.Trigger.Csv.Tests.Unit", "tests\Adapter.Trigger.Csv.Tests.Unit\Adapter.Trigger.Csv.Tests.Unit.csproj", "{810ECEAA-C177-4662-A904-65E599FAC2EA}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Domain.Builders", "test\Domain.Builders\Domain.Builders.csproj", "{B889CAE0-1827-4E64-9312-1439039A9C87}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Domain.Builders", "tests\Domain.Builders\Domain.Builders.csproj", "{B889CAE0-1827-4E64-9312-1439039A9C87}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Adapter.Persistence.InMemory", "src\Adapter.Persistence.InMemory\Adapter.Persistence.InMemory.csproj", "{F4479DCC-BBB7-43F6-ADDA-BE695E27F788}"
 EndProject
