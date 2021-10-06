@@ -1,8 +1,6 @@
 ﻿using System;
-using System.Threading;
 using AmbientContext.LogService.Serilog;
 using Serilog;
-using Serilog.Core;
 
 namespace Host.Console
 {

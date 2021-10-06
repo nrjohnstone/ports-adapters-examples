@@ -7,7 +7,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Adapter.Trigger.Test", "src
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Domain", "src\Domain\Domain.csproj", "{97E5E8EB-26D7-49D9-A412-3DF4F5716643}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Host.Console", "src\Host.Console\Host.Console.csproj", "{E7562808-6D94-4C58-902E-71CDFA832567}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HostApp.Console", "src\HostApp.Console\HostApp.Console.csproj", "{E7562808-6D94-4C58-902E-71CDFA832567}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Adapter.Persistence.Test", "src\Adapter.Persistence.Test\Adapter.Persistence.Test.csproj", "{1649AA20-899F-4050-B99A-C408A4AA39FE}"
 EndProject
