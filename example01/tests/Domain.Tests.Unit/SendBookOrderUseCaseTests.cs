@@ -46,7 +46,7 @@ namespace Core.Tests.Unit
         public void SendingABookOrder_WhenStateIsNotApproved_ShouldThrowDomainException(BookOrderState state)
         {
             var sut = CreateSut();
-            BookOrder bookOrder = a.BookOrder;
+            BookOrder bookOrder = a.BookOrder.WithState(state);
             _bookOrderRepository.Store(bookOrder);
 
             Action sendBookOrderThatIsAlreadySent = () => sut.Execute(bookOrder.Id);

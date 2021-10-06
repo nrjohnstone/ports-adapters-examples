@@ -64,5 +64,11 @@ namespace Core.Tests.Unit.Helpers
             _state = BookOrderState.Sent;
             return this;
         }
+
+        public BookOrderBuilder WithState(BookOrderState bookOrderState)
+        {
+            _state = bookOrderState;
+            return this;
+        }
     }
 }
