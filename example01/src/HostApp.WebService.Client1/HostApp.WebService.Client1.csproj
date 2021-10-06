@@ -10,7 +10,6 @@
     <PackageReference Include="AmbientContext" Version="2.1.1" />
     <PackageReference Include="AmbientContext.LogService.Serilog" Version="1.1.5" />
     <PackageReference Include="Microsoft.Extensions.Configuration" Version="3.1.1" />
-    <PackageReference Include="Microsoft.AspNet.WebApi.Core" Version="5.2.3" />
     <PackageReference Include="Serilog" Version="2.5.0" />
     <PackageReference Include="Serilog.Sinks.ColoredConsole" Version="3.0.1" />
     <PackageReference Include="SimpleInjector.Integration.GenericHost" Version="4.9.0" />
