@@ -42,7 +42,7 @@ namespace Adapter.Trigger.Csv
             {
                 if (FileExists(filePath))
                 {
-                    List<BookTitleRequest> bookOrders = new List<BookTitleRequest>();
+                    List<BookTitleRequest> bookTitleRequests = new List<BookTitleRequest>();
 
                     using (Stream stream = GetFileStream(filePath))
                     {
@@ -52,7 +52,7 @@ namespace Adapter.Trigger.Csv
                         
                         foreach (var record in records)
                         {
-                            bookOrders.Add(new BookTitleRequest(
+                            bookTitleRequests.Add(new BookTitleRequest(
                                 record.Title, record.Supplier, record.Price, record.Quantity));
                         }
                     }
@@ -63,9 +63,10 @@ namespace Adapter.Trigger.Csv
                     // for resuming at the last processed line if a fault occurs
                     DeleteFile(filePath);
 
-                    foreach (BookTitleRequest bookOrder in bookOrders)
+                    foreach (BookTitleRequest bookTitleRequest in bookTitleRequests)
                     {
-                        _addBookTitleRequestUseCase.Execute(bookOrder);
+                        // Invoke the use case from the domain for each book order
+                        _addBookTitleRequestUseCase.Execute(bookTitleRequest);
                     }
                 }
             }                            
