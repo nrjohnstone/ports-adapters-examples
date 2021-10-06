@@ -20,7 +20,7 @@ namespace HostApp.WebService.Client2
             ConfigureSerilog();
             Container container = new Container();
 
-            using (_host = new ApplicationHostBuilder(args, "Host.WebService.Client2",  container).Build())
+            using (_host = new ApplicationHostBuilder(args, "HostApp.WebService.Client2",  container).Build())
             {
                 // Use "Start" and "WaitForShutdown" instead of "Run" as this handles being stopped
                 // from a container and allow the CloseAndFlush to be called

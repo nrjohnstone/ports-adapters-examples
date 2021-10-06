@@ -1,12 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Web.Http;
 using Domain.UseCases;
 using Domain.ValueObjects;
+using HostApp.WebService.Client3.Dtos;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Infrastructure;
 
-namespace HostApp.WebService.Client3.BookOrders
+namespace HostApp.WebService.Client3.Controllers
 {
-    public class BookOrdersController : ApiController
+    public class BookOrdersController : ControllerBase
     {
         private readonly AddBookTitleRequestUseCase _addBookTitleRequestUseCase;
         private readonly ApproveBookOrderUseCase _approveBookOrderUseCase;
@@ -34,14 +36,14 @@ namespace HostApp.WebService.Client3.BookOrders
 
         [HttpGet]
         [Route("health/instance")]
-        public IHttpActionResult HealthCheck()
+        public IStatusCodeActionResult HealthCheck()
         {
-            return Ok();
+            return Ok(Program.ApplicationName);
         }
 
         [HttpPost]
         [Route("bookRequests")]
-        public IHttpActionResult CreateBookRequest([FromBody] BookTitleOrderRequest bookTitleOrderRequest)
+        public IStatusCodeActionResult CreateBookRequest([FromBody] BookTitleOrderRequest bookTitleOrderRequest)
         {
             if (bookTitleOrderRequest == null)
                 return BadRequest();
@@ -52,12 +54,12 @@ namespace HostApp.WebService.Client3.BookOrders
                 bookTitleOrderRequest.Price,
                 bookTitleOrderRequest.Quantity));
 
-            return Created<string>($"bookOrders/{bookOrderId}", null);
+            return Created($"bookOrders/{bookOrderId}", null);
         }
 
         [HttpGet]
         [Route("bookOrders")]
-        public IHttpActionResult GetBookOrders()
+        public IStatusCodeActionResult GetBookOrders()
         {
             var bookOrders = _getAllBookOrdersUseCase.Execute();
 
@@ -93,7 +95,7 @@ namespace HostApp.WebService.Client3.BookOrders
 
         [HttpDelete]
         [Route("bookOrders")]
-        public IHttpActionResult DeleteBookOrders()
+        public IStatusCodeActionResult DeleteBookOrders()
         {
             try
             {
@@ -101,14 +103,14 @@ namespace HostApp.WebService.Client3.BookOrders
             }
             catch (Exception)
             {
-                return InternalServerError();
+                return StatusCode(500);
             }
             return Ok();
         }
 
         [HttpPost]
         [Route("bookOrders/{bookOrderId}/approve")]
-        public IHttpActionResult ApproveBookOrder(Guid bookOrderId)
+        public IStatusCodeActionResult ApproveBookOrder(Guid bookOrderId)
         {
             if (bookOrderId == Guid.Empty)
                 return BadRequest();
@@ -119,7 +121,7 @@ namespace HostApp.WebService.Client3.BookOrders
 
         [HttpPost]
         [Route("bookOrders/{bookOrderId}/send")]
-        public IHttpActionResult SendBookOrder(Guid bookOrderId)
+        public IStatusCodeActionResult SendBookOrder(Guid bookOrderId)
         {
             if (bookOrderId == Guid.Empty)
                 return BadRequest();
