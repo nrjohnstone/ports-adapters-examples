@@ -2,7 +2,7 @@
 using Microsoft.Owin.Hosting;
 using Serilog;
 
-namespace Host.WebService.Client3
+namespace HostApp.WebService.Client3
 {
     public class Program
     {

@@ -23,7 +23,7 @@
   <ItemGroup>
     <ProjectReference Include="..\Adapter.Notification.Email\Adapter.Notification.Email.csproj" />
     <ProjectReference Include="..\Adapter.Persistence.MySql\Adapter.Persistence.MySql.csproj" />
-    <ProjectReference Include="..\Core\Domain.csproj" />
+    <ProjectReference Include="..\Domain\Domain.csproj" />
   </ItemGroup>
 
 </Project>

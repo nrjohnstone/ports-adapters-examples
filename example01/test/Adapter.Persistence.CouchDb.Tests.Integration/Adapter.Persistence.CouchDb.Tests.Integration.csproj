@@ -13,7 +13,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\src\Adapter.Persistence.CouchDb\Adapter.Persistence.CouchDb.csproj" />
-    <ProjectReference Include="..\..\src\Core\Domain.csproj" />
+    <ProjectReference Include="..\..\src\Domain\Domain.csproj" />
   </ItemGroup>
  
 </Project>

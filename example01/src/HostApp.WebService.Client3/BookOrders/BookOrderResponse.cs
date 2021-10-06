@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 
-namespace Host.WebService.Client3.BookOrders
+namespace HostApp.WebService.Client3.BookOrders
 {
     public class BookOrderResponse
     {

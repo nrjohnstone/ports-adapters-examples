@@ -16,7 +16,7 @@
   <ItemGroup>    
     <ProjectReference Include="..\..\src\Adapter.Notification.InMemory\Adapter.Notification.InMemory.csproj" />    
     <ProjectReference Include="..\..\src\Adapter.Persistence.Test\Adapter.Persistence.Test.csproj" />    
-    <ProjectReference Include="..\..\src\Core\Domain.csproj" />
+    <ProjectReference Include="..\..\src\Domain\Domain.csproj" />
   </ItemGroup>
  
 </Project>

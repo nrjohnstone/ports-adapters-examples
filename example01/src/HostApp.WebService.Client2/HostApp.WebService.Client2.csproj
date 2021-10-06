@@ -23,7 +23,7 @@
     <ProjectReference Include="..\Adapter.Notification.RabbitMq\Adapter.Notification.RabbitMq.csproj" />
     <ProjectReference Include="..\Adapter.Persistence.MySql\Adapter.Persistence.MySql.csproj" />
     <ProjectReference Include="..\Adapter.Trigger.RabbitMq\Adapter.Trigger.RabbitMq.csproj" />
-    <ProjectReference Include="..\Core\Domain.csproj" />
+    <ProjectReference Include="..\Domain\Domain.csproj" />
   </ItemGroup>
 
 </Project>

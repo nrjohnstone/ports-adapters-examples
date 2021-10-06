@@ -5,7 +5,7 @@ VisualStudioVersion = 15.0.27130.2036
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Adapter.Trigger.Test", "src\Adapter.Trigger.Test\Adapter.Trigger.Test.csproj", "{408F72C9-ED46-4B95-A1AA-9BA45D5681EE}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Domain", "src\Core\Domain.csproj", "{97E5E8EB-26D7-49D9-A412-3DF4F5716643}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Domain", "src\Domain\Domain.csproj", "{97E5E8EB-26D7-49D9-A412-3DF4F5716643}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Host.Console", "src\Host.Console\Host.Console.csproj", "{E7562808-6D94-4C58-902E-71CDFA832567}"
 EndProject
@@ -37,7 +37,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Adapter.Persistence.CouchDb
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Adapter.Persistence.CouchDb.Tests.Integration", "test\Adapter.Persistence.CouchDb.Tests.Integration\Adapter.Persistence.CouchDb.Tests.Integration.csproj", "{2DB22EFF-48A7-4D49-9EC1-D8C2AAB1AEEF}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Host.WebService.Client3", "src\Host.WebService3\Host.WebService.Client3.csproj", "{941768B7-F35F-4F0F-A4CC-E5BE61183D68}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HostApp.WebService.Client3", "src\HostApp.WebService.Client3\HostApp.WebService.Client3.csproj", "{941768B7-F35F-4F0F-A4CC-E5BE61183D68}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HostApp.WebService.Client1.Tests.Unit", "test\Host.WebService1.Tests.Unit\HostApp.WebService.Client1.Tests.Unit.csproj", "{8CAB6AE1-0317-4D8F-AFE2-92B1684E34E5}"
 EndProject
