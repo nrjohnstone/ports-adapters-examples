@@ -12,7 +12,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\src\Adapter.Persistence.MySql\Adapter.Persistence.MySql.csproj" />
-    <ProjectReference Include="..\..\src\Core\Domain.csproj" />
+    <ProjectReference Include="..\..\src\Domain\Domain.csproj" />
   </ItemGroup>
  
 </Project>

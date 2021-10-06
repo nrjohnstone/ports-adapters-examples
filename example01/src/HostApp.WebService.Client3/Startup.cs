@@ -2,13 +2,13 @@
 using System.Web.Http;
 using Adapter.Trigger.Csv;
 using Domain.UseCases;
-using Host.WebService.Client3.BookOrders;
+using HostApp.WebService.Client3.BookOrders;
 using Owin;
 using SimpleInjector;
 using SimpleInjector.Integration.WebApi;
 using Swashbuckle.Application;
 
-namespace Host.WebService.Client3
+namespace HostApp.WebService.Client3
 {
     public class Startup
     {

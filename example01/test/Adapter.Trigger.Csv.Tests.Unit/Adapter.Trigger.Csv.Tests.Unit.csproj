@@ -13,7 +13,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\src\Adapter.Trigger.Csv\Adapter.Trigger.Csv.csproj" />
-    <ProjectReference Include="..\..\src\Core\Domain.csproj" />
+    <ProjectReference Include="..\..\src\Domain\Domain.csproj" />
   </ItemGroup>
  
 </Project>
