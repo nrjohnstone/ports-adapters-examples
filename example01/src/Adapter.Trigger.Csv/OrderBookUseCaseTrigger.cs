@@ -7,6 +7,11 @@ using FileHelpers;
 
 namespace Adapter.Trigger.Csv
 {
+    /// <summary>
+    /// Handles polling the configured folder looking for files matching the given mask
+    /// and processing any that are found by triggering the use case from the domain.
+    /// Files are deleted once processed
+    /// </summary>
     internal class OrderBookUseCaseTrigger
     {
         private readonly AddBookTitleRequestUseCase _addBookTitleRequestUseCase;

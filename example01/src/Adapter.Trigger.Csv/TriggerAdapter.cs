@@ -18,6 +18,12 @@ namespace Adapter.Trigger.Csv
             _initialized = true;
         }
 
+        /// <summary>
+        /// Wire the instance of the AddBookTitleRequestUseCase to a trigger that will poll and
+        /// call the use case when matching trigger conditions are met
+        /// </summary>
+        /// <param name="addBookTitleRequestUseCase"></param>
+        /// <exception cref="InvalidOperationException"></exception>
         public void Handle(AddBookTitleRequestUseCase addBookTitleRequestUseCase)
         {
             if (!_initialized)

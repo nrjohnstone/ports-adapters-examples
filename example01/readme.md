@@ -42,12 +42,10 @@ A diagram that depicts the overall references between the assemblies is below
 ## Testing ##
 This repository also contains various examples of unit and integration testing.
 
-I have deliberately moved away from using mocking frameworks in unit tests for persistence interfaces as I 
-believe the over use of mocks for the following reasons
-* Maintaining an in memory implementation for each interface forces you to consider the port/interface if you only have
-a single implementation (eg you only support SQL server)
-* Mocking frameworks are too forgiving in the face of signature changes and will often keep a unit test passing where it should be failing. 
+I have deliberately moved away from using mocking frameworks in unit tests, especially for persistence interfaces, for the following reasons
+* When you only have a single real implementation, such as only using SQL Server, then maintaining an in memory implementation for each interface makes it easier to see where you might be leaking persistence details into your domain.
+* In memory implementations are useful for driving the application when iterating locally. For this reason I will quite often have configuration that allows me to bootstrap the application when deployed with the in memory implementations.
+* Mocking frameworks are too forgiving in the face of signature changes and will often keep a unit test passing where it should be failing.   
   By having another implementation to maintain it means when you change interface contracts you are more likely to be forced to update the tests correctly.
-* Using in memory implementations forces your tests to become more "data driven" as you have to populate them first in a sane manner
-rather than setting up mock expectations with arcane syntax requirements
+* Using in memory implementations forces your tests to become more "data driven" as you have to populate them first in a sane manner rather than setting up mock expectations with arcane syntax requirements
   
