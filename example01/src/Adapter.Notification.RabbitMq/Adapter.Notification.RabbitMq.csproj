@@ -7,7 +7,7 @@
 
   <ItemGroup>
     <PackageReference Include="AmbientContext.LogService.Serilog" Version="1.1.5" />
-    <PackageReference Include="Newtonsoft.Json" Version="10.0.3" />
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
     <PackageReference Include="RabbitMQ.Client" Version="5.0.1" />
     <PackageReference Include="SimpleInjector" Version="4.0.8" />
   </ItemGroup>
