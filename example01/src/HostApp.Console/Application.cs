@@ -9,8 +9,7 @@ using Domain.Ports.Persistence;
 using Domain.UseCases;
 using SimpleInjector;
 
-
-namespace Host.Console
+namespace HostApp.Console
 {
     public class Application : IDisposable
     {

@@ -1,7 +1,7 @@
 ﻿using System;
 using Serilog;
 
-namespace Host.Console
+namespace HostApp.Console
 {
     class Program
     {

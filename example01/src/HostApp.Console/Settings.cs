@@ -1,4 +1,4 @@
-﻿namespace Host.Console
+﻿namespace HostApp.Console
 {
     public class Settings
     {
