@@ -1,18 +1,17 @@
 ﻿using System;
 using System.Text;
-using AmbientContext.LogService.Serilog;
 using Domain.UseCases;
 using Domain.ValueObjects;
 using Newtonsoft.Json;
 using RabbitMQ.Client;
 using RabbitMQ.Client.Events;
+using Serilog;
 using static Adapter.Trigger.RabbitMq.RabbitMqConstants;
 
 namespace Adapter.Trigger.RabbitMq
 {
     internal class OrderBookUseCaseTrigger
     {
-        public AmbientLogService Logger { get; } = new AmbientLogService();
         private readonly AddBookTitleRequestUseCase _addBookTitleRequestUseCase;
         private readonly IConnection _connection;
         private IModel _channel;
@@ -36,7 +35,7 @@ namespace Adapter.Trigger.RabbitMq
         private void OnReceive(BasicDeliverEventArgs args)
         {
             var message = Encoding.UTF8.GetString(args.Body);
-            Logger.Debug("Received {RabbitMqMessage}", message);
+            Log.Logger.Debug("Received {RabbitMqMessage}", message);
 
             try
             {

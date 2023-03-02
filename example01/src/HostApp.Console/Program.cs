@@ -1,17 +1,14 @@
 ﻿using System;
-using AmbientContext.LogService.Serilog;
 using Serilog;
 
 namespace Host.Console
 {
     class Program
     {
-        public static AmbientLogService Logger = new AmbientLogService();
-
         static void Main(string[] args)
         {
             ConfigureSerilog();
-            Logger.Debug("Application starting");
+            Log.Logger.Debug("Application starting");
 
             try
             {
@@ -33,12 +30,12 @@ namespace Host.Console
                 
                 System.Console.ReadLine();
 
-                Logger.Debug("Application shutting down");
+                Log.Logger.Debug("Application shutting down");
                 application.Shutdown();
             }
             catch (Exception ex)
             {
-                Logger.Error(ex, ex.StackTrace);
+                Log.Logger.Error(ex, ex.StackTrace);
             }                     
         }
 

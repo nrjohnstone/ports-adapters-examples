@@ -6,7 +6,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="AmbientContext.LogService.Serilog" Version="1.1.5" />
     <PackageReference Include="FileHelpers" Version="3.5" />
   </ItemGroup>
 

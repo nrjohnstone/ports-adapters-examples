@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Net.Mail;
 using System.Text;
-using AmbientContext.LogService.Serilog;
 using Domain.Entities;
 using Domain.Ports.Notification;
+using Serilog;
 
 namespace Adapter.Notification.Email
 {
@@ -12,7 +12,6 @@ namespace Adapter.Notification.Email
         private readonly string _smtpServer;
         private readonly int _smtpPort;
         private readonly string _bookSupplierEmail;
-        public AmbientLogService Logger { get; } = new AmbientLogService();
 
         public BookSupplierGateway(string smtpServer, int smtpPort, string bookSupplierEmail)
         {
@@ -65,7 +64,7 @@ namespace Adapter.Notification.Email
             }
             catch (Exception ex)
             {
-                Logger.Error(ex, "Exception while sending email to book supplier gateway");
+                Log.Logger.Error(ex, "Exception while sending email to book supplier gateway");
             }
         }
     }

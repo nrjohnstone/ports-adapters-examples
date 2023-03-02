@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Configuration;
 using Domain.Entities;
 using Domain.Ports.Persistence;
 
