@@ -1,16 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using AmbientContext.LogService.Serilog;
 using Domain.Entities;
 using Domain.Ports.Persistence;
 using Domain.ValueObjects;
+using Serilog;
 
 namespace Domain.UseCases
 {
     public class AddBookTitleRequestUseCase
     {
-        public AmbientLogService Logger = new AmbientLogService();
         private readonly IBookOrderRepository _bookOrderRepository;
 
         public AddBookTitleRequestUseCase(IBookOrderRepository bookOrderRepository)
@@ -22,7 +21,7 @@ namespace Domain.UseCases
 
         public Guid Execute(BookTitleRequest bookTitleRequest)
         {
-            Logger.Information($"Execute {nameof(AddBookTitleRequestUseCase)} for Title: {{Title}}", bookTitleRequest.Title);
+            Log.Logger.Information($"Execute {nameof(AddBookTitleRequestUseCase)} for Title: {{Title}}", bookTitleRequest.Title);
 
             // Check for any existing new orders for the supplier
             IEnumerable<BookOrder> bookOrders = _bookOrderRepository.GetBySupplier(

@@ -1,9 +1,9 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using AmbientContext.LogService.Serilog;
 using Domain.Entities;
 using Domain.Ports.Persistence;
 using Domain.ValueObjects;
+using Serilog;
 
 namespace Domain.UseCases
 {
@@ -11,7 +11,6 @@ namespace Domain.UseCases
     {
         private readonly IBookOrderRepository _bookOrderRepository;
         private readonly IBookOrderLineConflictRepository _bookOrderLineConflictRepository;
-        public AmbientLogService Logger = new AmbientLogService();
 
         public SupplierBookOrderUpdateUseCase(IBookOrderRepository bookOrderRepository,
             IBookOrderLineConflictRepository bookOrderLineConflictRepository)
@@ -22,7 +21,7 @@ namespace Domain.UseCases
 
         public void Execute(SupplierBookOrderUpdateRequest supplierBookOrderUpdateRequest)
         {
-            Logger.Information($"Execute {nameof(GetType)} for Id: {{BookOrderId}}", supplierBookOrderUpdateRequest.BookOrderId);
+            Log.Logger.Information($"Execute {nameof(GetType)} for Id: {{BookOrderId}}", supplierBookOrderUpdateRequest.BookOrderId);
 
             var bookOrder = _bookOrderRepository.Get(supplierBookOrderUpdateRequest.BookOrderId);
 

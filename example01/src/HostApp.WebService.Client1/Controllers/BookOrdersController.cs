@@ -1,18 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
-using AmbientContext.LogService.Serilog;
 using Domain.UseCases;
 using Domain.ValueObjects;
 using HostApp.WebService.Client1.Dtos;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Infrastructure;
+using Serilog;
 
 namespace HostApp.WebService.Client1.Controllers
 {
     [ApiController]
     public class BookOrdersController : ControllerBase
     {
-        public AmbientLogService Log { get; set; }
         private readonly AddBookTitleRequestUseCase _addBookTitleRequestUseCase;
         private readonly ApproveBookOrderUseCase _approveBookOrderUseCase;
         private readonly SendBookOrderUseCase _sendBookOrderUseCase;
@@ -150,7 +149,7 @@ namespace HostApp.WebService.Client1.Controllers
             }
             catch (Exception ex)
             {
-                Log.Error(ex ,"Exception occurred while deleting book orders");
+                Log.Logger.Error(ex ,"Exception occurred while deleting book orders");
                 return StatusCode(500);
             }
             return Ok();

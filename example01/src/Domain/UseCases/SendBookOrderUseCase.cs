@@ -1,13 +1,12 @@
 ﻿using System;
-using AmbientContext.LogService.Serilog;
 using Domain.Ports.Notification;
 using Domain.Ports.Persistence;
+using Serilog;
 
 namespace Domain.UseCases
 {
     public class SendBookOrderUseCase
     {
-        public AmbientLogService Logger = new AmbientLogService();
         private readonly IBookOrderRepository _bookOrderRepository;
         private readonly IBookSupplierGateway _bookSupplierGateway;
 
@@ -23,7 +22,7 @@ namespace Domain.UseCases
 
         public void Execute(Guid bookOrderId)
         {
-            Logger.Information("Execute SendBookOrderUseCase for Id: {Title}", bookOrderId);
+            Log.Logger.Information("Execute SendBookOrderUseCase for Id: {Title}", bookOrderId);
 
             var bookOrder = _bookOrderRepository.Get(bookOrderId);
 

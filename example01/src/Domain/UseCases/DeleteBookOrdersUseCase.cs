@@ -1,13 +1,10 @@
 ﻿using System;
-using AmbientContext.LogService.Serilog;
 using Domain.Ports.Persistence;
 
 namespace Domain.UseCases
 {
     public class DeleteBookOrdersUseCase
     {
-        public AmbientLogService Logger = new AmbientLogService();
-
         private readonly IBookOrderRepository _bookOrderRepository;
 
         public DeleteBookOrdersUseCase(IBookOrderRepository bookOrderRepository)
